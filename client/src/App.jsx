@@ -1,22 +1,19 @@
 import { useState } from "react";
-import "./App.css";
-import ScrollAnimation from 'react-animate-on-scroll';
-import Header from "./Components/Header";
-import Hero from "./Components/Hero";
-import Card from "./Components/Card";
-import About from "./Components/About";
-import Mission from "./Components/Mission";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from "./Pages/Home";
+import AboutUs from "./Pages/AboutUs";
+
 function App() {
   return (
     <>
-      <div>
-        <Header/>
-        <Hero />
-        <About />
-        <Card />
-        <Mission />
-
-      </div>
+     <BrowserRouter>
+     <Routes>
+     <Route path='/' element={<Home/>}></Route>
+     <Route path='/home' element={<><Home/></>}></Route>
+     <Route path='/about' element={<><AboutUs/></>}></Route>
+     <Route path='*' element={<><Home/></>}></Route>
+     </Routes>
+     </BrowserRouter>
     </>
   );
 }

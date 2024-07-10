@@ -23,10 +23,39 @@ body {
 }
 
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
+/* Webkit Browsers */
+::-webkit-scrollbar {
+  width: 12px; /* width for vertical scrollbars */
+  height: 12px; /* height for horizontal scrollbars */
 }
+
+::-webkit-scrollbar-thumb {
+  background: #39827a; /* Scrollbar color */
+  border-radius: 6px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1D6559; /* Darker color on hover */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-corner {
+  background: #f1f1f1;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #39827a #f1f1f1;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #39827a;
+  border-radius: 6px;
+  border: 3px solid #f1f1f1;
+}
+

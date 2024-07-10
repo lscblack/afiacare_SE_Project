@@ -8,13 +8,13 @@ import ScrollAnimation from 'react-animate-on-scroll';
 function Hero() {
   return (
     <div className="z-[0] flex flex-wrap-reverse items-center mt-0 md:mt-0 justify-center flex gap-0 md:py-10 px-5 md:flex-row z-0 md:h-[100vh]">
-      <div className="space-y-4 md:ml-10 md:w-[60%] text-center md:text-left">
-      <ScrollAnimation animateIn="animate__fadeInUp" className="duration-1000">
+      <div className="space-y-4 md:ml-10 md:w-[60%] text-center md:text-left mb-8 md:mb-0">
+     
         <p className="text-[#39827a] text-sm">We are afiacare</p>
         <h1 className="text-2xl md:text-6xl text-[#39827a] font-bold">
           Empowering Healthcare with Technology
         </h1>
-        </ScrollAnimation>
+       
         <p className="text-gray-500  text-base">
           Transforming Healthcare, One digital step a time
         </p>
@@ -31,12 +31,12 @@ function Hero() {
         </div>
       </div>
       <div className="md:w-[30%] z-[-1]">
-        <ScrollAnimation animateIn="slideInRight" className="duration-1000">
+       
         <img
           src={HeroImg}
           alt="" className="w-[500px] h-[500px]  object-cover "
         />
-        </ScrollAnimation>
+      
       </div>
 
       <img

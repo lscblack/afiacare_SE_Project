@@ -8,8 +8,8 @@ function Header() {
   const [scrollColor, setScrollColor] = useState("bg-slate-100");
 
   const menu = [
-    { name: "Home", link: "/" },
-    { name: "About", link: "/" },
+    { name: "Home", link: "/home" },
+    { name: "About", link: "/about" },
     { name: "Contact", link: "/" },
     { name: "Services", link: "/" },
   ];
@@ -38,19 +38,22 @@ function Header() {
         <img src={logo} className="w-[60px] md:w-[80px] object-cover" alt="" />
         <div className="hidden md:flex gap-8 ">
           {menu.map((item) => (
-            <HeaderItem key={item.name} name={item.name} />
+
+
+            <HeaderItem key={item.name} goto={item.link} name={item.name} />
+          
           ))}
         </div>
 
         {/* Mobile menu */}
         <div className="md:hidden" onClick={() => setToggle(!toggle)}>
           <HiBars3BottomRight
-            size={30} className="cursor-pointer absolute text-[#39827a] top-4 right-7"
+            size={35} className="cursor-pointer absolute text-[#39827a] top-4 right-7 bg-slate-200 p-1 rounded"
           />
           {toggle ? (
-            <div className="absolute top-20 right-12 w-[80%] bg-[#ffffff] p-5 border rounded-md">
+            <div className="absolute top-14 right-2 w-[95%] bg-[#ffffff] p-5 border rounded-sm">
               {menu.map((item) => (
-                <HeaderItem key={item.name} name={item.name} />
+                <HeaderItem key={item.name} goto={item.link} name={item.name} />
               ))}
               <div className="items-center gap-2 flex mt-5 justify-center">
                 <button className="bg-[#39827a] w-[100px] md:w-[120px] rounded-md font-medium px-3 py-2 hover:bg-[#1D6559] duration-300">
