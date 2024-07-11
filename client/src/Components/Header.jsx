@@ -10,7 +10,7 @@ function Header() {
   const menu = [
     { name: "Home", link: "/home" },
     { name: "About", link: "/about" },
-    { name: "Contact", link: "/" },
+    { name: "Contact", link: "/contact" },
     { name: "Services", link: "/" },
   ];
 

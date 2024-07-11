@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaLinkedin, FaInstagram, FaFacebook } from 'react-icons/fa';
-
+import { CiLinkedin } from "react-icons/ci";
+import { IoLogoInstagram } from "react-icons/io";
+import { CiFacebook } from "react-icons/ci";
 // Import team member images
 import Member1 from '../assets/images/Member1.jpg';
 import Member2 from '../assets/images/Member2.jpg';
@@ -51,19 +53,19 @@ function Team() {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {teamMembers.map((member, index) => (
-          <div key={index} className="flex flex-col items-center p-4 border rounded-md bg-white shadow-sm">
+          <div key={index} className="flex flex-col items-start p-4 border rounded-md bg-white hover:translate-y-[-10px] duration-300 cursor-pointer">
             <img src={member.img} alt={member.name} className="w-[100%] h-[280px] object-cover shadow-md hover:scale-105 duration-300 cursor-pointer rounded mb-4" />
-            <h3 className="text-xl font-semibold text-[#39827a]">{member.name}</h3>
+            <h3 className="font-medium text-[18px] text-[#39827a]">{member.name}</h3>
             <p className="text-gray-500">{member.role}</p>
             <div className="flex mt-2 space-x-3">
-              <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-[#0e76a8] hover:text-[#0e76a8]">
-                <FaLinkedin size={20} />
+              <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-600 bg-slate-100 p-2 rounded-full hover:text-[#0e76a8]">
+              <CiLinkedin size={22} />
               </a>
-              <a href={member.instagram} target="_blank" rel="noopener noreferrer" className="text-[#E4405F] hover:text-[#E4405F]">
-                <FaInstagram size={20} />
+              <a href={member.instagram} target="_blank" rel="noopener noreferrer" className="text-gray-600 bg-slate-100 p-2 rounded-full hover:text-[#E4405F]">
+              <IoLogoInstagram size={22} />
               </a>
-              <a href={member.facebook} target="_blank" rel="noopener noreferrer" className="text-[#3b5998] hover:text-[#3b5998]">
-                <FaFacebook size={20} />
+              <a href={member.facebook} target="_blank" rel="noopener noreferrer" className="text-gray-500 bg-slate-100 p-2 rounded-full hover:text-[#3b5998]">
+              <CiFacebook size={22} />
               </a>
             </div>
           </div>

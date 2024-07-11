@@ -29,7 +29,7 @@ function Footer() {
               type="email"
               placeholder="Enter your email" className="p-2 md:w-[65%]    outline-none bg-[#f5f5f5] rounded text-gray-500"
             />
-            <button className="absolute right-40 mt-1 bg-[#398274] text-white p-2 rounded">
+            <button className="absolute right-[120px]  md:right-40 mt-1 bg-[#398274] text-white p-2 rounded">
               <IoIosArrowForward />
             </button>
           </div>
