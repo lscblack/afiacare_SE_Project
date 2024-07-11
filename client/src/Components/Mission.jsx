@@ -14,7 +14,7 @@ function Mission() {
           user-friendly digital platform that ensures better patient outcomes
           through accurate and efficient data handling.
         </p>
-        <button className="text-[#39827a] flex items-center mt-5 m-auto md:ml-0 gap-x-2 border rounded-md p-2 hover:bg-[#39827a] hover:text-white duration-300">
+        <button className="text-[#39827a] flex items-center mt-5 m-auto md:m-0 gap-x-2 border rounded-md p-2 hover:bg-[#39827a] hover:text-white duration-300">
           Be part of our journey <HiChevronRight />
         </button>
       </div>
