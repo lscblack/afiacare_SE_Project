@@ -10,6 +10,8 @@ import GetInvolved from "../Components/GetInvolved";
 import FAQ from "../Components/FAQ.jsx";
 import ClientSlider from "../Components/ClientSlider.jsx";
 import TrustedBySlider from "../Components/TrustedBy.jsx";
+import AboutUs from "./AboutUs.jsx";
+import Footer from "../Components/Footer.jsx";
 function Home() {
   return (
     <>
@@ -46,6 +48,9 @@ function Home() {
        </div>
        <div>
         <TrustedBySlider />
+       </div>
+       <div>
+        <Footer />
        </div>
       </div>
     </>
