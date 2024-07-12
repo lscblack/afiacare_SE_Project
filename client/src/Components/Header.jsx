@@ -5,6 +5,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import HeaderItem from "./HeaderItem";
 import enFlag from "./../assets/images/en-flag.png"; // Add your English flag image
 import frFlag from "./../assets/images/fr-flag.png"; // Add your French flag image
+import { Link } from 'react-router-dom';
 
 function Header() {
   const [toggle, setToggle] = useState(false);
@@ -15,7 +16,7 @@ function Header() {
     { name: "Home", link: "/home" },
     { name: "About", link: "/about" },
     { name: "Contact", link: "/contact" },
-    { name: "Services", link: "/" },
+    { name: "Services", link: "/services" },
   ];
 
   useEffect(() => {
@@ -76,12 +77,17 @@ function Header() {
                 <HeaderItem key={item.name} goto={item.link} name={item.name} />
               ))}
               <div className="flex items-center gap-2 mt-4">
+                <Link to="/authentication">
                 <button className="bg-[#39827a] text-white w-[100px] rounded-md font-medium px-3 py-2 hover:bg-[#1D6559] duration-300">
                   Login
                 </button>
+                </Link>
+                <Link to="/authentication">
                 <button className="bg-[#ffffff] text-[#39827a] border w-[100px] rounded-md font-medium px-3 py-2 border-[#39827a] border-solid hover:bg-[#39827a] hover:text-white duration-300">
                   Register
                 </button>
+                </Link>
+               
               </div>
             </div>
           )}
@@ -117,13 +123,17 @@ function Header() {
         </div>
 
         <div className="hidden md:flex items-center gap-5">
-          <button className="bg-[#39827a] text-white w-[100px] rounded-md font-medium px-3 py-2 hover:bg-[#1D6559] duration-300">
-            Login
-          </button>
-          <button className=" text-[#39827a] border w-[100px] rounded-md font-medium px-3 py-2 border-[#39827a] border-solid hover:bg-[#39827a] hover:text-white duration-300">
-            Register
-          </button>
-        </div>
+  <Link to="/authentication">
+    <button className="bg-[#39827a] text-white w-[100px] rounded-md font-medium px-3 py-2 hover:bg-[#1D6559] duration-300">
+      Login
+    </button>
+  </Link>
+  <Link to="/authentication">
+    <button className="text-[#39827a] border w-[100px] rounded-md font-medium px-3 py-2 border-[#39827a] border-solid hover:bg-[#39827a] hover:text-white duration-300">
+      Register
+    </button>
+  </Link>
+</div>
       </div>
     </div>
   );
