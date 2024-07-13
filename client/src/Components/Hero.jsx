@@ -28,10 +28,10 @@ function Hero() {
           <form action="">
             <input
               type="email"
-              placeholder="Enter your email" className="p-2  border-[#39827a] border-solid outline-none bg-[#f5f5f5] rounded border rounded-r-none text-gray-500"
+              placeholder={lang.placeholder_email} className="p-2  border-[#39827a] border-solid outline-none bg-[#f5f5f5] rounded border rounded-r-none text-gray-500"
             />
             <button className="bg-[#39827a] text-white p-2 rounded rounded-l-none cursor-pointer">
-              Get Demo
+             {lang.newsButton}
             </button>
           </form>
         </div>

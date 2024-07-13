@@ -83,7 +83,9 @@ const langs = [
       get_involved_patients_description: "Access comprehensive healthcare services and manage your health records with ease.",
       get_involved_donors: "Donors",
       get_involved_donors_description: "Support our mission by donating blood, organs, or financial aid to those in need.",
-      get_involved_button: "Get Started"
+      get_involved_button: "Get Started",
+      placeholder_email: "Enter your email",
+      newsButton: "Get Demo",
     },
     fre: {
       home: `Page d'accueil`,
@@ -168,7 +170,9 @@ const langs = [
       get_involved_patients_description: "Accédez à des services de santé complets et gérez vos dossiers de santé en toute simplicité.",
       get_involved_donors: "Donneurs",
       get_involved_donors_description: "Soutenez notre mission en donnant du sang, des organes ou une aide financière à ceux qui en ont besoin.",
-      get_involved_button: "Commencer"
+      get_involved_button: "Commencer",
+      placeholder_email: "Entrez votre email",
+      newsButton: "Obtenir le démo",
     }
   }
 ];
