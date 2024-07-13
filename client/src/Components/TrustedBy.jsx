@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from "react"; 
+import { useSelector, useDispatch } from "react-redux";
+import { changeLangSate } from "../features/SharedDataSlice/SharedData";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import Slider from 'react-slick';
 
 function TrustedBySlider() {
+  const lang = useSelector(state => state.afiaCare.langs);
+  const [selectedLang, setSelectedLang] = useState(""); // State to track selected language
   const logos = [
     { src: 'https://i.pinimg.com/originals/85/95/f4/8595f4b711e503bc72fe396e5043e0c2.png', alt: 'Company 1' },
     { src: 'https://static.vecteezy.com/system/resources/thumbnails/017/177/954/small/round-medical-cross-symbol-on-transparent-background-free-png.png', alt: 'Company 2' },
@@ -47,7 +51,7 @@ function TrustedBySlider() {
 
   return (
     <div className=' p-8'>
-      <h2 className='text-[#39827a] text-3xl mb-8 text-center'>Trusted By</h2>
+      <h2 className='text-[#39827a] text-3xl mb-8 text-center'>{lang.Trusted_title}</h2>
       <Slider {...settings}>
         {logos.map((logo, index) => (
           <div key={index} className='flex justify-center items-center p-4'>

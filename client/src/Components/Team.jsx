@@ -1,55 +1,61 @@
-import React from 'react';
+import React, { useState } from "react";
 import { FaLinkedin, FaInstagram, FaFacebook } from 'react-icons/fa';
 import { CiLinkedin } from "react-icons/ci";
 import { IoLogoInstagram } from "react-icons/io";
 import { CiFacebook } from "react-icons/ci";
+import { changeLangSate } from "../features/SharedDataSlice/SharedData";
+import { useSelector, useDispatch } from "react-redux";
 // Import team member images
 import Member1 from '../assets/images/Member1.jpg';
 import Member2 from '../assets/images/Member2.jpg';
 import Member3 from '../assets/images/Member3.jpg';
 import Member4 from '../assets/images/Member4.png';
 
-const teamMembers = [
-  {
-    img: Member1,
-    name: 'M. Branis Sumba',
-    role: 'Backend developer',
-    linkedin: 'https://www.linkedin.com/in/johndoe',
-    instagram: 'https://www.instagram.com/johndoe',
-    facebook: 'https://www.facebook.com/johndoe'
-  },
-  {
-    img: Member2,
-    name: 'Simeon A. Kongnyuy',
-    role: 'Frontend Developer ',
-    linkedin: 'https://www.linkedin.com/in/janesmith',
-    instagram: 'https://www.instagram.com/janesmith',
-    facebook: 'https://www.facebook.com/janesmith'
-  },
-  {
-    img: Member3,
-    name: 'Loue S. Christian',
-    role: 'DevOps Engineer',
-    linkedin: 'https://www.linkedin.com/in/emilyjohnson',
-    instagram: 'https://www.instagram.com/emilyjohnson',
-    facebook: 'https://www.facebook.com/emilyjohnson'
-  },
-  {
-    img: Member4,
-    name: 'Divine O. Itu',
-    role: 'Software Architect',
-    linkedin: 'https://www.linkedin.com/in/michaelbrown',
-    instagram: 'https://www.instagram.com/michaelbrown',
-    facebook: 'https://www.facebook.com/michaelbrown'
-  }
-];
+
 
 function Team() {
+  const lang = useSelector(state => state.afiaCare.langs);
+  const [selectedLang, setSelectedLang] = useState(""); // State to track selected language
+
+  const teamMembers = [
+    {
+      img: Member1,
+      name: 'M. Branis Sumba',
+      role: lang.team_role1,
+      linkedin: 'https://www.linkedin.com/in/johndoe',
+      instagram: 'https://www.instagram.com/johndoe',
+      facebook: 'https://www.facebook.com/johndoe'
+    },
+    {
+      img: Member2,
+      name: 'Simeon A. Kongnyuy',
+      role: lang.team_role2,
+      linkedin: 'https://www.linkedin.com/in/janesmith',
+      instagram: 'https://www.instagram.com/janesmith',
+      facebook: 'https://www.facebook.com/janesmith'
+    },
+    {
+      img: Member3,
+      name: 'Loue S. Christian',
+      role: lang.team_role3,
+      linkedin: 'https://www.linkedin.com/in/emilyjohnson',
+      instagram: 'https://www.instagram.com/emilyjohnson',
+      facebook: 'https://www.facebook.com/emilyjohnson'
+    },
+    {
+      img: Member4,
+      name: 'Divine O. Itu',
+      role: lang.team_role4,
+      linkedin: 'https://www.linkedin.com/in/michaelbrown',
+      instagram: 'https://www.instagram.com/michaelbrown',
+      facebook: 'https://www.facebook.com/michaelbrown'
+    }
+  ];
   return (
     <div className=" p-10">
-      <h2 className="text-[#39827a] text-3xl mb-4 text-center">Our Team</h2>
+      <h2 className="text-[#39827a] text-3xl mb-4 text-center">{lang.ourTeam_title}</h2>
       <p className="text-center mb-8 text-gray-500">
-        Afiacare is powered by a team of dedicated professionals with diverse expertise in healthcare, technology, and business. Our team is passionate about driving positive change in the healthcare sector and is committed to delivering the best possible solutions for our users.
+        {lang.ourTeam_description}
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {teamMembers.map((member, index) => (
