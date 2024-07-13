@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import Header from "../Components/Header";
 import Hero from "../Components/Hero";
 import Card from "../Components/Card";
@@ -10,49 +10,46 @@ import GetInvolved from "../Components/GetInvolved";
 import FAQ from "../Components/FAQ.jsx";
 import ClientSlider from "../Components/ClientSlider.jsx";
 import TrustedBySlider from "../Components/TrustedBy.jsx";
-import AboutUs from "./AboutUs.jsx";
 import Footer from "../Components/Footer.jsx";
+
 function Home() {
   return (
-    
     <>
       <div>
-        {/* thi */}
-       
-        <Header/>
-        <div>
-        <Hero />
+        <Header />
+        <div > {/* Corrected this line */}
+          <Hero />
+        </div>
+        <div > {/* Add AOS to other sections as needed */}
+          <About />
         </div>
         <div>
-        <About />
+          <Card />
         </div>
         <div>
-        <Card />
+          <Mission />
         </div>
         <div>
-        <Mission />
+          <HowItWorks />
+        </div>
+        <div >
+          <WhyChooseUs />
+        </div>
+        <div >
+          <GetInvolved />
+        </div>
+        <div >
+          <FAQ />
+        </div>
+        <div >
+          <ClientSlider />
+        </div>
+        <div >
+          <TrustedBySlider />
         </div>
         <div>
-        <HowItWorks/>
+          <Footer />
         </div>
-       <div>
-        <WhyChooseUs />
-       </div>
-       <div>
-        <GetInvolved />
-       </div>
-       <div>
-        <FAQ />
-       </div>
-       <div>
-        <ClientSlider />
-       </div>
-       <div>
-        <TrustedBySlider />
-       </div>
-       <div>
-        <Footer />
-       </div>
       </div>
     </>
   );

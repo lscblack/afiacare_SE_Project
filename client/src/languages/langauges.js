@@ -163,7 +163,13 @@ const langs = [
       WhyReason2: "Minimize errors in patient data handling.",
       WhyReason3: "Ensure quick and effective donor matching and information sharing.",
       WhyReason4: "Accessible via web and mobile applications.",
-      WhyReason5: "Ongoing training and technical support."
+      WhyReason5: "Ongoing training and technical support.",
+      Caccount_Title: "Create an Account",
+      Login_Title: "Login",
+      Login_question: "Don't have an account?",
+      Register_question: "Already have an account?",
+      page_not_found_h1: "We are sorry!",
+      page_not_found_description: "The page you are looking for does not exist or may have been moved, contact support if you think this was a mistake!",
     },
     fre: {
       home: `Page d'accueil`,
@@ -328,7 +334,13 @@ const langs = [
       WhyReason2: "Minimiser les erreurs dans la gestion des données des patients.",
       WhyReason3: "Assurer un appariement et un partage d'informations des donateurs rapides et efficaces.",
       WhyReason4: "Accessible via des applications web et mobiles.",
-      WhyReason5: "Formation continue et support technique."
+      WhyReason5: "Formation continue et support technique.",
+      Caccount_Title: "Creer un compte",
+      Login_Title: "Se connecter",
+      Login_question: "Vous n'avez pas de compte ?",
+      Register_question: "Vous avez deja un compte ?",
+      page_not_found_h1: "Nous sommes désolés!",
+      page_not_found_description: "La page que vous cherchez n'existe pas ou a été modifié. Contactez-nous pour plus d'informations.",
     }
   }
 ];

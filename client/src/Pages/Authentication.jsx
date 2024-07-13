@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react"; 
+import { useSelector, useDispatch } from "react-redux";
+import { changeLangSate } from "../features/SharedDataSlice/SharedData";
 import Login from './../Components/Login';
 import Registration from './../Components/Register';
 import ForgotPassword from './../Components/ForgotPassword';
@@ -11,16 +13,19 @@ function Authentication() {
     setFormState(formType);
   };
 
+  const lang = useSelector(state => state.afiaCare.langs);
+  const [selectedLang, setSelectedLang] = useState("");
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-[#39827a] to-[#025e53] p-6">
       <h2 className="text-2xl font-semibold text-[#ffffff] mb-1 ">
-        {formState === "login" ? 'Login' : formState === "register" ? 'Create an Account' : formState === "forgot" ? 'Forgot Password' : 'Reset Link Sent'}
+        {formState === "login" ? lang.Login_Title : formState === "register" ? lang.Caccount_Title : formState === "forgot" ? 'Forgot Password' : 'Reset Link Sent'}
       </h2>
       <p className="text-slate-50 text-sm">
-        {formState === "login" ? "Don't have an account?" : formState === "register" ? "Already have an account?" : null}
+        {formState === "login" ? lang.Login_question : formState === "register" ? lang.Register_question : null}
         {formState !== "forgot" && formState !== "reset" && (
           <button onClick={() => toggleForm(formState === "login" ? "register" : "login")} className="text-white font-semibold ml-1">
-            {formState === "login" ? 'Register' : 'Log in'}
+            {formState === "login" ? lang.register : lang.login_button }
           </button>
         )}
       </p>
