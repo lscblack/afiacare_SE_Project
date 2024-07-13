@@ -30,11 +30,11 @@ function WhyChooseUs() {
   return (
     <div className='bg-[#ffffff] p-8'>
       <div className='flex justify-center gap-40 flex-col lg:flex-row items-center'>
-        <div className='md:w-[50%]' data-aos="fade-right"> {/* Add AOS animation */}
+        <div className='md:w-[50%]' data-aos="fade-up"> {/* Add AOS animation */}
           <img src={AboutImg} className='w-[450px] h-[450px] object-cover' alt="About Us" />
         </div>
        
-        <div className='md:w-[50%]' data-aos="fade-left"> {/* Add AOS animation */}
+        <div className='md:w-[50%]' data-aos="fade-down"> {/* Add AOS animation */}
           <h2 className='text-[#39827a] text-3xl mb-4'>{lang.WhyTitle}</h2>
           <ul className='space-y-4'>
             {reasons.map((reason, index) => (

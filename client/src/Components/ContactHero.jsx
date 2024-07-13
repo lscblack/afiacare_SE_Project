@@ -21,7 +21,7 @@ function ContactHero() {
           {lang.contact_hero1} <br /> {lang.contact_hero2}
         </h2>
         <p className='text-gray-500 mt-4'>{lang.contact_text}</p>
-        <div className='flex justify-center gap-4'>
+        <div className='flex justify-center gap-4' data-aos="zoom-in">
           <button className='border border-[#39827a] text-[#39827a] mt-8 gap-2 px-4 py-2 rounded-3xl flex items-center hover:bg-[#39827a]/90 hover:text-white duration-300'>
             <CiVideoOn className='text-xl font-semibold' />
             {lang.contact_action}

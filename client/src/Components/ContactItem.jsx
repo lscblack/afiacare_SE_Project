@@ -1,18 +1,26 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { RiChat1Line } from "react-icons/ri";
 import { FiSend } from "react-icons/fi";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoLocationOutline } from "react-icons/io5";
-import { changeLangSate } from "../features/SharedDataSlice/SharedData";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function ContactItem() {
   const lang = useSelector((state) => state.afiaCare.langs);
-  const [selectedLang, setSelectedLang] = useState(""); // State to track selected language
+  const [selectedLang, setSelectedLang] = useState("");
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Animation duration
+      once: true, // Animation happens only once
+    });
+  }, []);
 
   return (
-    <div className="bg-white p-10">
+    <div className="bg-white p-10" data-aos="zoom-in"> {/* Added AOS attribute here */}
       <div className="flex flex-col md:flex-row justify-center items-start space-y-8 md:space-y-0 md:space-x-8">
         {/* Contact Info Section */}
         <div className="p-6 w-full md:w-1/2 flex flex-col justify-between">

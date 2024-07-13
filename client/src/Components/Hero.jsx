@@ -36,7 +36,7 @@ function Hero() {
           </form>
         </div>
       </div>
-      <div className="md:w-[30%] z-[-1]" data-aos="fade-left">
+      <div className="md:w-[30%] z-[-1]" data-aos="zoom-in">
         <img
           src={HeroImg}
           alt="" className="w-[500px] h-[500px] object-cover"

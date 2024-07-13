@@ -18,7 +18,7 @@ function Vision() {
 
   return (
     <div className="flex flex-col md:flex-row px-20 items-center justify-center">
-      <div className="w-[100%] md:w-[70%] mt-10 md:mt-0 overflow-hidden" data-aos="fade-right"> {/* Add AOS animation */}
+      <div className="w-[100%] md:w-[70%] mt-10 md:mt-0 overflow-hidden" data-aos="fade-down"> {/* Add AOS animation */}
         <h2 className="text-4xl text-[#39827a] mb-5">{lang.our_vision}</h2>
         <p className="text-gray-500">
           {lang.vision_text}
@@ -27,7 +27,7 @@ function Vision() {
           {lang.join_us} <HiChevronRight />
         </button>
       </div>
-      <div className="w-[100%] md:w-[50%]" data-aos="fade-left"> {/* Add AOS animation */}
+      <div className="w-[100%] md:w-[50%]" data-aos="zoom-in"> {/* Add AOS animation */}
         <img src={AboutImg} alt="" />
       </div>
     </div>
