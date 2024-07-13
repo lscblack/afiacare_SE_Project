@@ -9,6 +9,7 @@ import { BiSolidDonateBlood } from "react-icons/bi";
 import { FaHospitalAlt } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { MdContactSupport } from "react-icons/md";
+import { SiFigshare } from "react-icons/si";
 
 function Dashboard() {
   return (
@@ -26,6 +27,7 @@ function Dashboard() {
         <SidebarItem icon={<FaHospitalAlt size={20} />} text="Facilities" />
         <SidebarItem icon={<MdForum size={20} />} text="Forums" alert />
         <hr className='my-3' />
+        <SidebarItem icon={<SiFigshare size={20} />} text="Referrals" />
         <SidebarItem icon={<MdContactSupport size={20} />} text="Support" />
         <SidebarItem icon={<IoIosSettings size={20} />} text="Settings" alert />
       </Sidebar>

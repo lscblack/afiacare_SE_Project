@@ -90,7 +90,7 @@ function Navbar() {
                     <img src={FlagEN} alt="English" className="w-5 h-5" /> English
                   </button>
                   <button className="flex items-center gap-2 w-full text-gray-600 hover:bg-gray-100 p-2">
-                    <img src={FlagES} alt="Spanish" className="w-5 h-5" /> Español
+                    <img src={FlagES} alt="Spanish" className="w-5 h-5" /> French
                   </button>
                 </div>
               )}
