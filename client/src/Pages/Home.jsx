@@ -14,6 +14,7 @@ import AboutUs from "./AboutUs.jsx";
 import Footer from "../Components/Footer.jsx";
 function Home() {
   return (
+    
     <>
       <div>
         {/* thi */}

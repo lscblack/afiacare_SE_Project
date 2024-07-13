@@ -6,15 +6,19 @@ import HeaderItem from "./HeaderItem";
 import enFlag from "./../assets/images/en-flag.png"; // Add your English flag image
 import frFlag from "./../assets/images/fr-flag.png"; // Add your French flag image
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { changeLangSate } from "../features/SharedDataSlice/SharedData";
 
 function Header() {
+  /*Langauge translation call*/
+  const lang = useSelector(state => state.afiaCare.langs);
   const [toggle, setToggle] = useState(false);
   const [languageToggle, setLanguageToggle] = useState(false);
   const [scrollColor, setScrollColor] = useState("bg-slate-100");
 
   const menu = [
-    { name: "Home", link: "/home" },
-    { name: "About", link: "/about" },
+    { name: lang.home, link: "/home" },
+    { name: lang.about, link: "/about" },
     { name: "Contact", link: "/contact" },
     { name: "Services", link: "/services" },
   ];
@@ -34,7 +38,20 @@ function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  /*Handel Chnage Laungauge*/
+  const [newLang,setnewLang] = useState("")
+  const dispatch = useDispatch();
+  // Handel Language Changing
+  const changeLang = (selectedLang) => {
+      dispatch(changeLangSate(selectedLang));
+  };
 
+  useEffect(()=>{
+    if(newLang!=""){
+      changeLang(newLang);
+    }
+  },[newLang]);
+  
   return (
     <div
       className={`flex items-center justify-between py-2 px-6 md:px-10 sticky top-0 left-0 right-0 z-[100] duration-300 ${scrollColor}`}
@@ -110,11 +127,11 @@ function Header() {
           </button>
           {languageToggle && (
             <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg">
-              <button className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
+              <button onClick={()=>setnewLang("eng")} className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
                 <img src={enFlag} alt="EN" className="w-5 h-5" />
                 English
               </button>
-              <button className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
+              <button onClick={()=>setnewLang("fre")} className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
                 <img src={frFlag} alt="FR" className="w-5 h-5" />
                 French
               </button>
