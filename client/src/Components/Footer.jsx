@@ -26,11 +26,11 @@ function Footer() {
         <div className="md:w-[30%] mb-20 md:mb-0">
           <p className="text-sm font-light mb-2 text-[19px]">
             {lang.footer_newsletter}{" "}
-            <span className="text-[#fff] font-medium">Newsletter</span>
+
           </p>
           <input
             type="email"
-            placeholder="Enter your email" className="p-2 md:w-[65%] outline-none bg-[#f5f5f5] rounded text-gray-500"
+            placeholder={lang.placeholder_email} className="p-2 md:w-[65%] outline-none bg-[#f5f5f5] rounded text-gray-500"
           />
           <button className="absolute right-[120px] md:right-40 mt-1 bg-[#398274] text-white p-2 rounded">
             <IoIosArrowForward />
