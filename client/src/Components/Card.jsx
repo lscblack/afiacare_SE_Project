@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeLangSate } from "../features/SharedDataSlice/SharedData";
 import CardItem from "./CardItem";
 import {
   FaFileMedicalAlt,
@@ -11,47 +13,49 @@ import {
 } from "react-icons/fa";
 import { HiChevronRight } from "react-icons/hi2";
 function Card() {
+  const lang = useSelector(state => state.afiaCare.langs);
+  const [selectedLang, setSelectedLang] = useState("");
   const CardData = [
     {
-      title: "Digital Patient Records",
+      title: lang.records_text,
       description:
-        "Accurate and quick access to medical information by digitizing patient records.",
+       lang.description1,
       Icon: FaFileMedicalAlt,
     },
     {
-      title: "Donor Matching",
+      title: lang.donor_text,
       description:
-        "Facilitate quick and easy connection with matching donors in emergencies.",
+       lang.description2,
       Icon: FaHandshake,
     },
     {
-      title: "Seamless Data Sharing",
+      title: lang.sharing_text,
       description:
-        "Enable smooth and error-free information exchange between hospitals.",
+       lang.description3,
       Icon: FaShareAlt,
     },
     {
-      title: "Health Monitoring",
+      title: lang.monitoring_text,
       description:
-        "Monitor patient health and provide timely medical suggestions.",
+       lang.description4,
       Icon: FaHeartbeat,
     },
     {
-      title: "Doctor-Patient Consultations",
+      title: lang.doctor_text,
       description:
-        "Improve consultations and follow-ups with robust digital tools.",
+        lang.description5,
       Icon: FaStethoscope,
     },
     {
-      title: "Insurance & Finance Management",
+      title: lang.insurance_text,
       description:
-        "Efficiently manage insurance claims and financial transactions.",
+        lang.description6,
       Icon: FaMoneyCheckAlt,
     },
     {
-      title: "Community Forums",
+      title: lang.forum_text,
       description:
-        "Engage in discussions with patients and doctors for better health insights.",
+       lang.description7,
       Icon: FaComments,
     },
   ];
@@ -59,7 +63,7 @@ function Card() {
   return (
     <div className="p-8">
       <h2 className="text-3xl font-bold mb-4 text-[#39827a] text-center mb-10">
-        Features
+       {lang.card_title}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
         {CardData.map((item, index) => (
@@ -75,7 +79,7 @@ function Card() {
         ))}
       </div>
       <button className="bg-[#39827a] text-white p-2 rounded mt-10 flex m-auto items-center gap-x-1 hover:bg-[#39827a]/90">
-        Suggest a feature <HiChevronRight />
+        {lang.SuggestButton} <HiChevronRight />
       </button>
     </div>
   );

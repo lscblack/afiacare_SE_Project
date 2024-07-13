@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaUserMd, FaUser, FaHandHoldingHeart } from 'react-icons/fa';
 import { IoIosArrowForward } from "react-icons/io";
+import { changeLangSate } from "../features/SharedDataSlice/SharedData";
+import { useSelector, useDispatch } from "react-redux";
 
 function GetInvolved() {
+  // Assuming you're using English as default language
+  const lang = useSelector(state => state.afiaCare.langs);
+  const [selectedLang, setSelectedLang] = useState(""); // State to track selected language
+
   const involvementOptions = [
-    { icon: FaUserMd, title: "Healthcare Providers", description: "Join our network of professionals to deliver high-quality care and improve patient outcomes." },
-    { icon: FaUser, title: "Patients", description: "Access comprehensive healthcare services and manage your health records with ease." },
-    { icon: FaHandHoldingHeart, title: "Donors", description: "Support our mission by donating blood, organs, or financial aid to those in need." }
+    { icon: FaUserMd, title: lang.get_involved_healthcare_providers, description: lang.get_involved_healthcare_description },
+    { icon: FaUser, title: lang.get_involved_patients, description: lang.get_involved_patients_description },
+    { icon: FaHandHoldingHeart, title: lang.get_involved_donors, description: lang.get_involved_donors_description }
   ];
 
   return (
     <div className=' p-8'>
       <div className='text-center mb-8'>
-        <h2 className='text-[#39827a] text-3xl mb-4'>Get Involved</h2>
-        <p className='text-gray-400'>Join us in our mission to revolutionize healthcare in Cameroon. Whether you are a healthcare provider, patient, or donor, Afiacare offers the tools and support you need for a better healthcare experience.</p>
+        <h2 className='text-[#39827a] text-3xl mb-4'>{lang.get_involved_title}</h2>
+        <p className='text-gray-400'>{lang.get_involved_intro}</p>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
         {involvementOptions.map((option, index) => (
@@ -25,10 +31,11 @@ function GetInvolved() {
         ))}
       </div>
       <button className='bg-[#39827a] text-white mt-8 px-4 py-2 rounded flex m-auto items-center hover:bg-[#39827a]/90 duration-300'>
-        Get Started <IoIosArrowForward />
+        {lang.get_involved_button} <IoIosArrowForward />
       </button>
     </div>
   );
 }
 
 export default GetInvolved;
+

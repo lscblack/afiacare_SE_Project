@@ -1,34 +1,40 @@
-import React from "react";
+import React, { useState } from "react"; // Added useState import
+import { useSelector, useDispatch } from "react-redux";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
+import { changeLangSate } from "../features/SharedDataSlice/SharedData";
+
 function ClientSlider() {
+
+  const lang = useSelector(state => state.afiaCare.langs);
+  const [selectedLang, setSelectedLang] = useState(""); // State to track selected language
   const testimonials = [
     {
       quote:
-        "Afiacare has transformed our healthcare delivery. The digital platform is user-friendly and incredibly efficient.",
+       lang.quote1,
       client: "Dr. John Doe",
-      role: "Healthcare Provider",
+      role: lang.role1,
     },
     {
       quote:
-        "Thanks to Afiacare, managing my health records has never been easier. I can access my medical history anytime.",
+       lang.quote2,
       client: "Jane Smith",
-      role: "Patient",
+      role: lang.role2,
     },
     {
       quote:
-        "As a donor, Afiacare provides a seamless process for tracking my donations and connecting with those in need.",
+       lang.quote3,
       client: "Mark Johnson",
-      role: "Donor",
+      role: lang.role1,
     },
     {
       quote:
-        "Thanks to Afiacare, managing my health records has never been easier. I can access my medical history anytime.",
+        lang.quote4,
       client: "Jane Smith",
-      role: "Patient",
+      role: lang.role3,
     },
   ];
 
@@ -64,7 +70,7 @@ function ClientSlider() {
   return (
     <div className="bg-[#ffffff] p-8 flex flex-col gap-4">
       <h2 className="text-[#39827a] text-3xl mb-8 text-center">
-        What Our Clients Say
+       {lang.testimonial_title}
       </h2>
       <Slider {...settings}>
         {testimonials.map((testimonial, index) => (

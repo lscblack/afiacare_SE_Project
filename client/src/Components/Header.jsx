@@ -9,18 +9,19 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { changeLangSate } from "../features/SharedDataSlice/SharedData";
 
+
 function Header() {
-  /*Langauge translation call*/
   const lang = useSelector(state => state.afiaCare.langs);
   const [toggle, setToggle] = useState(false);
   const [languageToggle, setLanguageToggle] = useState(false);
   const [scrollColor, setScrollColor] = useState("bg-slate-100");
+  const [selectedLang, setSelectedLang] = useState(""); // State to track selected language
 
   const menu = [
     { name: lang.home, link: "/home" },
     { name: lang.about, link: "/about" },
-    { name: "Contact", link: "/contact" },
-    { name: "Services", link: "/services" },
+    { name: lang.contact, link: "/contact" },
+    { name: lang.services, link: "/services" },
   ];
 
   useEffect(() => {
@@ -38,56 +39,43 @@ function Header() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  /*Handel Chnage Laungauge*/
-  const [newLang,setnewLang] = useState("")
+
   const dispatch = useDispatch();
-  // Handel Language Changing
+
   const changeLang = (selectedLang) => {
-      dispatch(changeLangSate(selectedLang));
+    dispatch(changeLangSate(selectedLang));
+    setSelectedLang(selectedLang); // Update selectedLang state when language changes
   };
 
-  useEffect(()=>{
-    if(newLang!=""){
-      changeLang(newLang);
-    }
-  },[newLang]);
-  
   return (
-    <div
-      className={`flex items-center justify-between py-2 px-6 md:px-10 sticky top-0 left-0 right-0 z-[100] duration-300 ${scrollColor}`}
-    >
+    <div className={`flex items-center justify-between py-2 px-6 md:px-10 sticky top-0 left-0 right-0 z-[100] duration-300 ${scrollColor}`}>
       <div className="flex items-center justify-between w-full">
         <img src={logo} className="w-[60px] md:w-[80px] object-cover" alt="" />
 
         <div className="flex items-center md:hidden gap-2">
           {/* Mobile language toggle button */}
           <div className="relative">
-            <button
-              onClick={() => setLanguageToggle(!languageToggle)} className="flex items-center text-[#39827a] gap-1 px-2 py-1 border rounded cursor-pointer"
-            >
-              <img src={enFlag} alt="EN" className="w-5 h-5" />
-              En
+            <button onClick={() => setLanguageToggle(!languageToggle)} className="flex items-center text-[#39827a] gap-1 px-2 py-1 border rounded cursor-pointer">
+              <img src={selectedLang === "eng" ? enFlag : frFlag} alt={selectedLang === "eng" ? "EN" : "FR"} className="w-5 h-5" />
+              {selectedLang === "eng" ? "En" : "Fr"}
               <IoIosArrowDown />
             </button>
             {languageToggle && (
               <div className="absolute left-0 mt-2 w-[120px] bg-white border rounded shadow-lg">
-                <button className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
+                <button onClick={() => changeLang("eng")} className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
                   <img src={enFlag} alt="EN" className="w-5 h-5" />
-                  English
+                  {lang.language_one}
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
+                <button onClick={() => changeLang("fre")} className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
                   <img src={frFlag} alt="FR" className="w-5 h-5" />
-                  French
+                  {lang.language_two}
                 </button>
               </div>
             )}
           </div>
 
           {/* Mobile menu */}
-          <HiBars3BottomRight
-            size={30} className="cursor-pointer text-[#39827a] bg-slate-200 p-1 rounded"
-            onClick={() => setToggle(!toggle)}
-          />
+          <HiBars3BottomRight size={30} className="cursor-pointer text-[#39827a] bg-slate-200 p-1 rounded" onClick={() => setToggle(!toggle)} />
           {toggle && (
             <div className="absolute top-14 right-2 w-[95%] bg-[#ffffff] p-4 border rounded-sm shadow-lg">
               {menu.map((item) => (
@@ -95,16 +83,15 @@ function Header() {
               ))}
               <div className="flex items-center gap-2 mt-4">
                 <Link to="/authentication">
-                <button className="bg-[#39827a] text-white w-[100px] rounded-md font-medium px-3 py-2 hover:bg-[#1D6559] duration-300">
-                  Login
-                </button>
+                  <button className="bg-[#39827a] text-white w-[100px] rounded-md font-medium px-3 py-2 hover:bg-[#1D6559] duration-300">
+                   {lang.login}
+                  </button>
                 </Link>
                 <Link to="/authentication">
-                <button className="bg-[#ffffff] text-[#39827a] border w-[100px] rounded-md font-medium px-3 py-2 border-[#39827a] border-solid hover:bg-[#39827a] hover:text-white duration-300">
-                  Register
-                </button>
+                  <button className="bg-[#ffffff] text-[#39827a] border w-[100px] rounded-md font-medium px-3 py-2 border-[#39827a] border-solid hover:bg-[#39827a] hover:text-white duration-300">
+                    {lang.register}
+                  </button>
                 </Link>
-               
               </div>
             </div>
           )}
@@ -118,39 +105,37 @@ function Header() {
 
         {/* Language Toggle Button for larger screens */}
         <div className="hidden md:block relative">
-          <button
-            onClick={() => setLanguageToggle(!languageToggle)} className="flex items-center text-[#39827a] gap-1 px-2 py-1 border rounded cursor-pointer"
-          >
-            <img src={enFlag} alt="EN" className="w-5 h-5" />
-            En
+          <button onClick={() => setLanguageToggle(!languageToggle)} className="flex items-center text-[#39827a] gap-1 px-2 py-1 border rounded cursor-pointer">
+            <img src={selectedLang === "eng" ? enFlag : frFlag} alt={selectedLang === "eng" ? "EN" : "FR"} className="w-5 h-5" />
+            {selectedLang === "eng" ? "En" : "Fr"}
             <IoIosArrowDown />
           </button>
           {languageToggle && (
             <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg">
-              <button onClick={()=>setnewLang("eng")} className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
+              <button onClick={() => changeLang("eng")} className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
                 <img src={enFlag} alt="EN" className="w-5 h-5" />
-                English
+               {lang.language_one}
               </button>
-              <button onClick={()=>setnewLang("fre")} className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
+              <button onClick={() => changeLang("fre")} className="flex items-center gap-2 px-4 py-2 text-gray-500 hover:bg-gray-100 w-full">
                 <img src={frFlag} alt="FR" className="w-5 h-5" />
-                French
+               {lang.language_two}
               </button>
             </div>
           )}
         </div>
 
         <div className="hidden md:flex items-center gap-5">
-  <Link to="/authentication">
-    <button className="bg-[#39827a] text-white w-[100px] rounded-md font-medium px-3 py-2 hover:bg-[#1D6559] duration-300">
-      Login
-    </button>
-  </Link>
-  <Link to="/authentication">
-    <button className="text-[#39827a] border w-[100px] rounded-md font-medium px-3 py-2 border-[#39827a] border-solid hover:bg-[#39827a] hover:text-white duration-300">
-      Register
-    </button>
-  </Link>
-</div>
+          <Link to="/authentication">
+            <button className="bg-[#39827a] text-white w-[100px] rounded-md font-medium px-3 py-2 hover:bg-[#1D6559] duration-300">
+             {lang.login}
+            </button>
+          </Link>
+          <Link to="/authentication">
+            <button className="text-[#39827a] border w-[100px] rounded-md font-medium px-3 py-2 border-[#39827a] border-solid hover:bg-[#39827a] hover:text-white duration-300">
+             {lang.register}
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );
