@@ -11,6 +11,7 @@ else
     echo "No UVicorn process found running on port 8000"
 fi
 
+source venv/bin/activate
 # Start UVicorn in background mode
 nohup uvicorn main:app --reload > uvicorn.log 2>&1 &
 echo "Started UVicorn in background."
