@@ -3,11 +3,16 @@ name: Deploy FastAPI Application
 on:
   push:
     branches:
-      - main  # Replace with your main branch name
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      ALGORITHM: ${{ secrets.ALGORITHM }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: Checkout code
@@ -16,19 +21,23 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.12  # Replace with your Python version
+          python-version: 3.12
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests  # Optional: Add test steps if needed
+      - name: Run tests
         run: |
-          pytest  # Replace with your test command
+          pytest
 
       - name: Start FastAPI with uvicorn
         run: |
           nohup uvicorn main:app --reload > uvicorn.log 2>&1 &
         background: true
 
+      - name: Deploy to Server
+        run: |
+          echo "Deploying application with DATABASE_URL=${DATABASE_URL}"
+          # Add your deployment commands here using DATABASE_URL
