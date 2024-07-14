@@ -1,15 +1,16 @@
 #!/bin/bash
 
 # Find the PID of the UVicorn process running on port 8000
-sudo lsof -i :8000
+PID=$(sudo lsof -t -i:8000)
 
-# Kill the process using the PID
-sudo kill -9 <PID>
+if [ -n "$PID" ]; then
+    # Kill the UVicorn process using the PID
+    sudo kill -9 $PID
+    echo "Stopped UVicorn process with PID: $PID"
+else
+    echo "No UVicorn process found running on port 8000"
+fi
 
-# Install requirements
-pip install -r requirements.txt
-
-# Start uvicorn in background with nohup
+# Start UVicorn in background mode
 nohup uvicorn main:app --reload > uvicorn.log 2>&1 &
-
-echo "started AfiaCare Backend"
+echo "Started UVicorn in background."
