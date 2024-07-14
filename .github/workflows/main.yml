@@ -40,3 +40,4 @@ jobs:
         run: |
           echo "Deploying application with DATABASE_URL=${DATABASE_URL}"
           # Add your deployment commands here using DATABASE_URL
+
