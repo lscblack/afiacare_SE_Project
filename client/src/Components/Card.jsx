@@ -64,7 +64,7 @@ function Card() {
 
   return (
     <div className="p-8">
-      <h2 className="text-3xl font-bold mb-4 text-[#39827a] text-center mb-10">
+      <h2 className="text-3xl font-bold  text-[#39827a] text-center mb-10">
         {lang.card_title}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
