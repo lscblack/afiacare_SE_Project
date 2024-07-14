@@ -16,7 +16,7 @@ import os
 # Load environment variables from .env file
 load_dotenv()
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 #load env values
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -29,7 +29,7 @@ oauth2_bearer = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 #handel register User
 @router.post("/register", status_code=status.HTTP_201_CREATED)
-async def create_user(db: db_dependency, create_user_request: CreateUserRequest):
+async def register_user(db: db_dependency, create_user_request: CreateUserRequest):
     try:
         # Check if username or email already exists
         check_username = db.query(Users).filter(Users.username == create_user_request.username).first()
@@ -72,7 +72,7 @@ async def login_for_access_token(
         return HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="No Account found With the given Crenditals"
         )
-    token = create_access_token(user.username, user.id, timedelta(minutes=20))
+    token = create_access_token(user.username, user.id,user.acc_type, timedelta(minutes=60*24))
 
     return {"access_token": token, "token_type": "bearer"}
 
@@ -85,8 +85,8 @@ def authenticate_user(username: str, password: str, db):
         return False
     return user
 
-def create_access_token(username:str, user_id:int,expires_delta:timedelta):
-    encode = {'uname':username,'id':user_id}
+def create_access_token(username:str, user_id:int,acc_type:str,expires_delta:timedelta):
+    encode = {'uname':username,'id':user_id,'acc_type':acc_type}
     expires = datetime.utcnow()+expires_delta
     encode.update({'exp':expires})
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
@@ -96,10 +96,11 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
     try:
         playload = jwt.decode(token,SECRET_KEY, algorithms=[ALGORITHM])
         username:str = playload.get('uname')
+        acc_type:str = playload.get('acc_type')
         user_id:str = playload.get('id')
-        if username is None or user_id is None:
+        if username is None or user_id is None or acc_type is None:
             return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail ="Authentication required!")
-        return {"username":username, "user_id":user_id}
+        return {"username":username, "user_id":user_id, 'acc_type':acc_type}
     except JWTError:
-        return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication required!")
+        return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed. Your token is invalid or has expired. Please re-authenticate.")
         
