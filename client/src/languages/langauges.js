@@ -170,6 +170,16 @@ const langs = [
       Register_question: "Already have an account?",
       page_not_found_h1: "We are sorry!",
       page_not_found_description: "The page you are looking for does not exist or may have been moved, contact support if you think this was a mistake!",
+      welcomeTitle: "Welcome to Afiacre!",
+      welcomeParagraph1: "We're thrilled to have you here at Afiacre, your ultimate healthcare companion! Afiacre is designed to seamlessly connect you with top healthcare professionals, provide comprehensive health management tools, and ensure you have access to the best medical resources at your fingertips.",
+      welcomeParagraph2: "Let's get started on this exciting journey together! Click the button below to begin your onboarding process and discover all that Afiacre has to offer.",
+      getStarted: "Get Started",
+      howAreYouJoining: "How are you joining us?",
+      doctor: "Doctor",
+      user: "User",
+      hospital: "Hospital",
+      previous: "Previous",
+      submit: "Submit",
     },
     fre: {
       home: `Page d'accueil`,
@@ -341,6 +351,16 @@ const langs = [
       Register_question: "Vous avez deja un compte ?",
       page_not_found_h1: "Nous sommes désolés!",
       page_not_found_description: "La page que vous cherchez n'existe pas ou a été modifié. Contactez-nous pour plus d'informations.",
+      welcomeTitle: "Bienvenue chez Afiacre !",
+      welcomeParagraph1: "Nous sommes ravis de vous accueillir chez Afiacre, votre compagnon de santé ultime ! Afiacre est conçu pour vous connecter sans effort avec les meilleurs professionnels de la santé, fournir des outils de gestion de la santé complets et garantir que vous avez accès aux meilleures ressources médicales à portée de main.",
+      welcomeParagraph2: "Commençons ensemble ce voyage passionnant ! Cliquez sur le bouton ci-dessous pour commencer votre processus d'intégration et découvrir tout ce qu'Afiacre a à offrir.",
+      getStarted: "Commencer",
+      howAreYouJoining: "Comment nous rejoignez-vous?",
+    doctor: "Médecin",
+    user: "Utilisateur",
+    hospital: "Hôpital",
+    previous: "Précédent",
+    submit: "Soumettre",
     }
   }
 ];
