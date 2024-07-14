@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     env:
@@ -35,7 +35,6 @@ jobs:
       - name: Start FastAPI with uvicorn
         run: |
           nohup uvicorn main:app --reload > uvicorn.log 2>&1 &
-        background: true
 
       - name: Deploy to Server
         run: |
