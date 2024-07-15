@@ -13,6 +13,9 @@ import { SiFigshare } from "react-icons/si";
 import BookingDashboard from '../Components/BookingDashBoard';
 import BloodGroupCard from '../Components/BloodGroupCard';
 import BMICard from '../Components/BMICard';
+import MedReportDashboard from '../Components/MedReportDashboard';
+
+
 
 function Dashboard() {
   return (
@@ -46,7 +49,12 @@ function Dashboard() {
        
       <div className="flex flex-col px-4 md:flex-row">
          <div className='md:w-[50%]'>
+          <div>
           <BookingDashboard />
+          </div>
+          <div>
+
+          </div>
          </div>
          <div className='md:w-[50%]'>
           <div>
@@ -55,7 +63,9 @@ function Dashboard() {
         <div>
           <BMICard />
         </div>
-   
+          <div className='mt-2'>
+            <MedReportDashboard />
+          </div>
           </div>
       </div>
       </div>

@@ -16,7 +16,7 @@ function About() {
   const [selectedLang, setSelectedLang] = useState(""); // State to track selected language
 
   return (
-    <div className="flex flex-col md:flex-row px-10 items-center justify-center bg-[#ffffff] ">
+    <div className="h-screen flex flex-col md:flex-row px-10 items-center justify-center bg-[#ffffff] ">
       <div className="w-[100%] md:w-[70%] mt-10 md:mt-0">
         <h2 className="text-4xl text-[#39827a] mb-5" data-aos="fade-up">
           {lang.about_us}
