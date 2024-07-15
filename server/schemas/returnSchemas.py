@@ -3,8 +3,9 @@ from typing import Optional
 from datetime import date
 
 class ReturnUser(BaseModel):
+    id: Optional[int]
     username: Optional[str]
-    email: Optional[EmailStr]
+    email: Optional[str]
     fname: Optional[str]
     lname: Optional[str]
     phone: Optional[str]
@@ -21,7 +22,11 @@ class ReturnUser(BaseModel):
     married: Optional[bool]
     spouse: Optional[str]
     acc_type: Optional[str]
+    acc_status: Optional[bool]
     avatar: Optional[str]
+    blood_type: Optional[str]
+    id_prove: Optional[str]
+    email_confirm: Optional[bool]
 
     class Config:
         orm_mode = True

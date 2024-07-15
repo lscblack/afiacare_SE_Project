@@ -7,6 +7,9 @@ class Users(Base):
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String(255), unique=True, nullable=False, default="")  # Non-nullable for uniqueness
     username = Column(String(50), unique=True, nullable=False, default="")  # Non-nullable for uniqueness
+    acc_type = Column(String, default="patient")
+    acc_status = Column(Boolean, default=False)
+    email_confirm = Column(Boolean, default=False)
     fname = Column(String(50), nullable=True, default="")
     lname = Column(String(50), nullable=True, default="")
     phone = Column(String(15), nullable=True, default="")
@@ -22,6 +25,7 @@ class Users(Base):
     weight = Column(Float, nullable=True, default=None)  # Use None for numeric types
     married = Column(Boolean, default=False)
     spouse = Column(String(50), nullable=True, default="")
-    acc_type = Column(String, default="patient")
     avatar = Column(String(255), nullable=True, default="")
+    id_prove = Column(String(255), nullable=True, default="")
+    blood_type = Column(String(255), nullable=True, default="")
     password_hash = Column(String(255), nullable=True, default="")
