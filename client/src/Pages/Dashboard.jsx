@@ -39,20 +39,23 @@ function Dashboard() {
       </div>
      
 
-      <div className="flex-1 px-6 overflow-y-auto ">
+      <div className="flex-1  overflow-y-auto ">
         <div className='sticky top-0 z-40'>
         <Navbar /> {/* Place your Navbar here */}
         </div>
        
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col px-4 md:flex-row">
          <div className='md:w-[50%]'>
           <BookingDashboard />
          </div>
          <div className='md:w-[50%]'>
+          <div>
           <BloodGroupCard />
+          </div>
+        <div>
           <BMICard />
-          <BloodGroupCard />
-
+        </div>
+   
           </div>
       </div>
       </div>

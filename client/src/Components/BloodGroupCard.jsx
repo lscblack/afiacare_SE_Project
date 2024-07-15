@@ -6,7 +6,7 @@ import { FaRegQuestionCircle } from "react-icons/fa";
 function BloodGroupCard() {
   return (
     <div>
-      <h1 className='text-xl text-[#39827a] mt-2 font-medium text-[17px] mb-2'>Blood Research</h1> 
+      <h1 className=' text-[#39827a] mt-2 font-medium text-[16px] mb-2'>Blood Research</h1> 
       <div className='bg-white rounded  p-4 cursor-pointer hover:translate-y-[-5px] duration-300'>
         <div className='flex justify-between'>
             <div className='flex gap-4 items-center'>
