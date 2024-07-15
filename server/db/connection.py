@@ -2,7 +2,7 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 from .database import engine, SessionLocal
 from typing import Annotated
-from models.userModels import Users, Base
+from models.userModels import  Base
 
 Base.metadata.create_all(bind=engine)
 
