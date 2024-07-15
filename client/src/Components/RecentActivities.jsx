@@ -23,10 +23,11 @@ function RecentActivities() {
                
                 <FaChevronRight className="text-gray-400 text-[16px]" />
               </div>
-             
+           
             </li>
           ))}
         </ul>
+        <button className='text-[#39827a] hover:underline underline-offset-4 flex items-center gap-1'>View all <FaChevronRight className="text-[12px]" /> </button>
       </div>
     </div>
   );
