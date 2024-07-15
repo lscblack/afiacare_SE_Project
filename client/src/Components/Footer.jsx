@@ -45,7 +45,7 @@ function Footer() {
           </h2>
           <ul className="flex flex-col space-y-2 text-center">
             <li className="text-gray-200 hover:text-white font-light">
-              <Link to="/">{lang.home}</Link>
+              <Link to="/dashboard">{lang.home}</Link>
             </li>
             <li className="text-gray-200 hover:text-white font-light">
               <Link to="/about">{lang.about}</Link>
@@ -55,6 +55,9 @@ function Footer() {
             </li>
             <li className="text-gray-200 hover:text-white font-light">
               <Link to="/services">{lang.services}</Link>
+            </li>
+            <li className="text-gray-200 hover:text-white font-light">
+              <Link to="/auth/onboarding">{lang.services}</Link>
             </li>
           </ul>
         </div>
