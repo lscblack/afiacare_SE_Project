@@ -10,10 +10,14 @@ import { FaHospitalAlt } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { MdContactSupport } from "react-icons/md";
 import { SiFigshare } from "react-icons/si";
+import BookingDashboard from '../Components/BookingDashBoard';
+import BloodGroupCard from '../Components/BloodGroupCard';
+import BMICard from '../Components/BMICard';
 
 function Dashboard() {
   return (
-    <div className="flex">
+    <div className="flex h-screen">
+      <div>
       <Sidebar>
         <SidebarItem 
           icon={<LuLayoutDashboard size={20} />}
@@ -30,15 +34,30 @@ function Dashboard() {
         <SidebarItem icon={<SiFigshare size={20} />} text="Referrals" />
         <SidebarItem icon={<MdContactSupport size={20} />} text="Support" />
         <SidebarItem icon={<IoIosSettings size={20} />} text="Settings" alert />
+       
       </Sidebar>
+      </div>
+     
 
-      <div className="flex-1">
+      <div className="flex-1 px-6 overflow-y-auto ">
+        <div className='sticky top-0 z-40'>
         <Navbar /> {/* Place your Navbar here */}
-        <div className="p-6">
-        
         </div>
+       
+      <div className="flex flex-col md:flex-row">
+         <div className='md:w-[50%]'>
+          <BookingDashboard />
+         </div>
+         <div className='md:w-[50%]'>
+          <BloodGroupCard />
+          <BMICard />
+          <BloodGroupCard />
+
+          </div>
+      </div>
       </div>
     </div>
+   
   );
 }
 

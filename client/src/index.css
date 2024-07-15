@@ -59,4 +59,12 @@ body {
   border-radius: 6px;
   border: 3px solid #f1f1f1;
 }
+.hide-scroll {
+  /* Custom styles to hide the scrollbar */
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer 10+ */
+}
 
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
