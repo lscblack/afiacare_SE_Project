@@ -43,6 +43,8 @@ async def register_user(db: db_dependency, create_user_request: CreateUserReques
 
         # Create the user model
         create_user_model = Users(
+            fname=create_user_request.fname,
+            lname=create_user_request.lname,
             email=create_user_request.email,
             username=create_user_request.username,
             password_hash=bcrypt_context.hash(create_user_request.password),
@@ -69,10 +71,10 @@ async def login_for_access_token(
 ):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
-        return HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="No Account found With the given Crenditals"
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="No Account found with the given credentials"
         )
-    token = create_access_token(user.username, user.id,user.acc_type, timedelta(minutes=60*24))
+    token = create_access_token(user.username, user.id, user.acc_type, timedelta(minutes=60*24*30))
 
     return {"access_token": token, "token_type": "bearer"}
 

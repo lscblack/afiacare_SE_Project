@@ -1,19 +1,23 @@
-from pydantic import BaseModel,EmailStr
-from typing import List, Optional
+from pydantic import BaseModel, EmailStr
+from typing import List, Optional, Literal
 from datetime import date
 
 
-class CreateUserRequest(BaseModel): # registeration Schema
+class CreateUserRequest(BaseModel):  # registeration Schema
+    fname: Optional[str] = None
+    lname: Optional[str] = None
     username: str
     email: EmailStr
     password: str
 
 
-class Token(BaseModel): # token validation schema
+class Token(BaseModel):  # token validation schema
     access_token: str
     token_type: str
-    
+
 # Define your Pydantic schema for partial updates
+
+
 class UpdateUserSchema(BaseModel):
     fname: Optional[str] = None
     lname: Optional[str] = None
@@ -30,4 +34,11 @@ class UpdateUserSchema(BaseModel):
     married: Optional[bool] = None
     spouse: Optional[str] = None
     avatar: Optional[str] = None
+    id_prove: Optional[str] = None
+    email_confirm: Optional[bool] = False
     password: Optional[str] = None
+    blood_type: Optional[str] = None
+
+
+class UserTypeDropDown(BaseModel):
+    user_type: Literal["admin", "minister", "hospital", "nurse", "doctor","patient"]
