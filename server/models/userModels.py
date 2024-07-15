@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, Date
+from sqlalchemy import Column, Integer, String, Boolean, Float, Date, ForeignKey
 from db.database import Base
 from datetime import date
 
@@ -29,3 +29,9 @@ class Users(Base):
     id_prove = Column(String(255), nullable=True, default="")
     blood_type = Column(String(255), nullable=True, default="")
     password_hash = Column(String(255), nullable=True, default="")
+
+class Minister(Base):
+    __tablename__ = "minister_admins"
+    id = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"))
+     
