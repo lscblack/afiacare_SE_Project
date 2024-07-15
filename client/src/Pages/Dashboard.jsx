@@ -15,6 +15,8 @@ import BloodGroupCard from '../Components/BloodGroupCard';
 import BMICard from '../Components/BMICard';
 import MedReportDashboard from '../Components/MedReportDashboard';
 import { Calendar, theme, Badge } from 'antd';
+import AppointmentDis from '../Components/AppointmentDis';
+import RecentActivities from '../Components/RecentActivities';
 
 
 
@@ -136,6 +138,9 @@ function Dashboard() {
          <div style={wrapperStyle} className='p-4' >
          <Calendar fullscreen={false} onPanelChange={onPanelChange} cellRender={cellRender} />
          </div>
+         <div>
+         <AppointmentDis />
+         </div>
          </div>
          <div className='md:w-[50%]'>
           <div>
@@ -146,6 +151,9 @@ function Dashboard() {
         </div>
           <div className='mt-2'>
             <MedReportDashboard />
+          </div>
+          <div>
+            <RecentActivities />
           </div>
           </div>
       </div>
