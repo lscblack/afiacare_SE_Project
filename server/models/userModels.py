@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, Date, ARRAY
+from sqlalchemy import Column, Integer, String, Boolean, Float, Date, ARRAY, ForeignKey
 from db.database import Base
 from datetime import date
 
@@ -65,6 +65,18 @@ class Hospital(Base):
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
     hospital_id = Column(Integer)
+
+class Records(Base):
+    __tablename__ = "records"
+    id = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"))
+    username = Column(String(50), unique=True, nullable=False, default="")
+    existing_medical_conditions = Column(String(255), nullable=True, default="")
+    hospital_transfer_status = Column(Boolean, default=False)
+    hospital_transfer_name = Column(String(255), nullable=True, default="")
+    hospital_transfer_reason  = Column(String(255), nullable=True, default="")
+    hospital_transfer_date = Column(Date, default=date.today)
+
 
 
 
