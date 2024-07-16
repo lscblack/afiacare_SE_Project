@@ -35,7 +35,6 @@ class UpdateUserSchema(BaseModel):
     spouse: Optional[str] = None
     avatar: Optional[str] = None
     id_prove: Optional[str] = None
-    email_confirm: Optional[bool] = False
     password: Optional[str] = None
     blood_type: Optional[str] = None
 
