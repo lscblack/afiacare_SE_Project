@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, Date
+from sqlalchemy import Column, Integer, String, Boolean, Float, Date, ForeignKey,DateTime
 from db.database import Base
 from datetime import date
-
+from datetime import datetime
 class Users(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
@@ -29,3 +29,18 @@ class Users(Base):
     id_prove = Column(String(255), nullable=True, default="")
     blood_type = Column(String(255), nullable=True, default="")
     password_hash = Column(String(255), nullable=True, default="")
+
+class Minister(Base):
+    __tablename__ = "minister_admins"
+    id = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"))
+     
+class OTP(Base):
+    __tablename__ = "sent_otps"
+    id = Column(Integer, primary_key=True, index=True)
+    account_id = Column(Integer, index=True)
+    otp_code = Column(String, index=True)
+    verification_code = Column(String, index=True)
+    purpose = Column(String, index=True)
+    date = Column(DateTime, default=datetime.utcnow, index=True)
+    
