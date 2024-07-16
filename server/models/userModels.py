@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, Date
+from sqlalchemy import Column, Integer, String, Boolean, Float, Date, ARRAY
 from db.database import Base
 from datetime import date
 
@@ -29,3 +29,42 @@ class Users(Base):
     id_prove = Column(String(255), nullable=True, default="")
     blood_type = Column(String(255), nullable=True, default="")
     password_hash = Column(String(255), nullable=True, default="")
+    existing_medical_conditions = Column(String(255), nullable=True, default="")
+    allergies = Column(ARRAY(String), nullable=True, default="")
+    physical_activity_level = Column(String(255), nullable=True, default="")
+    dietary_preferences = Column(ARRAY(String), nullable=True, default="")
+    smoking_status = Column(String(255), nullable=True, default="")
+    alcohol_consumption = Column(String(255), nullable=True, default="")
+    primary_health_goal = Column(String(255), nullable=True, default="")
+    preferred_workout_types = Column(ARRAY(String), nullable=True, default="")
+    preferred_workout_times = Column(String(255), nullable=True, default="")
+    emergency_contact = Column(String(50), nullable=True, default="")
+    emergency_contact_name = Column(String(255), nullable=True, default="") 
+
+
+class Minister(Base):
+    __tablename__ = "minister_admins"
+    id = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"))
+    ministry_id = Column(Integer)
+
+class Doctor(Base):
+    __tablename__ = "Doctors"
+    id = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"))
+    doctor_id = Column(Integer)
+
+class Nurse(Base):
+    __tablename__ = "Nurses"
+    id = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"))
+    nurse_id = Column(Integer)
+
+class Hospital(Base):
+    __tablename__ = "hospital_admins"
+    id = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"))
+    hospital_id = Column(Integer)
+
+
+
