@@ -12,6 +12,8 @@ import { changeLangSate } from "./features/SharedDataSlice/SharedData";
 import DoctorsDashboard from "./Pages/Doctors/DoctorsDashboard";
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
 import Onboarding from "./Pages/Onboarding";
+import Consultation from "./Pages/Consultation";
+import Emergency from "./Pages/Emergency";
 
 function App() {
   const lang = useSelector(state => state.afiaCare.langs); // load language translations
@@ -31,6 +33,8 @@ function App() {
         <Route path='/contact' element={<><Contact /></>}></Route>
         <Route path='/services' element={<><Services /></>}></Route>
         <Route path='/dashboard' element={<><Dashboard /></>}></Route>
+        <Route path='/user/consultations' element={<><Consultation /></>}></Route>
+        <Route path='/user/emergency' element={<><Emergency /></>}></Route>
         <Route path='/doctor/dashboard' element={<><DoctorsDashboard /></>}></Route>
         <Route path='/admin/dashboard' element={<><AdminDashboard /></>}></Route>
         <Route path='/auth/onboarding' element={<><Onboarding /></>}></Route>

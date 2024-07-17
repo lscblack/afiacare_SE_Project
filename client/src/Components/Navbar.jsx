@@ -5,6 +5,7 @@ import FlagES from "../assets/images/fr-flag.png"; // Replace with your actual f
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineBell } from "react-icons/ai";
 import { IoLanguageOutline } from "react-icons/io5";
+import { MdWavingHand } from "react-icons/md";
 
 function Navbar() {
   const [greeting, setGreeting] = useState("");
@@ -38,9 +39,10 @@ function Navbar() {
 
   return (
     <div className="flex bg-white flex-col-reverse md:flex-row justify-between items-center px-4 md:px-8 py-4">
-      <h1 className="text-lg hidden md:block font-semibold text-gray-500">
-        {greeting}, <span className="text-[#57bdb1] text-[22px]">Simeon!</span>
-      </h1>
+      <h1 className="text-lg hidden md:flex items-center gap-2 font-semibold text-gray-500">
+      {greeting}, <span className="text-[#57bdb1] text-[22px]">Simeon!</span>
+      <MdWavingHand className="wave-icon" />
+    </h1>
       <div className="flex items-center gap-4 ml-auto">
         <div className="relative">
           <input

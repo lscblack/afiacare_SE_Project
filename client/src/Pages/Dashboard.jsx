@@ -17,6 +17,7 @@ import MedReportDashboard from '../Components/MedReportDashboard';
 import { Calendar, theme, Badge } from 'antd';
 import AppointmentDis from '../Components/AppointmentDis';
 import RecentActivities from '../Components/RecentActivities';
+import { Link } from 'react-router-dom';
 
 
 
@@ -104,13 +105,15 @@ function Dashboard() {
     <div className="flex h-screen">
       <div>
       <Sidebar>
-        <SidebarItem 
+        <Link to="/dashboard">   <SidebarItem 
           icon={<LuLayoutDashboard size={20} />}
           text="Dashboard"
           alert
           active
-        />
-        <SidebarItem icon={<FaHospitalUser size={20} />} text="Consultations" />
+        /></Link>
+     
+        <Link to="/user/consultations"> <SidebarItem icon={<FaHospitalUser size={20} />} text="Consultations" /></Link>
+       
         <SidebarItem icon={<GrEmergency size={20} />} text="Emergency" />
         <SidebarItem icon={<BiSolidDonateBlood size={20} />} text="Donations" alert />
         <SidebarItem icon={<FaHospitalAlt size={20} />} text="Facilities" />
