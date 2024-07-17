@@ -43,7 +43,7 @@ class Users(Base):
 
 
 class Minister(Base):
-    __tablename__ = "minister_admins"
+    __tablename__ = "minister"
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
     ministry_id = Column(Integer)
@@ -52,6 +52,7 @@ class Doctor(Base):
     __tablename__ = "Doctors"
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
+    hospitalId = Column(Integer, ForeignKey("hospital.id"))
     doctor_id = Column(Integer)
     specailists = Column(String(255), nullable=True, default="")
 
@@ -59,6 +60,15 @@ class Nurse(Base):
     __tablename__ = "Nurses"
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
+    hospitalId = Column(Integer, ForeignKey("hospital.id"))
+    nurse_id = Column(Integer)
+    specailists = Column(String(255), nullable=True, default="")
+
+class Lab_tech(Base):
+    __tablename__ = "lab_tech"
+    id = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"))
+    hospitalId = Column(Integer, ForeignKey("hospital.id"))
     nurse_id = Column(Integer)
     specailists = Column(String(255), nullable=True, default="")
 
@@ -66,12 +76,14 @@ class Hospital(Base):
     __tablename__ = "hospital"
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
+    ministerId = Column(Integer, ForeignKey("minister.id"))
     hospital_id = Column(Integer)
 
 class Records(Base):
     __tablename__ = "records"
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
+    consultations = Column(String(255), nullable=True, default="")
     tests = Column(String(255), nullable=True, default="")
     tests_results = Column(String(255), nullable=True, default="")
     presciptions = Column(String(255), nullable=True, default="")
@@ -79,6 +91,26 @@ class Records(Base):
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
     date_taken  = Column(Date, default=date.today)
 
+class Appointments(Base):
+    __tablename__ = "appointments"
+    id = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"))
+    hospital =Column(Integer, ForeignKey("hospital.id"))
+    home = Column(Boolean, default=False)
+    reason =  Column(String(255), nullable=True, default="")
+    Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
+    date_taken  = Column(Date, default=date.today)
+    time = Column(String(255), nullable=True, default="")
+
+class Donations(Base):
+    __tablename__ = "donations"
+    id = Column(Integer, primary_key=True, index=True)
+    userId = Column(Integer, ForeignKey("users.id"))
+    hospital =Column(Integer, ForeignKey("hospital.id"))
+    blood_donation = Column(Boolean, default=False)
+    Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
+    date_taken  = Column(Date, default=date.today)
+    time = Column(String(255), nullable=True, default="")
 
 
 class Transfer(Base):
