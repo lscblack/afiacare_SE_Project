@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar, { SidebarItem } from '../Components/Sidebar';
+import Sidebar, { SidebarItem } from '../Components/User/Sidebar';
 import Navbar from '../Components/User/Navbar'; // Import your Navbar component
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { MdForum } from "react-icons/md";

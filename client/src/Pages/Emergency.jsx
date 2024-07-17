@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar, { SidebarItem } from '../Components/Sidebar';
+import Sidebar, { SidebarItem } from '../Components/User/Sidebar';
 import Navbar from '../Components/User/Navbar'; // Import your Navbar component
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { MdForum } from "react-icons/md";
@@ -13,6 +13,7 @@ import { SiFigshare } from "react-icons/si";
 import { Link } from 'react-router-dom';
 import EmergencyRequestCards from '../Components/User/Emergency_Components/EmergencyRequestCards';
 import FirstAidCards from '../Components/User/Emergency_Components/FirstAidCards';
+import HospitalsNearyou from '../Components/User/Emergency_Components/HospitalsNearyou';
 
 function Emergency() {
   return (
@@ -50,6 +51,7 @@ function Emergency() {
         </div>
         <div className='px-6'>
             <h1 className='text-[#39827a] font-medium text-[16px]'>Hospitals Near you</h1>
+            <HospitalsNearyou />
         </div>
         <div className=''>
             <h1 className='text-[#39827a] font-medium text-[16px] p-6'>What to do incase of an Emergency</h1>

@@ -1,11 +1,11 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
-import Logo from "./../assets/images/afiacare.svg";
+import Logo from "../../assets/images/afiacare.svg";
 import { LuChevronFirst, LuChevronLast } from "react-icons/lu";
 import { IoMdMore } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineLogin } from "react-icons/ai";
 import { IoSettingsOutline } from "react-icons/io5";
-import ProfileAvatar from "./../assets/images/avatar.png";
+import ProfileAvatar from "../../assets/images/avatar.png";
 
 const SidebarContext = createContext();
 
@@ -53,8 +53,8 @@ function Sidebar({ children }) {
             className={`flex justify-between items-center ml-3 overflow-hidden transition-all ${expanded ? "w-52" : "w-0"}`}
           >
             <div className="leading-5">
-              <h4 className="text-gray-500 font-semibold">John Doe</h4>
-              <span className="text-gray-400 text-xs">johndoe@gmail.com</span>
+              <h4 className="text-gray-500 font-semibold">Simeon Azeh</h4>
+              <span className="text-gray-400 text-xs">simeon@gmail.com</span>
             </div>
             <button onClick={() => setActionsVisible(!actionsVisible)}>
               <IoMdMore size={24} className="text-gray-400" />

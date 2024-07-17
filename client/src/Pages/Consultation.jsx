@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar, { SidebarItem } from '../Components/Sidebar';
+import Sidebar, { SidebarItem } from '../Components/User/Sidebar';
 import Navbar from '../Components/User/Navbar'; // Import your Navbar component
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { MdForum } from "react-icons/md";
@@ -12,7 +12,7 @@ import { MdContactSupport } from "react-icons/md";
 import { SiFigshare } from "react-icons/si";
 import backgroundImage from './../assets/images/bgImg.png';
 import { Link } from 'react-router-dom';
-import GreetingsCard from '../Components/GreetingsCard';
+import GreetingsCard from '../Components/User/consultations/GreetingsCard';
 import CardImg from '../assets/images/welness3.jpg'
 import CardInsuranceImg from '../assets/images/InsuranceImg.avif'
 import WellnessCard from '../Components/User/consultations/WellnessCard';
