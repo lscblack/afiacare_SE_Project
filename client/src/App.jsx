@@ -15,6 +15,7 @@ import Onboarding from "./Pages/Onboarding";
 import Consultation from "./Pages/Users/Consultation";
 import Emergency from "./Pages/Users/Emergency";
 import Donations from "./Pages/Users/Donations";
+import Facilities from "./Pages/Users/Facilities";
 
 function App() {
   const lang = useSelector(state => state.afiaCare.langs); // load language translations
@@ -37,6 +38,7 @@ function App() {
         <Route path='/user/consultations' element={<><Consultation /></>}></Route>
         <Route path='/user/emergency' element={<><Emergency /></>}></Route>
         <Route path='/user/donations' element={<><Donations /></>}></Route>
+        <Route path='/facilities' element={<><Facilities /></>}></Route>
         <Route path='/doctor/dashboard' element={<><DoctorsDashboard /></>}></Route>
         <Route path='/admin/dashboard' element={<><AdminDashboard /></>}></Route>
         <Route path='/auth/onboarding' element={<><Onboarding /></>}></Route>

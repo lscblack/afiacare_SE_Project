@@ -47,8 +47,10 @@ function Donations() {
        <Link to="/user/donations">
         <SidebarItem icon={<BiSolidDonateBlood size={20} />} text="Donations" alert active/>
        </Link>
+       <Link to="/facilities">
         <SidebarItem icon={<FaHospitalAlt size={20} />} text="Facilities" />
-        <SidebarItem icon={<MdForum size={20} />} text="Forums" alert />
+       </Link>
+        <SidebarItem icon={<MdForum size={20} />} text="Messages" alert />
         <hr className='my-3' />
         <SidebarItem icon={<SiFigshare size={20} />} text="Referrals" />
         <SidebarItem icon={<MdContactSupport size={20} />} text="Support" />
