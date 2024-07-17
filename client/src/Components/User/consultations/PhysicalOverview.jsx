@@ -1,5 +1,5 @@
 import React from 'react';
-import MetricCard from '../Components/MetricCard';
+import MetricCard from './MetricCard';
 import { FaHeartbeat, FaLungs, FaTachometerAlt } from 'react-icons/fa';
 import 'chart.js/auto';
 import { IoIosArrowForward } from "react-icons/io";

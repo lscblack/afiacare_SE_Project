@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar, { SidebarItem } from '../Components/Sidebar';
-import Navbar from '../Components/Navbar'; // Import your Navbar component
+import Navbar from '../Components/User/Navbar'; // Import your Navbar component
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { MdForum } from "react-icons/md";
 import { FaHospitalUser } from "react-icons/fa6";
@@ -10,12 +10,12 @@ import { FaHospitalAlt } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { MdContactSupport } from "react-icons/md";
 import { SiFigshare } from "react-icons/si";
-import BookingDashboard from '../Components/BookingDashBoard';
-import BloodGroupCard from '../Components/BloodGroupCard';
-import BMICard from '../Components/BMICard';
-import MedReportDashboard from '../Components/MedReportDashboard';
+import BookingDashboard from '../Components/User/Dashboard/BookingDashBoard';
+import BloodGroupCard from '../Components/User/Dashboard/BloodGroupCard';
+import BMICard from '../Components/User/Dashboard/BMICard';
+import MedReportDashboard from '../Components/User/Dashboard/MedReportDashboard';
 import { Calendar, theme, Badge } from 'antd';
-import AppointmentDis from '../Components/AppointmentDis';
+import AppointmentDis from '../Components/User/Dashboard/AppointmentDis';
 import RecentActivities from '../Components/RecentActivities';
 import { Link } from 'react-router-dom';
 

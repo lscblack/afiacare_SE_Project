@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import background1 from './../assets/images/bgCard.png'; // Replace with your background image path
-import background2 from './../assets/images/bgCard2.png'; // Replace with your background image path
+import background1 from '../../../assets/images/bgCard.png'; // Replace with your background image path
+import background2 from '../../../assets/images/bgCard2.png'; // Replace with your background image path
 import AppointmentForm from "./AppointmentForm";
 import HomeVisitForm from "./HomeVisitForm";
 import BookingCard from "./BookingCard";

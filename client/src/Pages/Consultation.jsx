@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar, { SidebarItem } from '../Components/Sidebar';
-import Navbar from '../Components/Navbar'; // Import your Navbar component
+import Navbar from '../Components/User/Navbar'; // Import your Navbar component
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { MdForum } from "react-icons/md";
 import { FaHospitalUser } from "react-icons/fa6";
@@ -15,11 +15,11 @@ import { Link } from 'react-router-dom';
 import GreetingsCard from '../Components/GreetingsCard';
 import CardImg from '../assets/images/welness3.jpg'
 import CardInsuranceImg from '../assets/images/InsuranceImg.avif'
-import WellnessCard from '../Components/WellnessCard';
-import PhysicalOverview from '../Components/PhysicalOverview';
-import RecentVisits from '../Components/RecentVisits';
-import InsuranceCard from '../Components/InsuranceCard';
-import UpcomingConsultations from '../Components/UpcomingConsultations';
+import WellnessCard from '../Components/User/consultations/WellnessCard';
+import PhysicalOverview from '../Components/User/consultations/PhysicalOverview';
+import RecentVisits from '../Components/User/consultations/RecentVisits';
+import InsuranceCard from '../Components/User/consultations/InsuranceCard';
+import UpcomingConsultations from '../Components/User/consultations/UpcomingConsultations';
 
 
 function Consultation() {

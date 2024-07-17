@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import AvatarImg from "../assets/images/avatar.png";
-import FlagEN from "./../assets/images/en-flag.png"; // Replace with your actual flag image path
-import FlagES from "../assets/images/fr-flag.png"; // Replace with your actual flag image path
+import AvatarImg from "../../assets/images/avatar.png";
+import FlagEN from "../../assets/images/en-flag.png"; // Replace with your actual flag image path
+import FlagES from "../../assets/images/fr-flag.png"; // Replace with your actual flag image path
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineBell } from "react-icons/ai";
 import { IoLanguageOutline } from "react-icons/io5";

@@ -1,52 +1,52 @@
 import React from 'react';
 import { Carousel } from 'antd';
-import FirstAidImg1 from './../assets/images/FirstAidImg1.jpg';
-import FirstAidImg2 from './../assets/images/FirstAidImg2.jpg';
-import FirstAidImg3 from './../assets/images/FirstAidImg3.jpg';
-import FirstAidImg4 from './../assets/images/FirstAidImg4.avif';
-import FirstAidImg5 from './../assets/images/FirstAidImg5.jpg';
-import FirstAidImg6 from './../assets/images/FirstAidImg6.avif';
-import FirstAidImg7 from './../assets/images/FirstAidImg7.jpg';
-import FirstAidImg8 from './../assets/images/FirstAidImg8.jpg';
+import FirstAidImg1 from '../../../assets/images/FirstAidImg1.jpg';
+import FirstAidImg2 from '../../../assets/images/FirstAidImg2.jpg';
+import FirstAidImg3 from '../../../assets/images/FirstAidImg3.jpg';
+import FirstAidImg4 from '../../../assets/images/FirstAidImg4.avif';
+import FirstAidImg5 from '../../../assets/images/FirstAidImg5.jpg';
+import FirstAidImg6 from '../../../assets/images/FirstAidImg6.avif';
+import FirstAidImg7 from '../../../assets/images/FirstAidImg7.jpg';
+import FirstAidImg8 from '../../../assets/images/FirstAidImg8.jpg';
 
 const firstAidInstructions = [
   { 
-    title: 'First Aid for Poisoning', 
+    title: 'Poisoning', 
     image: FirstAidImg1, 
     buttonText: 'Learn More' 
   },
   { 
-    title: 'First Aid for Bleeding', 
+    title: 'Bleeding', 
     image: FirstAidImg2, 
     buttonText: 'Learn More' 
   },
   { 
-    title: 'First Aid for Burns', 
+    title: 'Burns', 
     image: FirstAidImg3, 
     buttonText: 'Learn More' 
   },
   { 
-    title: 'First Aid for Choking', 
+    title: 'Choking', 
     image: FirstAidImg4, 
     buttonText: 'Learn More' 
   },
   { 
-    title: 'First Aid for Fractures', 
+    title: 'Fractures', 
     image: FirstAidImg5, 
     buttonText: 'Learn More' 
   },
   { 
-    title: 'First Aid for Drowning', 
+    title: 'Drowning', 
     image: FirstAidImg6, 
     buttonText: 'Learn More' 
   },
   { 
-    title: 'First Aid for Heart Attack', 
+    title: 'Heart Attack', 
     image: FirstAidImg7, 
     buttonText: 'Learn More' 
   },
   { 
-    title: 'First Aid for Heat Stroke', 
+    title: 'Heat Stroke', 
     image: FirstAidImg8, 
     buttonText: 'Learn More' 
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import Sidebar, { SidebarItem } from '../Components/Sidebar';
-import Navbar from '../Components/Navbar'; // Import your Navbar component
+import Navbar from '../Components/User/Navbar'; // Import your Navbar component
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { MdForum } from "react-icons/md";
 import { FaHospitalUser } from "react-icons/fa6";
@@ -11,8 +11,8 @@ import { IoIosSettings } from "react-icons/io";
 import { MdContactSupport } from "react-icons/md";
 import { SiFigshare } from "react-icons/si";
 import { Link } from 'react-router-dom';
-import EmergencyRequestCards from '../Components/EmergencyRequestCards';
-import FirstAidCards from '../Components/FirstAidCards';
+import EmergencyRequestCards from '../Components/User/Emergency_Components/EmergencyRequestCards';
+import FirstAidCards from '../Components/User/Emergency_Components/FirstAidCards';
 
 function Emergency() {
   return (
