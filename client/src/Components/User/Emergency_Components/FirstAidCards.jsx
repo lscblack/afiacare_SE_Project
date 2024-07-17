@@ -1,4 +1,5 @@
 import React from 'react';
+import { IoIosArrowForward } from "react-icons/io";
 import { Carousel } from 'antd';
 import FirstAidImg1 from '../../../assets/images/FirstAidImg1.jpg';
 import FirstAidImg2 from '../../../assets/images/FirstAidImg2.jpg';
@@ -78,8 +79,8 @@ function FirstAidCards() {
                   <img src={aid.image} alt={aid.title} className="w-full h-32 object-cover" />
                   <div className="p-4">
                     <h2 className="text-lg font-semibold text-gray-800 mb-2">{aid.title}</h2>
-                    <button className="bg-[#39827a] text-white px-4 py-2 rounded hover:bg-[#368a80] duration-300">
-                      {aid.buttonText}
+                    <button className=" text-[#39827a] font-medium flex items-center gap-2">
+                      {aid.buttonText} <IoIosArrowForward />
                     </button>
                   </div>
                 </div>

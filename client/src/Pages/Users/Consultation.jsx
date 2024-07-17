@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar, { SidebarItem } from '../Components/User/Sidebar';
-import Navbar from '../Components/User/Navbar'; // Import your Navbar component
+import Sidebar, { SidebarItem } from '../../Components/User/Sidebar';
+import Navbar from '../../Components/User/Navbar'; // Import your Navbar component
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { MdForum } from "react-icons/md";
 import { FaHospitalUser } from "react-icons/fa6";
@@ -10,16 +10,16 @@ import { FaHospitalAlt } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { MdContactSupport } from "react-icons/md";
 import { SiFigshare } from "react-icons/si";
-import backgroundImage from './../assets/images/bgImg.png';
+import backgroundImage from '../../assets/images/bgImg.png';
 import { Link } from 'react-router-dom';
-import GreetingsCard from '../Components/User/consultations/GreetingsCard';
-import CardImg from '../assets/images/welness3.jpg'
-import CardInsuranceImg from '../assets/images/InsuranceImg.avif'
-import WellnessCard from '../Components/User/consultations/WellnessCard';
-import PhysicalOverview from '../Components/User/consultations/PhysicalOverview';
-import RecentVisits from '../Components/User/consultations/RecentVisits';
-import InsuranceCard from '../Components/User/consultations/InsuranceCard';
-import UpcomingConsultations from '../Components/User/consultations/UpcomingConsultations';
+import GreetingsCard from '../../Components/User/consultations/GreetingsCard';
+import CardImg from '../../assets/images/welness3.jpg'
+import CardInsuranceImg from '../../assets/images/InsuranceImg.avif'
+import WellnessCard from '../../Components/User/consultations/WellnessCard';
+import PhysicalOverview from '../../Components/User/consultations/PhysicalOverview';
+import RecentVisits from '../../Components/User/consultations/RecentVisits';
+import InsuranceCard from '../../Components/User/consultations/InsuranceCard';
+import UpcomingConsultations from '../../Components/User/consultations/UpcomingConsultations';
 
 
 function Consultation() {
