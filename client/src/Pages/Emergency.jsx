@@ -11,6 +11,8 @@ import { IoIosSettings } from "react-icons/io";
 import { MdContactSupport } from "react-icons/md";
 import { SiFigshare } from "react-icons/si";
 import { Link } from 'react-router-dom';
+import EmergencyRequestCards from '../Components/EmergencyRequestCards';
+import FirstAidCards from '../Components/FirstAidCards';
 
 function Emergency() {
   return (
@@ -42,31 +44,19 @@ function Emergency() {
         <div className='sticky top-0 z-40'>
         <Navbar /> {/* Place your Navbar here */}
         </div>
-       
-      <div className="flex flex-col px-4 md:flex-row">
-         <div className='md:w-[50%]'>
-          <div className='p-4'>
-          
-          </div>
-          <div className='p-4'>
-          
-          </div>
-          <div className='p-4'>
-          
-          </div>
-            <div>
-           
-            </div>
-         </div>
-         <div className='md:w-[50%]'>
-          <div>
-        
-          </div>
-          <div className='pb-4'>
-         
-          </div>
-          </div>
-      </div>
+       <div>
+        <div>
+            <EmergencyRequestCards />
+        </div>
+        <div className='px-6'>
+            <h1 className='text-[#39827a] font-medium text-[16px]'>Hospitals Near you</h1>
+        </div>
+        <div className=''>
+            <h1 className='text-[#39827a] font-medium text-[16px] p-6'>What to do incase of an Emergency</h1>
+            <FirstAidCards />
+        </div>
+       </div>
+     
       </div>
     </div>
   )
