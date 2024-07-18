@@ -27,6 +27,8 @@ class Users(Base):
     spouse = Column(String(50), nullable=True, default="")
     avatar = Column(String(255), nullable=True, default="")
     id_prove = Column(String(255), nullable=True, default="")
+    father_id_prove = Column(String(255), nullable=True, default="")
+    mother_id_prove = Column(String(255), nullable=True, default="")
     blood_type = Column(String(255), nullable=True, default="")
     password_hash = Column(String(255), nullable=True, default="")
     existing_medical_conditions = Column(String(255), nullable=True, default="")
@@ -56,7 +58,7 @@ class Minister(Base):
     __tablename__ = "minister"
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
-    # ministry_id = Column(Integer)
+    ministry_id = Column(Integer)
 
 class Doctor(Base):
     __tablename__ = "Doctors"
@@ -88,6 +90,7 @@ class Hospital(Base):
     userId = Column(Integer, ForeignKey("users.id"))
     ministerId = Column(Integer, ForeignKey("minister.id"))
     hospital_id = Column(Integer)
+    country = Column(String(255), nullable=True, default="")
 
 class Records(Base):
     __tablename__ = "records"
@@ -99,6 +102,7 @@ class Records(Base):
     presciptions = Column(String(255), nullable=True, default="")
     diseases = Column(String(255), nullable=True, default="")
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
+    hospital = Column(Integer, ForeignKey("hospital.id"))
     date_taken  = Column(Date, default=date.today)
 
 class Appointments(Base):
