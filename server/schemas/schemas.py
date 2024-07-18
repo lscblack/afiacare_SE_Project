@@ -37,6 +37,17 @@ class UpdateUserSchema(BaseModel):
     id_prove: Optional[str] = None
     password: Optional[str] = None
     blood_type: Optional[str] = None
+    existing_medical_conditions: Optional[str] = None
+    allergies: Optional[str] = None
+    physical_activity_level: Optional[str] = None
+    dietary_preferences: Optional[str] = None
+    smoking_status: Optional[str] = None
+    alcohol_consumption: Optional[str] = None
+    primary_health_goal: Optional[str] = None
+    preferred_workout_types: Optional[str] = None
+    preferred_workout_times: Optional[str] = None
+    emergency_contact: Optional[str] = None
+    emergency_contact_name: Optional[str] = None
 
 
 class UserTypeDropDown(BaseModel):
