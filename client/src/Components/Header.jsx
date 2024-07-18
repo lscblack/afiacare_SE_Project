@@ -82,12 +82,12 @@ function Header() {
                 <HeaderItem key={item.name} goto={item.link} name={item.name} />
               ))}
               <div className="flex items-center gap-2 mt-4">
-                <Link to="/authentication">
+                <Link to="/authentication?show=login">
                   <button className="bg-[#39827a] text-white w-[100px] rounded-md font-medium px-3 py-2 hover:bg-[#1D6559] duration-300">
                    {lang.login}
                   </button>
                 </Link>
-                <Link to="/authentication">
+                <Link to="/authentication?show=register">
                   <button className="bg-[#ffffff] text-[#39827a] border w-[100px] rounded-md font-medium px-3 py-2 border-[#39827a] border-solid hover:bg-[#39827a] hover:text-white duration-300">
                     {lang.register}
                   </button>

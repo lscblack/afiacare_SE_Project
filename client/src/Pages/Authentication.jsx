@@ -1,13 +1,13 @@
-import React, { useState } from "react"; 
+import React, { useEffect, useState } from "react"; 
 import { useSelector, useDispatch } from "react-redux";
 import { changeLangSate } from "../features/SharedDataSlice/SharedData";
 import Login from './../Components/Login';
 import Registration from './../Components/Register';
 import ForgotPassword from './../Components/ForgotPassword';
 import ResetLinkSent from './../Components/ResetLinkSent';
-
+import { useLocation } from 'react-router-dom';
 function Authentication() {
-  const [formState, setFormState] = useState("login");
+  const [formState, setFormState] = useState("")
 
   const toggleForm = (formType) => {
     setFormState(formType);
@@ -15,6 +15,18 @@ function Authentication() {
 
   const lang = useSelector(state => state.afiaCare.langs);
   const [selectedLang, setSelectedLang] = useState("");
+  const location = useLocation();
+  //
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const fromReg = params.get('show');
+    if (fromReg == "register") {
+      toggleForm('register');
+    }else{
+      toggleForm('login');
+    }
+    // console.log(fromReg)  
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-[#39827a] to-[#025e53] p-6">
@@ -30,7 +42,7 @@ function Authentication() {
         )}
       </p>
       {formState === "login" && <Login toggleForm={toggleForm} showForgotPassword={() => toggleForm("forgot")} />}
-      {formState === "register" && <Registration toggleForm={toggleForm} />}
+      {formState === "register" && <Registration toggleForm={()=>toggleForm} />}
       {formState === "forgot" && <ForgotPassword toggleForm={() => toggleForm("login")} />}
       {formState === "reset" && <ResetLinkSent toggleForm={() => toggleForm("login")} />}
       <div>
