@@ -16,12 +16,12 @@ function RequestDonation() {
   return (
     <>
       <div
-        className=" p-4 border border-l-8 border-red-400 bg-white rounded-lg  cursor-pointer hover:shadow-lg transition-shadow duration-300"
+        className=" p-4 border border-l-8 border-[#39827a] border-solid bg-white rounded-lg  cursor-pointer hover:shadow-lg transition-shadow duration-300"
         onClick={showDrawer}
       >
         <div className="flex items-center justify-between">
           <h2 className="text-[16px]  text-gray-500 font-medium">Request a Blood Donation</h2>
-          <FaPlus className="text-red-400" />
+          <FaPlus className="text-gray-500" />
         </div>
         <p className="text-gray-400 mt-2">Click here to request a blood donation.</p>
       </div>

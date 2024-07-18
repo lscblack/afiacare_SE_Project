@@ -12,7 +12,7 @@ function RecentDonations() {
   return (
     <div>
       <h2 className=" font-medium text-[16px] mb-2 text-gray-500">Recent Donations</h2>
-      <div className="p-4 bg-white rounded-lg shadow-sm border-l-8 border-red-400">
+      <div className="p-4 bg-white rounded-lg shadow-sm border-l-8 border-[#39827a]">
         <ul>
           {donations.map((donation) => (
             <li key={donation.id} className="mb-2 flex items-center justify-between">

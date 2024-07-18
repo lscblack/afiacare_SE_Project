@@ -37,7 +37,8 @@ function Registration({ toggleForm }) {
         />
       </div>
     </div>
-    <div className="mb-4">
+    <div className="mb-4 flex items-center gap-2">
+      <div>
       <label htmlFor="registerEmail" className="block text-white font-semibold mb-2">
         {lang.email}
       </label>
@@ -46,6 +47,18 @@ function Registration({ toggleForm }) {
         id="registerEmail" className="w-full p-2 border rounded bg-transparent text-slate-100 outline-none"
         required
       />
+      </div>
+      <div>
+      <label htmlFor="registerUsername" className="block text-white font-semibold mb-2">
+        {lang.login_email}
+      </label>
+      <input
+        type="text"
+        id="registerUsername" className="w-full p-2 border rounded bg-transparent text-slate-100 outline-none"
+        required
+      />
+      </div>
+    
     </div>
     <div className="mb-4 relative">
       <label htmlFor="registerPassword" className="block text-white font-semibold mb-2">

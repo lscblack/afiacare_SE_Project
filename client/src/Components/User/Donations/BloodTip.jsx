@@ -21,7 +21,7 @@ function BloodTip() {
   }, []);
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-sm border-l-8 border-red-400">
+    <div className="p-4 bg-white rounded-lg shadow-sm border-l-8 border-[#39827a]">
       <h2 className="text-gray-500 font-medium text-[16px] mb-2">Blood Donation Tip</h2>
       <p className="text-gray-400 text-[14px] font-medium">{tip}</p>
 

@@ -15,6 +15,7 @@ import { SiFigshare } from 'react-icons/si';
 import FacilityCard from '../../Components/User/Facilities/FacilityCard';
 import FacilityDrawerContent from '../../Components/User/Facilities/FacilityDrawerContent';
 import { FaHospital, FaClinicMedical, FaSyringe, FaTooth, FaUserMd, FaHeartbeat, FaAmbulance } from 'react-icons/fa';
+import RecommendedFacilities from '../../Components/User/Facilities/RecommendedFacilities';
 
 const facilities = [
     { id: 1, icon: <FaHospital size={24} />, title: 'Hospitals' },
@@ -106,6 +107,7 @@ const Facilities = () => {
         <div className='sticky top-0 z-40'>
           <Navbar /> {/* Place your Navbar here */}
         </div>
+        <div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 p-4">
           {facilities.map(facility => (
             <FacilityCard
@@ -115,6 +117,7 @@ const Facilities = () => {
               onClick={() => showDrawer(facility.title)}
             />
           ))}
+        </div>
         </div>
         <Drawer
           closable
@@ -126,6 +129,9 @@ const Facilities = () => {
         >
           <FacilityDrawerContent facilities={drawerContent} loading={loading} />
         </Drawer>
+        <div>
+            <RecommendedFacilities />
+        </div>
       </div>
     </div>
   );
