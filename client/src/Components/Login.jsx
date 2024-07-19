@@ -3,19 +3,57 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { changeLangSate } from "../features/SharedDataSlice/SharedData";
 import { useSelector, useDispatch } from "react-redux";
+import MyApi from "../AxiosInstance/MyApi";
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login({ toggleForm, showForgotPassword }) {
    // Assuming you're using English as default language
   const lang = useSelector(state => state.afiaCare.langs);
   const [selectedLang, setSelectedLang] = useState(""); // State to track selected language
   const [showPassword, setShowPassword] = useState(false);
+  const [data, setData] = useState({"username":"string","password":"string"})
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  //login a user
+  const LoginUser = async() =>{
+    try{
+      const response = await MyApi.post("auth/login",data) // for sending request on backend
+      const token = response.data.access_token
+      console.log(token)
+      const instance = axios.create({
+        baseURL: import.meta.env.VITE_MAIN,
+        headers: {
+            Authorization: token ? `Bearer ${token}` : '',
+            'Content-Type': 'application/json',
+        },
+        withCredentials: false, // this will be changed in production
+    });
+    instance.get("apis/me")
+    .then((res)=>{
+      console.log(res)
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+    }
+    catch(err){
+      if(err.response.status == 401){
+        toast.dismiss();
+        toast.error(err.response.data.detail);
+      }else{
+
+      }
+    }
+
+    
+  }
 
   return (
-    <form className="p-6 rounded w-full max-w-lg">
+    <div className="p-6 rounded w-full max-w-lg">
     <div className="mb-4">
       <label htmlFor="loginEmail" className="block text-white font-semibold mb-2">
         {lang.login_email}
@@ -50,7 +88,7 @@ function Login({ toggleForm, showForgotPassword }) {
         {lang.login_forgot_password}
       </button>
     </div>
-    <button type="submit" className="w-full bg-[#36857b] text-white py-2 rounded hover:bg-[#368a80] mb-4">
+    <button onClick={()=>LoginUser()} type="submit" className="w-full bg-[#36857b] text-white py-2 rounded hover:bg-[#368a80] mb-4">
       {lang.login_button}
     </button>
     <button
@@ -58,7 +96,7 @@ function Login({ toggleForm, showForgotPassword }) {
     >
       <FcGoogle className="mr-2" /> {lang.login_google_button}
     </button>
-  </form>
+  </div>
   );
 }
 

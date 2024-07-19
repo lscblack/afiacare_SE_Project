@@ -12,10 +12,11 @@ import { changeLangSate } from "../features/SharedDataSlice/SharedData";
 
 function Header() {
   const lang = useSelector(state => state.afiaCare.langs);
+  const SelctedLang = useSelector(state => state.afiaCare.selectedLangKey);
   const [toggle, setToggle] = useState(false);
   const [languageToggle, setLanguageToggle] = useState(false);
   const [scrollColor, setScrollColor] = useState("bg-slate-100");
-  const [selectedLang, setSelectedLang] = useState(""); // State to track selected language
+  const [selectedLang, setSelectedLang] = useState(SelctedLang); // State to track selected language
 
   const menu = [
     { name: lang.home, link: "/home" },
