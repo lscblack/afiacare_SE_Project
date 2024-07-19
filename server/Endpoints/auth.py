@@ -10,6 +10,8 @@ from models import userModels
 from models.userModels import Users
 
 from schemas.schemas import CreateUserRequest, Token,FromData
+from schemas.returnSchemas import ReturnUser
+
 
 from dotenv import load_dotenv
 import os
@@ -64,17 +66,22 @@ async def register_user(db: db_dependency, create_user_request: CreateUserReques
         db.rollback()
         # Raise an appropriate HTTPException or handle it accordingly
         return HTTPException(status_code=500, detail="Internal server error")
+
 # ------Login user and create token
 @router.post("/login", response_model=Token)
-async def login_for_access_token(form_data:FromData, db: db_dependency):
+async def login_for_access_token(form_data: FromData, db: db_dependency):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="No Account found with the given credentials"
         )
+    
     token = create_access_token(user.username, user.id, user.acc_type, timedelta(minutes=60*24*30))
+    
+    # Serialize the user object to match the ReturnUser schema
+    user_info = ReturnUser.from_orm(user)
 
-    return {"access_token": token, "token_type": "bearer"}
+    return {"access_token": token, "token_type": "bearer", "UserInfo": user_info}
 
 
 def authenticate_user(username: str, password: str, db):
@@ -99,8 +106,8 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
         acc_type:str = playload.get('acc_type')
         user_id:str = playload.get('id')
         if username is None or user_id is None or acc_type is None:
-            return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail ="Authentication required!")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail ="Authentication required!")
         return {"username":username, "user_id":user_id, 'acc_type':acc_type}
     except JWTError:
-        return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed. Your token is invalid or has expired. Please re-authenticate.")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication failed. Your token is invalid or has expired. Please re-authenticate.")
         
