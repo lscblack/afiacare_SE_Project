@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional, Literal
 from datetime import date
-
+from schemas.returnSchemas import ReturnUser
 
 class CreateUserRequest(BaseModel):  # registeration Schema
     fname: Optional[str] = None
@@ -14,6 +14,7 @@ class CreateUserRequest(BaseModel):  # registeration Schema
 class Token(BaseModel):  # token validation schema
     access_token: str
     token_type: str
+    UserInfo: ReturnUser
 
 class FromData(BaseModel):  # token validation schema
     username: str
@@ -42,17 +43,16 @@ class UpdateUserSchema(BaseModel):
     password: Optional[str] = None
     blood_type: Optional[str] = None
     existing_medical_conditions: Optional[str] = None
-    allergies: Optional[str] = None
+    allergies: Optional[List[str]] = None
     physical_activity_level: Optional[str] = None
-    dietary_preferences: Optional[str] = None
+    dietary_preferences: Optional[List[str]] = None
     smoking_status: Optional[str] = None
     alcohol_consumption: Optional[str] = None
     primary_health_goal: Optional[str] = None
-    preferred_workout_types: Optional[str] = None
+    preferred_workout_types: Optional[List[str]] = None
     preferred_workout_times: Optional[str] = None
     emergency_contact: Optional[str] = None
     emergency_contact_name: Optional[str] = None
-
 
 class UserTypeDropDown(BaseModel):
     user_type: Literal["admin", "minister", "hospital", "nurse", "doctor","patient"]
