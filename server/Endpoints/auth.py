@@ -9,7 +9,7 @@ from db.connection import db_dependency
 from models import userModels
 from models.userModels import Users
 
-from schemas.schemas import CreateUserRequest, Token
+from schemas.schemas import CreateUserRequest, Token,FromData
 
 from dotenv import load_dotenv
 import os
@@ -66,9 +66,7 @@ async def register_user(db: db_dependency, create_user_request: CreateUserReques
         return HTTPException(status_code=500, detail="Internal server error")
 # ------Login user and create token
 @router.post("/login", response_model=Token)
-async def login_for_access_token(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: db_dependency
-):
+async def login_for_access_token(form_data:FromData, db: db_dependency):
     user = authenticate_user(form_data.username, form_data.password, db)
     if not user:
         raise HTTPException(

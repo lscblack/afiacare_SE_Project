@@ -15,6 +15,10 @@ class Token(BaseModel):  # token validation schema
     access_token: str
     token_type: str
 
+class FromData(BaseModel):  # token validation schema
+    username: str
+    password: str
+
 # Define your Pydantic schema for partial updates
 
 
