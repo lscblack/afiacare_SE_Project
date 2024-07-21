@@ -85,6 +85,7 @@ function Login({ toggleForm, showForgotPassword }) {
             {lang.login_email}
           </label>
           <input
+            onChange={(e) => handleInputChange(e)}
             type="text"
             placeholder="Enter Your Username Here"
             id="username" className="w-full p-3 border rounded bg-slate-200 text-slate-700 outline-none"
@@ -95,9 +96,11 @@ function Login({ toggleForm, showForgotPassword }) {
           <label htmlFor="password" className="block text-slate-700 text-light font-semibold mb-2">
             {lang.login_password}
           </label>
-          <input className="w-full p-3 border rounded bg-slate-200 text-slate-700 outline-none"
+          <input
+            onChange={(e) => handleInputChange(e)}
             type={showPassword ? 'text' : 'password'}
             id="password"
+            className="w-full p-3 border rounded bg-slate-200 text-slate-700 outline-none"
             placeholder="Enter Your Password Here"
             required
           />
