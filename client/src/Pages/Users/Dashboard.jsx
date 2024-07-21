@@ -18,11 +18,13 @@ import { Calendar, theme, Badge } from 'antd';
 import AppointmentDis from '../../Components/User/Dashboard/AppointmentDis';
 import RecentActivities from '../../Components/RecentActivities';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 
 
 function Dashboard() {
+  const UserInfo = useSelector(state => state.afiaCare.usersLogin);
   const { token } = theme.useToken();
   const wrapperStyle = {
     borderRadius: token.borderRadiusLG,
@@ -42,7 +44,7 @@ function Dashboard() {
             type: 'warning',
             content: 'Appt',
           },
-        
+
         ];
         break;
       case 10:
@@ -51,7 +53,7 @@ function Dashboard() {
             type: 'warning',
             content: 'App',
           },
-         
+
         ];
         break;
       case 15:
@@ -60,7 +62,7 @@ function Dashboard() {
             type: 'success',
             content: 'event',
           },
-        
+
         ];
         break;
       default:
@@ -104,65 +106,66 @@ function Dashboard() {
   return (
     <div className="flex h-screen">
       <div>
-      <Sidebar>
-        <Link to="/dashboard">   <SidebarItem 
-          icon={<LuLayoutDashboard size={20} />}
-          text="Dashboard"
-          alert
-          active
-        /></Link>
-     
-        <Link to="/user/consultations"> <SidebarItem icon={<FaHospitalUser size={20} />} text="Consultations" /></Link>
-       
-        <SidebarItem icon={<GrEmergency size={20} />} text="Emergency" />
-        <SidebarItem icon={<BiSolidDonateBlood size={20} />} text="Donations" alert />
-        <SidebarItem icon={<FaHospitalAlt size={20} />} text="Facilities" />
-        <SidebarItem icon={<MdForum size={20} />} text="Messages" alert />
-        <hr className='my-3' />
-        <SidebarItem icon={<SiFigshare size={20} />} text="Referrals" />
-        <SidebarItem icon={<MdContactSupport size={20} />} text="Support" />
-        <SidebarItem icon={<IoIosSettings size={20} />} text="Settings" alert />
-       
-      </Sidebar>
+        <Sidebar>
+          <Link to="/dashboard">   <SidebarItem
+            icon={<LuLayoutDashboard size={20} />}
+            text="Dashboard"
+            alert
+            active
+          /></Link>
+
+          <Link to="/user/consultations"> <SidebarItem icon={<FaHospitalUser size={20} />} text="Consultations" /></Link>
+
+          <SidebarItem icon={<GrEmergency size={20} />} text="Emergency" />
+          <SidebarItem icon={<BiSolidDonateBlood size={20} />} text="Donations" alert />
+          <SidebarItem icon={<FaHospitalAlt size={20} />} text="Facilities" />
+          <SidebarItem icon={<MdForum size={20} />} text="Messages" alert />
+          <hr className='my-3' />
+          <SidebarItem icon={<SiFigshare size={20} />} text="Referrals" />
+          <SidebarItem icon={<MdContactSupport size={20} />} text="Support" />
+          <SidebarItem icon={<IoIosSettings size={20} />} text="Settings" alert />
+
+        </Sidebar>
       </div>
-     
+
 
       <div className="flex-1  overflow-y-auto ">
         <div className='sticky top-0 z-40'>
-        <Navbar /> {/* Place your Navbar here */}
+          <Navbar /> {/* Place your Navbar here */}
         </div>
-       
-      <div className="flex flex-col px-4 md:flex-row">
-         <div className='md:w-[50%]'>
-          <div>
-          <BookingDashboard />
+        {UserInfo.UserInfo.acc_status &&
+          <div className="flex flex-col px-4 md:flex-row">
+            <div className='md:w-[50%]'>
+              <div>
+                <BookingDashboard />
+              </div>
+
+              <div style={wrapperStyle} className='p-4' >
+                <Calendar fullscreen={false} onPanelChange={onPanelChange} cellRender={cellRender} />
+              </div>
+              <div>
+                <AppointmentDis />
+              </div>
+            </div>
+            <div className='md:w-[50%]'>
+              <div>
+                <BloodGroupCard />
+              </div>
+              <div>
+                <BMICard />
+              </div>
+              <div className='mt-2'>
+                <MedReportDashboard />
+              </div>
+              <div>
+                <RecentActivities />
+              </div>
+            </div>
           </div>
-          
-         <div style={wrapperStyle} className='p-4' >
-         <Calendar fullscreen={false} onPanelChange={onPanelChange} cellRender={cellRender} />
-         </div>
-         <div>
-         <AppointmentDis />
-         </div>
-         </div>
-         <div className='md:w-[50%]'>
-          <div>
-          <BloodGroupCard />
-          </div>
-        <div>
-          <BMICard />
-        </div>
-          <div className='mt-2'>
-            <MedReportDashboard />
-          </div>
-          <div>
-            <RecentActivities />
-          </div>
-          </div>
-      </div>
+        }
       </div>
     </div>
-   
+
   );
 }
 

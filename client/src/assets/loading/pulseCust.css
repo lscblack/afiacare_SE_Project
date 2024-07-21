@@ -1,0 +1,66 @@
+@keyframes afiacare-yzaezf3dcmj-1 {
+    0% { top: -4.819px; height: 18px }
+    50% { top: 3.544999999999998px; height: 16px }
+    100% { top: 3.544999999999998px; height: 16px }
+  }
+  @keyframes afiacare-yzaezf3dcmj-2 {
+    0% { top: -3.228000000000003px; height: 18px }
+    50% { top: 3.544999999999998px; height: 16px }
+    100% { top: 3.544999999999998px; height: 16px }
+  }
+  @keyframes afiacare-yzaezf3dcmj-3 {
+    0% { top: -2.463000000000004px; height: 18px }
+    50% { top: 3.544999999999998px; height: 16px }
+    100% { top: 3.544999999999998px; height: 16px }
+  }
+  @keyframes afiacare-yzaezf3dcmj-4 {
+    0% { top: -1.363000000000004px; height: 18px }
+    50% { top: 3.544999999999998px; height: 16px }
+    100% { top: 3.544999999999998px; height: 16px }
+  }
+  .afiacare-yzaezf3dcmj div { position: absolute; width: 16.68px }
+  .afiacare-yzaezf3dcmj div:nth-child(1) {
+    left: 26.409999999999997px;
+    border-radius: 100px;
+    background: #3a8a44;
+    animation: afiacare-yzaezf3dcmj-1 0.5555555555555556s cubic-bezier(0,0.5,0.5,1) infinite;
+    animation-delay: -0.11111111111111112s
+  }
+  .afiacare-yzaezf3dcmj div:nth-child(2) {
+    left: 61.16px;
+    border-radius: 100px;
+    background: #48b556;
+    animation: afiacare-yzaezf3dcmj-2 0.5555555555555556s cubic-bezier(0,0.5,0.5,1) infinite;
+    animation-delay: -0.05555555555555556s
+  }
+  .afiacare-yzaezf3dcmj div:nth-child(3) {
+    left: 90.91px;
+    border-radius: 100px;
+    background: #1d5d25;
+    animation: afiacare-yzaezf3dcmj-3 0.5555555555555556s cubic-bezier(0,0.5,0.5,1) infinite;
+    animation-delay: undefineds
+  }
+  .afiacare-yzaezf3dcmj div:nth-child(4) {
+    left: 120px;
+    border-radius: 100px;
+    background: #50ad5c;
+    animation: afiacare-yzaezf3dcmj-4 0.5555555555555556s cubic-bezier(0,0.5,0.5,1) infinite;
+    animation-delay: undefineds
+  }
+  
+  .afiacare-spinner-pulse-2by998twmg8 {
+    width: 139px;
+    height: 139px;
+    display: inline-block;
+    overflow: hidden;
+    background: none;
+  }
+  .afiacare-yzaezf3dcmj {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0; /* see note above */
+  }
+  .afiacare-yzaezf3dcmj div { box-sizing: content-box; }

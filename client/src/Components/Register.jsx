@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import MyApi from "../AxiosInstance/MyApi";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import MainLoad from "../loads/MainLoad";
 
 function Registration({ toggleForm }) {
   const nav = useNavigate()
@@ -39,7 +40,7 @@ function Registration({ toggleForm }) {
     const { fname, lname, username, email, password } = data;
     if (!fname || !lname || !username || !email || !password) {
       toast.dismiss();
-      toast.error('All fields .');
+      toast.warning('All fields .');
       setShowLoad(false)
       return;
     }
@@ -51,7 +52,7 @@ function Registration({ toggleForm }) {
       setShowLoad(true)
       try {
         const response = await MyApi.post("auth/register", data);
-        
+
         if (response.data && response.data.status_code == 400) {
           toast.dismiss();
           toast.error(`Error: ${response.data.detail || 'An error occurred'}`);
@@ -78,135 +79,144 @@ function Registration({ toggleForm }) {
   };
 
   return (
-    <form className="p-6 rounded w-full max-w-lg" onSubmit={register_New_User}>
-      <div className="mb-4 flex items-center gap-2">
-        <div>
-          <label htmlFor="fname" className="block text-white font-semibold mb-2">
-            {lang.first_name}
-          </label>
-          <input
-            type="text"
-            id="fname"
-            className="w-full p-2 border rounded bg-transparent text-slate-100 outline-none"
-
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="lname" className="block text-white font-semibold mb-2">
-            {lang.last_name}
-          </label>
-          <input
-            type="text"
-            id="lname"
-            className="w-full p-2 border rounded bg-transparent text-slate-100 outline-none"
-
-            onChange={handleInputChange}
-          />
-        </div>
+    <>
+      {showLoad && <>
+      <div className="fixed w-screen h-screen bg-white z-50 top-0 left-0">
+        <MainLoad title="Creating Your Account"/>
       </div>
-      <div className="mb-4 flex items-center gap-2">
-        <div>
-          <label htmlFor="email" className="block text-white font-semibold mb-2">
-            {lang.email}
-          </label>
-          <input
-            type="email"
-            id="email"
-            className="w-full p-2 border rounded bg-transparent text-slate-100 outline-none"
+      </>}
+        <form className="p-6 rounded w-full max-w-lg mt-3 bg-gray-100" onSubmit={register_New_User}>
+          <div className="mb-4 flex items-center gap-2">
+            <div>
+              <label htmlFor="fname" className="block text-slate-700 font-semibold mb-2">
+                {lang.first_name}
+              </label>
+              <input
+                type="text"
+                id="fname"
+                placeholder="Type Here.."
+                className="w-full p-3 border rounded bg-slate-200 text-slate-900 outline-none"
 
-            onChange={handleInputChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="username" className="block text-white font-semibold mb-2">
-            {lang.login_email}
-          </label>
-          <input
-            type="text"
-            id="username"
-            className="w-full p-2 border rounded bg-transparent text-slate-100 outline-none"
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="lname" className="block text-slate-700 font-semibold mb-2">
+                {lang.last_name}
+              </label>
+              <input
+                type="text"
+                id="lname"
+                placeholder="Type Here.."
+                className="w-full p-3 border rounded bg-slate-200 text-slate-900 outline-none"
 
-            onChange={handleInputChange}
-          />
-        </div>
-      </div>
-      <div className="mb-4 relative">
-        <label htmlFor="password" className="block text-white font-semibold mb-2">
-          {lang.password}
-        </label>
-        <input
-          className="w-full p-2 border rounded bg-transparent text-slate-100 outline-none"
-          type={showPassword ? "text" : "password"}
-          id="password"
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div className="mb-4 flex items-center gap-2">
+            <div>
+              <label htmlFor="email" className="block text-slate-700 font-semibold mb-2">
+                {lang.email}
+              </label>
+              <input
+                type="email"
+                id="email"
+                placeholder="Type Here.."
+                className="w-full p-3 border rounded bg-slate-200 text-slate-900 outline-none"
 
-          onChange={handleInputChange}
-        />
-        <button
-          type="button"
-          onClick={togglePasswordVisibility}
-          className="absolute right-4 top-11 text-[#39827a]"
-        >
-          {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
-        </button>
-      </div>
-      <div className="mb-4 relative">
-        <label htmlFor="confirmPassword" className="block text-white font-semibold mb-2">
-          {lang.confirm_password}
-        </label>
-        <input
-          value={Cpass}
-          onChange={(e) => setCpass(e.target.value)}
-          className="w-full p-2 border rounded bg-transparent text-slate-100 outline-none"
-          type={showPassword ? "text" : "password"}
-          id="confirmPassword"
+                onChange={handleInputChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="username" className="block text-slate-700 font-semibold mb-2">
+                {lang.login_email}
+              </label>
+              <input
+                type="text"
+                id="username"
+                placeholder="Type Here.."
+                className="w-full p-3 border rounded bg-slate-200 text-slate-900 outline-none"
 
-        />
-        <button
-          type="button"
-          onClick={togglePasswordVisibility}
-          className="absolute right-4 top-11 text-[#39827a]"
-        >
-          {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
-        </button>
-      </div>
-      <div className="mb-4 flex items-center">
-        <input
-          type="checkbox"
-          id="terms"
-          required
-          className="mr-2 bg-white border"
-        />
-        <label htmlFor="terms" className="text-white">
-          {lang.agree_to}{" "}
-          <a href="#" className="text-[#59f1e0]">
-            {lang.terms_and_conditions}
-          </a>{" "}
-          {lang.and}{" "}
-          <a href="#" className="text-[#59f1e0]">
-            {lang.privacy_policy}
-          </a>
-          .
-        </label>
-      </div>
-      <button
-        type="submit"
-        className="w-full bg-[#36857b] text-white py-2 rounded hover:bg-[#368a80] mb-4"
-      >
-        {!showLoad&&<>
-        {lang.register}
-        </>}
-        {showLoad&&<>
-        Creating Account ...
-        </>}
-      </button>
-      <button
-        type="button"
-        className="w-full flex items-center justify-center bg-white text-gray-500 font-medium py-2 rounded hover:bg-gray-100"
-      >
-        <FcGoogle className="mr-2" /> {lang.get_started_with_google}
-      </button>
-    </form>
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div className="mb-4 relative">
+            <label htmlFor="password" className="block text-slate-700 font-semibold mb-2">
+              {lang.password}
+            </label>
+            <input
+            placeholder="Enter Your Password Here"
+              className="w-full p-3 border rounded bg-slate-200 text-slate-900 outline-none"
+              type={showPassword ? "text" : "password"}
+              id="password"
+
+              onChange={handleInputChange}
+            />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-4 top-11 text-[#39827a]"
+            >
+              {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+            </button>
+          </div>
+          <div className="mb-4 relative">
+            <label htmlFor="confirmPassword" className="block text-slate-700 font-semibold mb-2">
+              {lang.confirm_password}
+            </label>
+            <input
+              value={Cpass}
+              placeholder="Confirm Your Password Here"
+              onChange={(e) => setCpass(e.target.value)}
+              className="w-full p-3 border rounded bg-slate-200 text-slate-900 outline-none"
+              type={showPassword ? "text" : "password"}
+              id="confirmPassword"
+
+            />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute right-4 top-11 text-[#39827a]"
+            >
+              {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+            </button>
+          </div>
+          <div className="mb-4 flex items-center">
+            <input
+              type="checkbox"
+              id="terms"
+              required
+              className="mr-2 bg-white border"
+            />
+            <label htmlFor="terms" className="text-slate-700">
+              {lang.agree_to}{" "}
+              <a href="#" className="text-[#25756c]">
+                {lang.terms_and_conditions}
+              </a>{" "}
+              {lang.and}{" "}
+              <a href="#" className="text-[#25756c]">
+                {lang.privacy_policy}
+              </a>
+              .
+            </label>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-[#36857b] text-slate-200 py-3 rounded hover:bg-[#256b63] mb-4"
+          >
+            {lang.register}
+          </button>
+          <button
+            type="button"
+            className="w-full flex items-center justify-center  font-medium  bg-gray-200 text-gray-700 py-3 rounded hover:bg-gray-300"
+          >
+            <FcGoogle className="mr-2" /> {lang.get_started_with_google}
+          </button>
+        </form>
+     
+    </>
   );
 }
 

@@ -3,11 +3,19 @@ import AvatarImg from "../../assets/images/avatar.png";
 import FlagEN from "../../assets/images/en-flag.png"; // Replace with your actual flag image path
 import FlagES from "../../assets/images/fr-flag.png"; // Replace with your actual flag image path
 import { FiSearch } from "react-icons/fi";
+import { AiOutlineLogin } from "react-icons/ai";
 import { AiOutlineBell } from "react-icons/ai";
 import { IoLanguageOutline } from "react-icons/io5";
 import { MdWavingHand } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { resetStateToDefault } from "../../features/SharedDataSlice/SharedData";
 
 function Navbar() {
+  const UserInfo = useSelector(state => state.afiaCare.usersLogin);
+  const dispatch = useDispatch()
+  const nav = useNavigate()
   const [greeting, setGreeting] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
@@ -36,13 +44,18 @@ function Navbar() {
   const toggleLanguageDropdown = () => {
     setLanguageDropdownOpen(!languageDropdownOpen);
   };
+  const LogoutUser = () =>{
+    if(dispatch(resetStateToDefault())){
+      window.location.href="/authentication"
+    }
+  }
 
   return (
     <div className="flex bg-white flex-col-reverse md:flex-row justify-between items-center px-4 md:px-8 py-4">
       <h1 className="text-lg hidden md:flex items-center gap-2 font-semibold text-gray-500">
-      {greeting}, <span className="text-[#57bdb1] text-[22px]">Simeon!</span>
-      <MdWavingHand className="wave-icon" />
-    </h1>
+        {greeting}, <span className="text-[#57bdb1] text-[22px]">{UserInfo.UserInfo.username}</span>
+        <MdWavingHand className="wave-icon" />
+      </h1>
       <div className="flex items-center gap-4 ml-auto">
         <div className="relative">
           <input
@@ -61,33 +74,43 @@ function Navbar() {
           </button>
           {notificationOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-md z-10">
-              <div className="p-2 px-4 text-gray-600 cursor-pointer"
-                onClick={() => alert("Notification clicked!")}
-              >
-                Email not verified
-                <span className="absolute top-4 right-4 w-2 h-2 bg-yellow-400 rounded-full"></span>
-              </div>
+              {!UserInfo.UserInfo.email_confirm &&
+                <div className="p-2 px-4 text-gray-600 cursor-pointer"
+                >
+                  <span className="text-red-500 font-bold">
+                    Email not verified
+                  </span>
+                  <br></br> <span className="text-xs">(Fill The OnBoarding To Have Full Access)</span>
+                  <span className="absolute top-4 right-4 w-2 h-2 bg-red-400 rounded-full"></span>
+                </div>
+              }
             </div>
           )}
         </div>
         <div className="relative">
-          
+
           <img
-            src={AvatarImg}
-            alt="Avatar" className="w-[40px] h-[40px]    md:w-10 md:h-10   rounded-full border border-white shadow-md cursor-pointer"
+            src={UserInfo.UserInfo.avatar ? UserInfo.UserInfo.avatar : AvatarImg}
+            alt={UserInfo.UserInfo.username} className="w-[40px] h-[40px]    md:w-10 md:h-10   rounded-full border border-white shadow-md cursor-pointer"
             onClick={toggleDropdown}
           />
-         
-        
+
+
           {dropdownOpen && (
             <div className="absolute right-0 mt-2 w-60 p-2 bg-white border rounded-lg shadow-lg z-10">
+              {UserInfo.UserInfo.acc_type !== "patient" && <>
                 <p className="text-gray-600 text-center font-medium ">You're in as a user</p>
-              <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
-                Switch Profile
-              </button>
+                <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
+                  Switch Profile
+                </button>
+              </>}
+
               <hr />
+              <button className="w-full text-red-500 text-center p-2 hover:bg-gray-100 flex items-center gap-2" onClick={()=>LogoutUser()}>
+              <AiOutlineLogin /> Logout
+              </button>
               <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100 flex items-center gap-2" onClick={toggleLanguageDropdown}>
-              <IoLanguageOutline /> Change Language
+                <IoLanguageOutline /> Change Language
               </button>
               {languageDropdownOpen && (
                 <div className="mt-2">
@@ -99,7 +122,7 @@ function Navbar() {
                   </button>
                 </div>
               )}
-            
+
             </div>
           )}
           <span className="absolute top-8 right-1 w-2 h-2 bg-green-500 rounded-full" title="Online"></span>
