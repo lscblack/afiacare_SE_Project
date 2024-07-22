@@ -42,9 +42,7 @@ class Users(Base):
     preferred_workout_times = Column(String(255), nullable=True, default="")
     emergency_contact = Column(String(50), nullable=True, default="")
     emergency_contact_name = Column(String(255), nullable=True, default="") 
-
-
-     
+ 
 class OTP(Base):
     __tablename__ = "sent_otps"
     id = Column(Integer, primary_key=True, index=True)
@@ -139,5 +137,11 @@ class Transfer(Base):
     hospital_transfer_date = Column(Date, default=date.today)
 
 
-
+# table for disease
+class Disease(Base):
+    __tablename__ = "Diseases"
+    Disease_id = Column(Integer, primary_key=True, index=True)
+    Disease_name  = Column(String(255), nullable=True, default="")
+    Disease_reg  = Column(String(255), nullable=True, default="afiacare")
+    Disease_reg_date  = Column(String(255), nullable=True, default=date.today)
 
