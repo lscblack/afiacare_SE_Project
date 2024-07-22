@@ -1,7 +1,9 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, Date, ForeignKey,DateTime,ARRAY
+from sqlalchemy import Column, Integer,LargeBinary, String, Boolean, Float, Date, ForeignKey,DateTime,ARRAY
 from db.database import Base
 from datetime import date
 from datetime import datetime
+
+
 class Users(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
@@ -26,8 +28,8 @@ class Users(Base):
     weight = Column(Float, nullable=True, default=None)  # Use None for numeric types
     married = Column(Boolean, default=False)
     spouse = Column(String(50), nullable=True, default="")
-    avatar = Column(String(255), nullable=True, default="")
-    id_prove = Column(String(255), nullable=True, default="")
+    avatar = Column(LargeBinary, nullable=True, default="")
+    id_prove = Column(LargeBinary, nullable=True, default="")
     father_id_prove = Column(String(255), nullable=True, default="")
     mother_id_prove = Column(String(255), nullable=True, default="")
     blood_type = Column(String(255), nullable=True, default="")
