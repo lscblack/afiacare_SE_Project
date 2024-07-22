@@ -28,9 +28,10 @@ export default function LoginWithGoogle({ data, setData, avatar }) {
                     toast.error("Unable To Establish Session For You Retry");
                     setShowLoad(false)
                 }
+            }else{
                 setShowLoad(false)
             }
-            setShowLoad(false)
+            
 
         }
         catch (err) {
