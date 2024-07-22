@@ -1,7 +1,9 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, Date, ForeignKey,DateTime,ARRAY
+from sqlalchemy import Column, Integer, String,Text, Boolean, Float, Date, ForeignKey,DateTime,ARRAY
 from db.database import Base
 from datetime import date
 from datetime import datetime
+
+
 class Users(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
@@ -26,8 +28,8 @@ class Users(Base):
     weight = Column(Float, nullable=True, default=None)  # Use None for numeric types
     married = Column(Boolean, default=False)
     spouse = Column(String(50), nullable=True, default="")
-    avatar = Column(String(255), nullable=True, default="")
-    id_prove = Column(String(255), nullable=True, default="")
+    avatar = Column(Text, nullable=True, default="")
+    id_prove = Column(Text, nullable=True, default="")
     father_id_prove = Column(String(255), nullable=True, default="")
     mother_id_prove = Column(String(255), nullable=True, default="")
     blood_type = Column(String(255), nullable=True, default="")
@@ -87,9 +89,10 @@ class Hospital(Base):
     __tablename__ = "hospital"
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
-    ministerId = Column(Integer, ForeignKey("minister.id"))
-    hospital_id = Column(Integer)
+    hospital_type = Column(String(255), nullable=True, default="")
+    hospital_status = Column(Boolean, nullable=True, default=False)
     country = Column(String(255), nullable=True, default="")
+    ministerId = Column(Integer, nullable=True, default="")
 
 class Records(Base):
     __tablename__ = "records"
@@ -109,11 +112,10 @@ class Appointments(Base):
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
     hospital =Column(Integer, ForeignKey("hospital.id"))
-    home = Column(Boolean, default=False)
+    app_status = Column(Boolean, default=False)
     reason =  Column(String(255), nullable=True, default="")
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
     date_taken  = Column(Date, default=date.today)
-    time = Column(String(255), nullable=True, default="")
 
 class Donations(Base):
     __tablename__ = "donations"

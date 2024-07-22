@@ -13,7 +13,7 @@ AFIA_USERNAME = os.getenv("AFIA_USERNAME")
 AFIA_PASSWORD = os.getenv("AFIA_PASSWORD")  # Replace with App Password
 AFIA_SENDER_EMAIL = os.getenv("AFIA_SENDER_EMAIL")
 
-def send_new_email(Email_to, Email_sub, Email_msg, verification):
+def send_new_email(Email_to, Email_sub, Email_msg):
     msg = MIMEMultipart("alternative")
     msg['From'] = formataddr(("Afia Care", AFIA_SENDER_EMAIL))
     msg['To'] = Email_to

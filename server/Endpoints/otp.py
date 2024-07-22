@@ -60,7 +60,7 @@ async def send_email(details: EmailSchema, db: db_dependency):
     db.refresh(new_otp)
 
     msg = otp_temp(new_otp.otp_code, user.fname)
-    if send_new_email(details.toEmail, otp_subjet[purpose], msg, verification):
+    if send_new_email(details.toEmail, otp_subjet[purpose], msg):
         return {"message": "Email sent successfully", "verification_Code": verification}
 
 
