@@ -20,12 +20,15 @@ import RecentActivities from '../../Components/RecentActivities';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Onboarding from '../Onboarding';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 
 
 
 function Dashboard() {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
+  const [showMenuSmall, setShowMenuSmall] = useState(true)
   const { token } = theme.useToken();
   const wrapperStyle = {
     borderRadius: token.borderRadiusLG,
@@ -33,6 +36,22 @@ function Dashboard() {
   const onPanelChange = (value, mode) => {
     console.log(value.format('YYYY-MM-DD'), mode);
   };
+  //auto
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setShowMenuSmall(false);
+      }else{
+        setShowMenuSmall(true);
+
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Removed `expanded` from the dependency array
 
   //Event details
 
@@ -103,10 +122,9 @@ function Dashboard() {
     if (info.type === 'month') return monthCellRender(current);
     return info.originNode;
   };
-
   return (
     <div className="flex h-screen">
-      <div className='z-50'>
+      <div className={`${showMenuSmall ? "" : "hidden"} z-50 `}>
         <Sidebar>
           <Link to="/dashboard">   <SidebarItem
             icon={<LuLayoutDashboard size={20} />}
@@ -134,7 +152,7 @@ function Dashboard() {
 
       <div className="flex-1  overflow-y-auto ">
         <div className='sticky top-0 z-40'>
-          <Navbar /> {/* Place your Navbar here */}
+          <Navbar showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} /> {/* Place your Navbar here */}
         </div>
         {!UserInfo.UserInfo.acc_status &&
           <div className="bg-[white] p-1 z-0">

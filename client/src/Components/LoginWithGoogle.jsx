@@ -71,6 +71,7 @@ export default function LoginWithGoogle({ data, setData, avatar }) {
                 if (response.data && response.data.status_code == 400) {
                     toast.dismiss();
                     toast.error(`Error: ${response.data.detail || 'An error occurred'}`);
+                    setShowLoad(false)
                     console.log('Error detail:', JSON.stringify(response.data, null, 2)); // Pretty print the object
                 } else if (response.status >= 200 && response.status <= 299) {
                     const UserData = response.data
@@ -80,9 +81,11 @@ export default function LoginWithGoogle({ data, setData, avatar }) {
                         toast.dismiss();
                         toast.error("Unable To Establish Session For You Retry");
                       }
+                      setShowLoad(false)
                 } else {
                     toast.dismiss();
                     toast.error('An unexpected error occurred.');
+                    setShowLoad(false)
                     console.log('Unexpected response:', JSON.stringify(response, null, 2)); // Pretty print the object
                 }
                 setShowLoad(false)

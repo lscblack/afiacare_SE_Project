@@ -6,13 +6,15 @@ import MedicalInfoStep from "../Components/User/Onboarding/MedicalInfoStep";
 import CheckboxOptionsStep from "../Components/User/Onboarding/CheckboxOptionsStep";
 import SidebarProgress from "../Components/User/Onboarding/SidebarProgress";
 import Logo from "../assets/images/afiacare.svg";
+import { useSelector } from "react-redux";
 
 const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const UserInfo = useSelector(state => state.afiaCare.usersLogin);
   const [formData, setFormData] = useState(
     {
-      "fname": "",
-      "lname": "",
+      "fname": UserInfo.UserInfo.fname,
+      "lname": UserInfo.UserInfo.lname,
       "phone": "",
       "gender": "",
       "country": "",
@@ -29,7 +31,6 @@ const Onboarding = () => {
       "id_prove": "",
       "Id_type": "",
       "N_id": "",
-      "password": "",
       "blood_type": "",
       "existing_medical_conditions": "",
       "allergies": [
@@ -56,18 +57,15 @@ const Onboarding = () => {
 
   const handleNextStep = () => setCurrentStep((prevStep) => prevStep + 1);
   const handlePrevStep = () => setCurrentStep((prevStep) => prevStep - 1);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsModalOpen(true);
+  const handleSubmit = () => {
+    
+    console.log(formData)
   };
 
   return (
-    <div className="  py-2 h-full overflow-auto ">
-      <div className="flex justify-between  items-center px-10 sticky top-0 bg-[rgb(241,245,249)]">
-        <div className="">
-          <img src={Logo} alt="Logo" className="w-[100px] object-cover hidden md:block" />
-        </div>
-        <div>
+    <div className="  py-2 h-full overflow-auto max-md:text-xs">
+      <div className="flex justify-between  items-center  sticky top-0 bg-[rgb(241,245,249)]">
+        <div className="w-full p-2">
           <SidebarProgress currentStep={currentStep} steps={steps} />
         </div>
         <div>

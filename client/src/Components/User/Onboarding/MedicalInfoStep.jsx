@@ -31,12 +31,15 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
         }));
         setDiseases(formattedDiseases);
       } else {
+       toast.dismiss();
         toast.error("Error while getting diseases");
       }
     } catch (err) {
       if (err.response && err.response.status === 401) {
+       toast.dismiss();
         toast.error(err.response.data.detail);
       } else {
+       toast.dismiss();
         toast.error("Error while getting diseases");
       }
     }
@@ -48,24 +51,25 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
 
   const handleNext = () => {
     const {
-      bloodType,
-      existingMedicalConditions,
+      blood_type,
+      existing_medical_conditions,
       allergies,
-      physicalActivityLevel,
-      dietaryPreferences,
-      smokingStatus,
-      alcoholConsumption,
-      primaryHealthGoal,
-      preferredWorkoutTypes,
-      preferredWorkoutTimes,
-      emergencyContact,
-      emergencyContactName
+      physical_activity_level,
+      dietary_preferences,
+      smoking_status,
+      alcohol_consumption,
+      primary_health_goal,
+      preferred_workout_types,
+      preferred_workout_times,
+      emergency_contact,
+      emergency_contact_name
     } = formData;
 
-    if (!bloodType || !existingMedicalConditions || !allergies.length || !physicalActivityLevel || !dietaryPreferences.length ||
-      !smokingStatus || !alcoholConsumption || !primaryHealthGoal || !preferredWorkoutTypes.length || !preferredWorkoutTimes ||
-      !emergencyContact || !emergencyContactName) {
-      toast.error("Please fill out all required fields");
+    if (!blood_type || !existing_medical_conditions || !physical_activity_level || !dietary_preferences.length ||
+      !smoking_status || !alcohol_consumption ||
+      !emergency_contact || !emergency_contact_name) {
+     toast.dismiss();
+        toast.error("Please fill out all required fields");
       return;
     }
 
@@ -81,17 +85,17 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
 
       <div className="md:p-8">
         <div className="mb-4">
-          <label htmlFor="bloodType" className="text-gray-500 mb-2 text-[18px] block">
+          <label htmlFor="blood_type" className="text-gray-500 mb-2 text-md block">
             Blood Type
           </label>
           <select
-            name="bloodType"
-            value={formData.bloodType}
+            name="blood_type"
+            value={formData.blood_type}
             onChange={handleInputChange}
             className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
             required
           >
-            <option value="" disabled>Select Blood Type</option>
+            <option value="" >Select Blood Type</option>
             {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((type) => (
               <option key={type} value={type} className="text-[#39827a]">
                 {type}
@@ -101,17 +105,17 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
         </div>
 
         <div className="mb-4">
-          <label htmlFor="existingMedicalConditions" className="text-gray-500 mb-2 text-[18px] block">
+          <label htmlFor="existing_medical_conditions" className="text-gray-500 mb-2 text-md block">
             Existing Medical Conditions
           </label>
           <select
-            name="existingMedicalConditions"
-            value={formData.existingMedicalConditions}
+            name="existing_medical_conditions"
+            value={formData.existing_medical_conditions}
             onChange={handleInputChange}
             className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
             required
           >
-            <option value="" disabled>Select Medical Condition</option>
+            <option value="" >Select Medical Condition</option>
             {disease.sort().map((condition) => (
               <option key={condition.id} value={condition.id} className="text-[#39827a]">
                 {condition.name}
@@ -129,17 +133,17 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
         />
 
         <div className="mb-4">
-          <label htmlFor="physicalActivityLevel" className="text-gray-500 mb-2 text-[18px] block">
+          <label htmlFor="physical_activity_level" className="text-gray-500 mb-2 text-md block">
             Physical Activity Level
           </label>
           <select
-            name="physicalActivityLevel"
-            value={formData.physicalActivityLevel}
+            name="physical_activity_level"
+            value={formData.physical_activity_level}
             onChange={handleInputChange}
             className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
             required
           >
-            <option value="" disabled>Select Activity Level</option>
+            <option value="" >Select Activity Level</option>
             {["Sedentary", "Lightly Active", "Moderately Active", "Very Active", "Extra Active"].map((level) => (
               <option key={level} value={level} className="text-[#39827a]">
                 {level}
@@ -150,25 +154,25 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
 
         <ArrayInputField
           label="Dietary Preferences"
-          name="dietaryPreferences"
-          value={formData.dietaryPreferences || []}
-          onChange={(value) => handleArrayChange("dietaryPreferences", value)}
-          onRemove={(index) => handleRemoveItem("dietaryPreferences", index)}
+          name="dietary_preferences"
+          value={formData.dietary_preferences || []}
+          onChange={(value) => handleArrayChange("dietary_preferences", value)}
+          onRemove={(index) => handleRemoveItem("dietary_preferences", index)}
         />
 
         <div className="flex gap-2 w-full">
           <div className="mb-4 w-full">
-            <label htmlFor="smokingStatus" className="text-gray-500 mb-2 text-[18px] block">
+            <label htmlFor="smoking_status" className="text-gray-500 mb-2 text-md block">
               Smoking Status
             </label>
             <select
-              name="smokingStatus"
-              value={formData.smokingStatus}
+              name="smoking_status"
+              value={formData.smoking_status}
               onChange={handleInputChange}
               className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
               required
             >
-              <option value="" disabled> Select Smoking Status</option>
+              <option value="" > Select Smoking Status</option>
               {["No", "Yes"].map((level) => (
                 <option key={level} value={level} className="text-[#39827a]">
                   {level}
@@ -178,17 +182,17 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
           </div>
 
           <div className="mb-4 w-full">
-            <label htmlFor="alcoholConsumption" className="text-gray-500 mb-2 text-[18px] block">
+            <label htmlFor="alcohol_consumption" className="text-gray-500 mb-2 text-md block">
               Alcohol Consumption
             </label>
             <select
-              name="alcoholConsumption"
-              value={formData.alcoholConsumption}
+              name="alcohol_consumption"
+              value={formData.alcohol_consumption}
               onChange={handleInputChange}
               className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
               required
             >
-              <option value="" disabled> Select  Alcohol Consumption Status</option>
+              <option value="" > Select  Alcohol Consumption Status</option>
               {["No", "Yes"].map((level) => (
                 <option key={level} value={level} className="text-[#39827a]">
                   {level}
@@ -199,13 +203,13 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
         </div>
 
         <div className="mb-4">
-          <label htmlFor="primaryHealthGoal" className="text-gray-500 mb-2 text-[18px] block">
+          <label htmlFor="primary_health_goal" className="text-gray-500 mb-2 text-md block">
             Primary Health Goal
           </label>
           <input
             type="text"
-            name="primaryHealthGoal"
-            value={formData.primaryHealthGoal}
+            name="primary_health_goal"
+            value={formData.primary_health_goal}
             onChange={handleInputChange}
             placeholder="Enter primary health goal"
             className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
@@ -215,25 +219,25 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
 
         <ArrayInputField
           label="Preferred Workout Types"
-          name="preferredWorkoutTypes"
-          value={formData.preferredWorkoutTypes || []}
-          onChange={(value) => handleArrayChange("preferredWorkoutTypes", value)}
-          onRemove={(index) => handleRemoveItem("preferredWorkoutTypes", index)}
+          name="preferred_workout_types"
+          value={formData.preferred_workout_types || []}
+          onChange={(value) => handleArrayChange("preferred_workout_types", value)}
+          onRemove={(index) => handleRemoveItem("preferred_workout_types", index)}
         />
 
         <div className="mb-4">
-          <label htmlFor="preferredWorkoutTimes" className="text-gray-500 mb-2 text-[18px] block">
+          <label htmlFor="preferred_workout_times" className="text-gray-500 mb-2 text-md block">
             Preferred Workout Times
           </label>
 
           <select
-            name="preferredWorkoutTimes"
-            value={formData.preferredWorkoutTimes}
+            name="preferred_workout_times"
+            value={formData.preferred_workout_times}
             onChange={handleInputChange}
             className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
             required
           >
-            <option value="" disabled> Select  Preferred Workout Times</option>
+            <option value="" > Select  Preferred Workout Times</option>
             {["Day", "Night"].map((level) => (
               <option key={level} value={level} className="text-[#39827a]">
                 {level}
@@ -244,13 +248,13 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
 
         <div className="flex gap-10">
           <div className="mb-4 w-full">
-            <label htmlFor="emergencyContact" className="text-gray-500 mb-2 text-[18px] block">
+            <label htmlFor="emergency_contact" className="text-gray-500 mb-2 text-md block">
               Emergency Contact
             </label>
             <input
               type="text"
-              name="emergencyContact"
-              value={formData.emergencyContact}
+              name="emergency_contact"
+              value={formData.emergency_contact}
               onChange={handleInputChange}
               placeholder="Enter emergency contact number"
               className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
@@ -259,13 +263,13 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
           </div>
 
           <div className="mb-4 w-full">
-            <label htmlFor="emergencyContactName" className="text-gray-500 mb-2 text-[18px] block">
+            <label htmlFor="emergency_contact_name" className="text-gray-500 mb-2 text-md block">
               Emergency Contact Name
             </label>
             <input
               type="text"
-              name="emergencyContactName"
-              value={formData.emergencyContactName}
+              name="emergency_contact_name"
+              value={formData.emergency_contact_name}
               onChange={handleInputChange}
               placeholder="Enter emergency contact name"
               className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
@@ -315,8 +319,8 @@ const ArrayInputField = ({ label, name, value, onChange, onRemove }) => {
 
   return (
     <div className="mb-4">
-      <label htmlFor={name} className="text-gray-500 mb-2 text-[18px] block">
-        {label}
+      <label htmlFor={name} className="text-gray-500 mb-2 text-md block">
+        {label} <span className="text-red-500 text-xs font-bold">Use comma To add Your Data</span>
       </label>
       <div className="flex items-center mb-2">
         <input

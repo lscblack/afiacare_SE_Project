@@ -15,10 +15,10 @@ function WelcomeStep({ handleNextStep }) {
       </div>
       <div className="w-[100%] md:w-[60%]">
       <h3 className="text-xl font-medium mb-2 text-[#36857b]">{lang.welcomeTitle}</h3>
-      <p className="text-white-50 mb-4 text-justify text-[18px] text-gray-500">
+      <p className="text-white-50 mb-4 text-justify text-md text-gray-500">
            {lang.welcomeParagraph1}
             </p>
-            <p className="text-white-50 text-[18px] mb-4 text-justify text-gray-500">
+            <p className="text-white-50 text-md mb-4 text-justify text-gray-500">
              {lang.welcomeParagraph2}
             </p>
       <button
