@@ -40,6 +40,8 @@ class UpdateUserSchema(BaseModel):
     spouse: Optional[str] = None
     avatar: Optional[str] = None
     id_prove: Optional[str] = None
+    Id_type: Optional[str] = None
+    N_id: Optional[str] = None
     password: Optional[str] = None
     blood_type: Optional[str] = None
     existing_medical_conditions: Optional[str] = None

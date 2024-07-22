@@ -17,6 +17,7 @@ class Users(Base):
     country = Column(String(50), nullable=True, default="")
     dob = Column(Date, default=date.today)
     N_id = Column(String(20), nullable=True, default="")
+    Id_type = Column(String(250), nullable=True, default="")
     father_id = Column(String(20), nullable=True, default="")
     father_name = Column(String(50), nullable=True, default="")
     mother_id = Column(String(20), nullable=True, default="")

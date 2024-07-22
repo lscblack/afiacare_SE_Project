@@ -12,6 +12,8 @@ class ReturnUser(BaseModel):
     country: Optional[str] = None
     dob: Optional[date]
     N_id: Optional[str] = None
+    id_prove: Optional[str] = None
+    Id_type: Optional[str] = None
     father_id: Optional[str] = None
     father_name: Optional[str] = None
     mother_id: Optional[str] = None
@@ -24,7 +26,6 @@ class ReturnUser(BaseModel):
     acc_status: Optional[bool]
     avatar: Optional[str] = None
     blood_type: Optional[str] = None
-    id_prove: Optional[str] = None
     email_confirm: Optional[bool]
     existing_medical_conditions: Optional[str] = None
     allergies: Optional[List[str]] = None
