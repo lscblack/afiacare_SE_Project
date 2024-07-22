@@ -221,7 +221,7 @@ async def Create_Token_For_sign_up_with_google(
 
     if not check_email:  # if email exists, log the user into the system
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
+            status_code=status.HTTP_404_NOT_FOUND,
             detail="No Account found with the given credentials",
         )
 

@@ -37,7 +37,7 @@ def otp_temp(otp, names):
         <b>Note</b> the otp will expire in ten minutes
     </p>
     <p style="font-size: 0.75rem; margin-top: 12px; text-align: center;">You Can Visit The Web Via:
-        <a href="https://afiacare.vercel.app/" style="color: #3182ce;">https://afiacare.vercel.app/</a>
+        <a href="https://www.afiacare.tech/" style="color: #3182ce;">https://www.afiacare.tech/</a>
     </p>
 </div>
 </body>
