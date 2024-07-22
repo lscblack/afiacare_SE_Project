@@ -27,6 +27,8 @@ const Onboarding = () => {
       "spouse": "",
       "avatar": "",
       "id_prove": "",
+      "Id_type": "",
+      "N_id": "",
       "password": "",
       "blood_type": "",
       "existing_medical_conditions": "",

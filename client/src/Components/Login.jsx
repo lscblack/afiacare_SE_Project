@@ -162,7 +162,7 @@ function Login({ toggleForm, showForgotPassword }) {
           <div className="mb-4 text-right">
             <button
               type="button"
-              onClick={showForgotPassword} className="text-[#fff] font-normal"
+              onClick={showForgotPassword} className="text-slate-200 font-normal"
             >
               {lang.login_forgot_password}
             </button>

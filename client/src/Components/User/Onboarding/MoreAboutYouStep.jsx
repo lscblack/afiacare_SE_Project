@@ -15,8 +15,8 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
   };
 
   const handleSelectChange = (e) => {
-    setFormData({ ...formData, id_prove: e.target.value, idNumber: "" });
-    setErrors({ ...errors, id_prove: "" });
+    setFormData({ ...formData, Id_type: e.target.value, N_id: "" });
+    setErrors({ ...errors, Id_type: "" });
   };
 
   const calculateAge = (dob) => {
@@ -36,28 +36,31 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
     if (!formData.phone) newErrors.phone = "Phone Number is required";
     if (!formData.gender) newErrors.gender = "Gender is required";
     if (!formData.address) newErrors.address = "Address is required";
+    if (!formData.N_id && formData.Id_type) newErrors.N_id = "Id Number is required";
 
-    if (!formData.dob){
-       toast.dismiss();
+    if (!formData.dob) {
+      toast.dismiss();
       toast.warning("Date of Birth is required")
     }
-    else if (!formData.phone){
-       toast.dismiss();
+    else if (!formData.phone) {
+      toast.dismiss();
       toast.warning("Phone Number is required")
     }
-    else if (!formData.gender){
-       toast.dismiss();
+    else if (!formData.gender) {
+      toast.dismiss();
       toast.warning("Gender is required")
     }
-    else if (!formData.address){
-       toast.dismiss();
+    else if (!formData.address) {
+      toast.dismiss();
       toast.warning("Address is required")
-    }
-    if (calculateAge(formData.dob) >= 16 && !formData.id_prove){
-      newErrors.id_prove = "ID Type is required";
+    }  else if (calculateAge(formData.dob) >= 16 && !formData.Id_type) {
+      newErrors.Id_type = "ID Type is required";
       toast.warning("ID Type is required")
-    } 
-      
+    }else if (!formData.N_id && formData.Id_type) {
+      toast.dismiss();
+      toast.warning(`${formData.Id_type} Number is required`)
+    }
+
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -152,12 +155,12 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
         {calculateAge(formData.dob) >= 16 && (
           <div className="flex gap-4 mb-4">
             <div className="w-1/2">
-              <label htmlFor="id_prove" className="text-gray-500 mb-2 text-[18px] block">
+              <label htmlFor="Id_type" className="text-gray-500 mb-2 text-[18px] block">
                 ID Type
               </label>
               <select
-                name="id_prove"
-                value={formData.id_prove}
+                name="Id_type"
+                value={formData.Id_type}
                 onChange={handleSelectChange}
                 className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none"
               >
@@ -168,21 +171,21 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
                 <option value="id">ID</option>
                 {/* <option value="driversLicense">Driver's License</option> */}
               </select>
-              {errors.id_prove && <span className="text-red-500 text-sm">{errors.id_prove}</span>}
+              {errors.Id_type && <span className="text-red-500 text-sm">{errors.Id_type}</span>}
             </div>
             <div className="w-1/2">
-              {formData.id_prove && (
+              {formData.Id_type && (
                 <div>
-                  <label htmlFor="idNumber" className="text-gray-500 mb-2 text-[18px] block">
-                    {formData.id_prove === "passport" ? "Passport Number" : formData.id_prove === "id" ? "ID Number" : "Driver's License Number"}
+                  <label htmlFor="N_id" className="text-gray-500 mb-2 text-[18px] block">
+                    {formData.Id_type === "passport" ? "Passport Number" : formData.Id_type === "id" ? "ID Number" : "Driver's License Number"}
                   </label>
                   <input
                     type="text"
-                    name="idNumber"
-                    value={formData.idNumber}
+                    name="N_id"
+                    value={formData.N_id}
                     onChange={handleInputChange}
                     className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
-                    placeholder={`Enter your ${formData.id_prove} number`}
+                    placeholder={`Enter your ${formData.Id_type} number`}
                   />
                 </div>
               )}
