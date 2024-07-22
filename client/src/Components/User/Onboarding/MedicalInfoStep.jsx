@@ -40,7 +40,7 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
         toast.error(err.response.data.detail);
       } else {
        toast.dismiss();
-        toast.error("Error while getting diseases");
+       // toast.error("Error while getting diseases");
       }
     }
   };
@@ -65,13 +65,40 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
       emergency_contact_name
     } = formData;
 
-    if (!blood_type || !existing_medical_conditions || !physical_activity_level || !dietary_preferences.length ||
-      !smoking_status || !alcohol_consumption ||
-      !emergency_contact || !emergency_contact_name) {
-     toast.dismiss();
-        toast.error("Please fill out all required fields");
+    if (!blood_type) {
+      toast.dismiss();
+      toast.error("Please fill out the blood type field");
+      return;
+    } else if (!existing_medical_conditions) {
+      toast.dismiss();
+      toast.error("Please fill out the existing medical conditions field");
+      return;
+    } else if (!physical_activity_level) {
+      toast.dismiss();
+      toast.error("Please fill out the physical activity level field");
+      return;
+    } else if (!dietary_preferences.length) {
+      toast.dismiss();
+      toast.error("Please fill out the dietary preferences field");
+      return;
+    } else if (!smoking_status) {
+      toast.dismiss();
+      toast.error("Please fill out the smoking status field");
+      return;
+    } else if (!alcohol_consumption) {
+      toast.dismiss();
+      toast.error("Please fill out the alcohol consumption field");
+      return;
+    } else if (!emergency_contact) {
+      toast.dismiss();
+      toast.error("Please fill out the emergency contact field");
+      return;
+    } else if (!emergency_contact_name) {
+      toast.dismiss();
+      toast.error("Please fill out the emergency contact name field");
       return;
     }
+    
 
     handleNextStep();
   };

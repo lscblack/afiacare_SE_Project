@@ -23,18 +23,22 @@ export default function LoginWithGoogle({ data, setData, avatar }) {
                 const UserData = response.data
                 if (dispatch(addUserLogin(UserData))) {
                     window.location.href = "/dashboard"
-                  } else {
+                } else {
                     toast.dismiss();
                     toast.error("Unable To Establish Session For You Retry");
-                  }
-            } else {
+                    setShowLoad(false)
+                }
                 setShowLoad(false)
             }
+            setShowLoad(false)
+
         }
         catch (err) {
             if (err.response.status == 401) {
                 setShowLoad(false)
             }
+            setShowLoad(false)
+
             console.log(err.response)
         }
     }
@@ -77,11 +81,11 @@ export default function LoginWithGoogle({ data, setData, avatar }) {
                     const UserData = response.data
                     if (dispatch(addUserLogin(UserData))) {
                         window.location.href = "/dashboard"
-                      } else {
+                    } else {
                         toast.dismiss();
                         toast.error("Unable To Establish Session For You Retry");
-                      }
-                      setShowLoad(false)
+                    }
+                    setShowLoad(false)
                 } else {
                     toast.dismiss();
                     toast.error('An unexpected error occurred.');

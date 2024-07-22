@@ -32,7 +32,7 @@ const CheckboxOptionsStep = ({ formData, setFormData, handleSubmit, handlePrevSt
     }
   };
 
-  const fileTypes = ['image/jpeg','image/png'];
+  const fileTypes = ['image/jpeg', 'image/png'];
 
   const profileProps = {
     beforeUpload: (file) => {
@@ -57,13 +57,10 @@ const CheckboxOptionsStep = ({ formData, setFormData, handleSubmit, handlePrevSt
       return false; // Prevent auto upload
     },
   };
-  const checkData = () =>{
-    if(!profilePreview){
-      toast.dismiss();
-      toast.error('Profle Picture is Needed!');
-    }else if(!docPreview){
+  const checkData = () => {
+    if (!docPreview) {
       toast.error('ID Prove Is Needed!');
-    }else{
+    } else {
       handleSubmit()
     }
   }
