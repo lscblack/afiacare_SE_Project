@@ -6,6 +6,8 @@ from typing import List
 from schemas.returnSchemas import ReturnUser
 from schemas.schemas import UpdateUserSchema
 from schemas.schemas import UserTypeDropDown
+from functions.send_mail import send_new_email
+from emailsTemps.AccCreation import account_completion_email
 
 router = APIRouter(prefix="/apis", tags=["User Management"])
 
@@ -85,11 +87,13 @@ async def patch_current_user(user_data: UpdateUserSchema, user: user_dependency,
     # Update user fields based on provided data using dynamic attribute assignment
     for field_name, value in user_data.dict(exclude_unset=True).items():
         setattr(db_user, field_name, value)
-
+        
+    db_user.acc_status = True
     db.commit()
     db.refresh(db_user)
-
-    return ReturnUser.from_orm(db_user)
+    msg = account_completion_email(db_user.fname)
+    if send_new_email(db_user.email, "Thank You for Setting Up Your Afia Care Account – Next Steps Inside", msg):
+        return ReturnUser.from_orm(db_user)
 # ------------------------ Delete User One
 
 
