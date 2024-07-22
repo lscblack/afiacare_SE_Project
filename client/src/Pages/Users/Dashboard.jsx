@@ -19,6 +19,7 @@ import AppointmentDis from '../../Components/User/Dashboard/AppointmentDis';
 import RecentActivities from '../../Components/RecentActivities';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Onboarding from '../Onboarding';
 
 
 
@@ -105,7 +106,7 @@ function Dashboard() {
 
   return (
     <div className="flex h-screen">
-      <div>
+      <div className='z-50'>
         <Sidebar>
           <Link to="/dashboard">   <SidebarItem
             icon={<LuLayoutDashboard size={20} />}
@@ -113,17 +114,19 @@ function Dashboard() {
             alert
             active
           /></Link>
-
-          <Link to="/user/consultations"> <SidebarItem icon={<FaHospitalUser size={20} />} text="Consultations" /></Link>
-
+          {UserInfo.UserInfo.acc_status && UserInfo.UserInfo.acc_status &&
+            <>
+              <Link to="/user/consultations"> <SidebarItem icon={<FaHospitalUser size={20} />} text="Consultations" /></Link>
+              <SidebarItem icon={<IoIosSettings size={20} />} text="Settings" alert />
+              <SidebarItem icon={<BiSolidDonateBlood size={20} />} text="Donations" alert />
+              <SidebarItem icon={<MdForum size={20} />} text="Messages" alert />
+            </>
+          }
           <SidebarItem icon={<GrEmergency size={20} />} text="Emergency" />
-          <SidebarItem icon={<BiSolidDonateBlood size={20} />} text="Donations" alert />
           <SidebarItem icon={<FaHospitalAlt size={20} />} text="Facilities" />
-          <SidebarItem icon={<MdForum size={20} />} text="Messages" alert />
           <hr className='my-3' />
           <SidebarItem icon={<SiFigshare size={20} />} text="Referrals" />
           <SidebarItem icon={<MdContactSupport size={20} />} text="Support" />
-          <SidebarItem icon={<IoIosSettings size={20} />} text="Settings" alert />
 
         </Sidebar>
       </div>
@@ -133,6 +136,11 @@ function Dashboard() {
         <div className='sticky top-0 z-40'>
           <Navbar /> {/* Place your Navbar here */}
         </div>
+        {!UserInfo.UserInfo.acc_status &&
+          <div className="bg-[white] p-1 z-0">
+            <Onboarding />
+          </div>
+        }
         {UserInfo.UserInfo.acc_status &&
           <div className="flex flex-col px-4 md:flex-row">
             <div className='md:w-[50%]'>

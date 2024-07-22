@@ -16,15 +16,13 @@ function Sidebar({ children }) {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
   const dispatch = useDispatch()
   const nav = useNavigate()
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const [actionsVisible, setActionsVisible] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setExpanded(false);
-      } else {
-        setExpanded(true);
       }
     };
 
@@ -32,7 +30,7 @@ function Sidebar({ children }) {
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, []); // Removed `expanded` from the dependency array
   const LogoutUser = () =>{
     if(dispatch(resetStateToDefault())){
       window.location.href="/authentication"

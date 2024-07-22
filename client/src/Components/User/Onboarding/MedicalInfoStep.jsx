@@ -1,11 +1,44 @@
 import React from "react";
+import MyApi from "../../../AxiosInstance/MyApi";
+import { useState } from "react";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
+  const [disease,setDiseases] = useState([]) 
+  //--------------------get all disease
+  const diseases = async() =>{
+    try {
+      const response = await MyApi.get("diseases/all") // for sending request on backend
+      const disease = response.data
+      if (disease) {
+        const formattedDiseases = disease.map(disease => ({
+          name: disease.Disease_name,
+          id: disease.Disease_id
+        }));
+        setDiseases(formattedDiseases);
+      } else {
+        toast.dismiss();
+        toast.error("Error While Getting diseases");
+      }
+    }
+    catch (err) {
+      if (err.response && err.response.status == 401) {
+        toast.dismiss();
+        toast.error(err.response.data.detail);
+      } else {
+        toast.dismiss();
+        toast.error("Error While Getting diseases");
+      }
+    }
+  }
+  useEffect(()=>{
+    diseases()
+  },[])
   return (
     <div className="bg-white w-full max-w-screen-lg m-auto rounded-lg overflow-y-auto p-4">
       <div className="border-b-gray border-b border-solid pb-4">
@@ -46,11 +79,14 @@ const MedicalInfoStep = ({ formData, setFormData, handleNextStep, handlePrevStep
             required
           >
             <option value="" disabled>Select Medical Condition</option>
-            {["Diabetes", "Hypertension", "Asthma", "Heart Disease", "None"].map((condition) => (
-              <option key={condition} value={condition} className="text-[#39827a]">
-                {condition}
+            {disease.map((condition) => (
+              <option key={condition.id} value={condition.id} className="text-[#39827a]">
+                {condition.name}
               </option>
             ))}
+            {!disease && <>
+            <option value=""  className="text-[#39827a]" >Loading...</option>
+            </>}
           </select>
         </div>
         

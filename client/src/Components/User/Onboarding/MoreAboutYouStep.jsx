@@ -1,18 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { CiCalendarDate } from "react-icons/ci";
-
+import { toast } from 'react-toastify';
 const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevStep }) => {
+  const [errors, setErrors] = useState({});
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: "" });
   };
 
   const handleRadioChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
   };
 
   const handleSelectChange = (e) => {
     setFormData({ ...formData, id_prove: e.target.value, idNumber: "" });
+    setErrors({ ...errors, id_prove: "" });
   };
 
   const calculateAge = (dob) => {
@@ -24,6 +28,50 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
       age--;
     }
     return age;
+  };
+
+  const validateForm = () => {
+    let newErrors = {};
+    if (!formData.dob) newErrors.dob = "Date of Birth is required";
+    if (!formData.phone) newErrors.phone = "Phone Number is required";
+    if (!formData.gender) newErrors.gender = "Gender is required";
+    if (!formData.address) newErrors.address = "Address is required";
+
+    if (!formData.dob){
+       toast.dismiss();
+      toast.warning("Date of Birth is required")
+    }
+    else if (!formData.phone){
+       toast.dismiss();
+      toast.warning("Phone Number is required")
+    }
+    else if (!formData.gender){
+       toast.dismiss();
+      toast.warning("Gender is required")
+    }
+    else if (!formData.address){
+       toast.dismiss();
+      toast.warning("Address is required")
+    }
+    if (calculateAge(formData.dob) >= 16 && !formData.id_prove){
+      newErrors.id_prove = "ID Type is required";
+      toast.warning("ID Type is required")
+    } 
+      
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleNext = () => {
+    if (validateForm()) {
+      if (!formData.father_id && !formData.mother_id) {
+        toast.dismiss();
+        toast.warning(`Warning: Without providing at least one parent ID, you won't be able to see relatives.`);
+      }
+      handleNextStep();
+
+    }
   };
 
   return (
@@ -45,6 +93,7 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
             onChange={handleInputChange}
             className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
           />
+          {errors.dob && <span className="text-red-500 text-sm">{errors.dob}</span>}
           <div className="text-gray-400 float-right -mt-10 mr-1 cursor-pointer font-semibold">
             <CiCalendarDate size={30} className="cursor-pointer" />
           </div>
@@ -62,6 +111,7 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
               onChange={handleInputChange}
               className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
             />
+            {errors.phone && <span className="text-red-500 text-sm">{errors.phone}</span>}
           </div>
           <div className="md:w-1/3">
             <label htmlFor="gender" className="text-gray-500 mb-2 text-[18px] block">
@@ -82,6 +132,7 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
                 </label>
               ))}
             </div>
+            {errors.gender && <span className="text-red-500 text-sm">{errors.gender}</span>}
           </div>
           <div className="mb-4 md:w-1/3">
             <label htmlFor="address" className="text-gray-500 mb-2 text-[18px] block">
@@ -94,6 +145,7 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
               onChange={handleInputChange}
               className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
             />
+            {errors.address && <span className="text-red-500 text-sm">{errors.address}</span>}
           </div>
         </div>
 
@@ -114,8 +166,9 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
                 </option>
                 <option value="passport">Passport</option>
                 <option value="id">ID</option>
-                <option value="driversLicense">Driver's License</option>
+                {/* <option value="driversLicense">Driver's License</option> */}
               </select>
+              {errors.id_prove && <span className="text-red-500 text-sm">{errors.id_prove}</span>}
             </div>
             <div className="w-1/2">
               {formData.id_prove && (
@@ -158,6 +211,32 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
               type="text"
               name="mother_name"
               value={formData.mother_name}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
+            />
+          </div>
+        </div>
+        <div className="flex gap-4 mb-4">
+          <div className="w-1/2">
+            <label htmlFor="father_id" className="text-gray-500 mb-2 text-[18px] block">
+              Father's Id (Passport)
+            </label>
+            <input
+              type="text"
+              name="father_id"
+              value={formData.father_id}
+              onChange={handleInputChange}
+              className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
+            />
+          </div>
+          <div className="w-1/2">
+            <label htmlFor="mother_id" className="text-gray-500 mb-2 text-[18px] block">
+              Mother's Id (Passport)
+            </label>
+            <input
+              type="text"
+              name="mother_id"
+              value={formData.mother_id}
               onChange={handleInputChange}
               className="w-full p-2 border rounded bg-transparent text-gray-400 outline-none focus:border-[#5ae9d8] focus:border-solid"
             />
@@ -230,11 +309,12 @@ const MoreAboutYouStep = ({ formData, setFormData, handleNextStep, handlePrevSte
           </div>
         )}
 
+
         <div className="flex justify-between mt-4">
           <button onClick={handlePrevStep} className="bg-transparent text-gray-400 px-4 py-2 rounded hover:bg-gray-400 hover:text-white border duration-300">
             Previous
           </button>
-          <button onClick={handleNextStep} className="bg-[#39827a] text-white px-4 py-2 rounded hover:bg-[#368a80] duration-300">
+          <button onClick={handleNext} className="bg-[#39827a] text-white px-4 py-2 rounded hover:bg-[#368a80] duration-300">
             Next
           </button>
         </div>
