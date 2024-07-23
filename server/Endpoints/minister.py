@@ -6,7 +6,7 @@ from typing import List
 from schemas.returnSchemas import ReturnUser
 from schemas.schemas import UserTypeDropDown
 
-router = APIRouter(prefix="/admin", tags=["Admin Management"])
+router = APIRouter(prefix="/minister", tags=["Minister Management"])
 
 # -------------------- Change UserType only Admin,Minister,Hospital
 @router.post("/me/type/{userid}")
