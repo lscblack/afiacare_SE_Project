@@ -1,4 +1,8 @@
 learn
 .env
 venv
+.mypy_cache
+.venv
+.vscode
 example.env
+*.pyc

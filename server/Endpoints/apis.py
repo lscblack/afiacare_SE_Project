@@ -6,6 +6,8 @@ from typing import List
 from schemas.returnSchemas import ReturnUser
 from schemas.schemas import UpdateUserSchema
 from schemas.schemas import UserTypeDropDown
+from functions.send_mail import send_new_email
+from emailsTemps.AccCreation import account_completion_email
 
 router = APIRouter(prefix="/apis", tags=["User Management"])
 
@@ -31,32 +33,6 @@ async def get_current_user(user: user_dependency, db: db_dependency):
             status_code=404, detail="User information Not Found!")
 
     return ReturnUser.from_orm(user_info)
-
-# -------------------------------get all user info
-
-
-@router.get("/all_users", description="""
-    This endpoint is used to get All user information for the for admin user. Pass the admin's token in the headers.
-    \n
-    Returns 200 if user information is successfully retrieved. Throws an error if authentication fails or user information is not found.
-    """, response_model=List[ReturnUser])
-async def get_all_user(user: user_dependency, db: db_dependency):
-    if isinstance(user, HTTPException):
-        raise user
-
-    if not user or "user_id" not in user:
-        raise HTTPException(
-            status_code=404, detail="User information Not Found!")
-
-    if user['acc_type'] != "admin":
-        raise HTTPException(status_code=401, detail="Your Not Admin")
-
-    user_info = db.query(Users).all()
-    if not user_info:
-        raise HTTPException(
-            status_code=404, detail="User information Not Found!")
-
-    return user_info
 
 
 # ------------------------------patial update user
@@ -85,11 +61,13 @@ async def patch_current_user(user_data: UpdateUserSchema, user: user_dependency,
     # Update user fields based on provided data using dynamic attribute assignment
     for field_name, value in user_data.dict(exclude_unset=True).items():
         setattr(db_user, field_name, value)
-
+        
+    db_user.acc_status = True
     db.commit()
     db.refresh(db_user)
-
-    return ReturnUser.from_orm(db_user)
+    msg = account_completion_email(db_user.fname)
+    if send_new_email(db_user.email, "Thank You for Setting Up Your Afia Care Account – Next Steps Inside", msg):
+        return ReturnUser.from_orm(db_user)
 # ------------------------ Delete User One
 
 
@@ -114,47 +92,3 @@ async def delete_current_user(user: user_dependency, db: db_dependency):
 
     return None  # Returning None with status_code 204 indicates successful deletion
 
-# -------------------- Change UserType only Admin,Minister,Hospital
-
-
-@router.post("/me/type/{userid}")
-async def change_user_type(
-        userid: int,
-        userType: UserTypeDropDown,
-        user: user_dependency, 
-        db: db_dependency
-    ):
-    if isinstance(user, HTTPException):
-        raise user  # Re-raise the HTTPException if user is an instance of it
-
-    if not user or "user_id" not in user:
-        raise HTTPException(status_code=401, detail="Authentication required!")
-
-    user_info = db.query(Users).filter(Users.id == userid).first()
-    if not user_info:
-        raise HTTPException(status_code=404, detail="User Not Found")
-
-    if user['acc_type'] == "admin":
-        setattr(user_info, "acc_type", userType.user_type)
-    elif user['acc_type'] == "minister":
-        if user_info.acc_type not in ["admin","minister"] and userType.user_type not in ["minister", "admin"]:
-            setattr(user_info, "acc_type", userType.user_type)
-        else:
-            raise HTTPException(
-                status_code=401, detail="You don't have permission to change to those categories"
-            )
-    elif user['acc_type'] == "hospital":
-        if user_info.acc_type not in ["admin","minister","hospital"] and userType.user_type not in ["minister", "admin", "hospital"]:
-            setattr(user_info, "acc_type", userType.user_type)
-        else:
-            raise HTTPException(
-                status_code=401, detail="You don't have permission to change to those categories"
-            )
-    elif user['acc_type'] == "patient":
-        raise HTTPException(
-            status_code=401, detail="You're not allowed to change user type"
-        )
-
-    db.commit()
-    db.refresh(user_info)
-    return {"message": "User type updated successfully", "user_type": user_info.acc_type}

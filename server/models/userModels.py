@@ -1,6 +1,8 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, Date, ARRAY, ForeignKey
+from sqlalchemy import Column, Integer, String,Text, Boolean, Float, Date, ForeignKey,DateTime,ARRAY
 from db.database import Base
 from datetime import date
+from datetime import datetime
+
 
 class Users(Base):
     __tablename__ = "users"
@@ -17,6 +19,7 @@ class Users(Base):
     country = Column(String(50), nullable=True, default="")
     dob = Column(Date, default=date.today)
     N_id = Column(String(20), nullable=True, default="")
+    Id_type = Column(String(250), nullable=True, default="")
     father_id = Column(String(20), nullable=True, default="")
     father_name = Column(String(50), nullable=True, default="")
     mother_id = Column(String(20), nullable=True, default="")
@@ -25,8 +28,10 @@ class Users(Base):
     weight = Column(Float, nullable=True, default=None)  # Use None for numeric types
     married = Column(Boolean, default=False)
     spouse = Column(String(50), nullable=True, default="")
-    avatar = Column(String(255), nullable=True, default="")
-    id_prove = Column(String(255), nullable=True, default="")
+    avatar = Column(Text, nullable=True, default="")
+    id_prove = Column(Text, nullable=True, default="")
+    father_id_prove = Column(String(255), nullable=True, default="")
+    mother_id_prove = Column(String(255), nullable=True, default="")
     blood_type = Column(String(255), nullable=True, default="")
     password_hash = Column(String(255), nullable=True, default="")
     existing_medical_conditions = Column(String(255), nullable=True, default="")
@@ -40,44 +45,60 @@ class Users(Base):
     preferred_workout_times = Column(String(255), nullable=True, default="")
     emergency_contact = Column(String(50), nullable=True, default="")
     emergency_contact_name = Column(String(255), nullable=True, default="") 
-
+ 
+class OTP(Base):
+    __tablename__ = "sent_otps"
+    id = Column(Integer, primary_key=True, index=True)
+    account_id = Column(Integer, index=True)
+    otp_code = Column(String, index=True)
+    verification_code = Column(String, index=True)
+    purpose = Column(String, index=True)
+    date = Column(DateTime, default=datetime.utcnow, index=True)
 
 class Minister(Base):
     __tablename__ = "minister"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
-    ministry_id = Column(Integer)
+    OwnerId = Column(Integer, ForeignKey("users.id"))
+    country =  Column(String(255), nullable=True, default="")
+    AdminId = Column(String(255), nullable=True, default="")
+    
+class Admin(Base):
+    __tablename__ = "Admin"
+    id = Column(Integer, primary_key=True, index=True)
+    OwnerId = Column(Integer, ForeignKey("users.id"))
+    country =  Column(String(255), nullable=True, default="")
 
 class Doctor(Base):
     __tablename__ = "Doctors"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
     hospitalId = Column(Integer, ForeignKey("hospital.id"))
-    doctor_id = Column(Integer)
     specailists = Column(String(255), nullable=True, default="")
 
 class Nurse(Base):
     __tablename__ = "Nurses"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
     hospitalId = Column(Integer, ForeignKey("hospital.id"))
-    nurse_id = Column(Integer)
     specailists = Column(String(255), nullable=True, default="")
 
 class Lab_tech(Base):
     __tablename__ = "lab_tech"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
     hospitalId = Column(Integer, ForeignKey("hospital.id"))
-    nurse_id = Column(Integer)
     specailists = Column(String(255), nullable=True, default="")
 
 class Hospital(Base):
     __tablename__ = "hospital"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
-    ministerId = Column(Integer, ForeignKey("minister.id"))
-    hospital_id = Column(Integer)
+    OwnerId = Column(Integer, ForeignKey("users.id"))
+    hospital_type = Column(String(255), nullable=True, default="")
+    hospital_status = Column(Boolean, nullable=True, default=False)
+    hospital_prove = Column(Text, nullable=True, default="")
+    insurance = Column(ARRAY(String), nullable=True, default="")
+    country = Column(String(255), nullable=True, default="")
+    ministerId = Column(Integer, nullable=True, default="")
 
 class Records(Base):
     __tablename__ = "records"
@@ -89,6 +110,7 @@ class Records(Base):
     presciptions = Column(String(255), nullable=True, default="")
     diseases = Column(String(255), nullable=True, default="")
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
+    hospital = Column(Integer, ForeignKey("hospital.id"))
     date_taken  = Column(Date, default=date.today)
 
 class Appointments(Base):
@@ -96,11 +118,10 @@ class Appointments(Base):
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
     hospital =Column(Integer, ForeignKey("hospital.id"))
-    home = Column(Boolean, default=False)
+    app_status = Column(Boolean, default=False)
     reason =  Column(String(255), nullable=True, default="")
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
     date_taken  = Column(Date, default=date.today)
-    time = Column(String(255), nullable=True, default="")
 
 class Donations(Base):
     __tablename__ = "donations"
@@ -125,5 +146,11 @@ class Transfer(Base):
     hospital_transfer_date = Column(Date, default=date.today)
 
 
-
+# table for disease
+class Disease(Base):
+    __tablename__ = "Diseases"
+    Disease_id = Column(Integer, primary_key=True, index=True)
+    Disease_name  = Column(String(255), nullable=True, default="")
+    Disease_reg  = Column(String(255), nullable=True, default="afiacare")
+    Disease_reg_date  = Column(String(255), nullable=True, default=date.today)
 
