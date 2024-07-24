@@ -21,8 +21,8 @@ function BMICard() {
   };
 
   // Ensure non-zero values
-  const weight = UserInfo.UserInfo.weight > 0 ? UserInfo.UserInfo.weight : 0;
-  const height = UserInfo.UserInfo.height > 0 ? UserInfo.UserInfo.height : 1;
+  const weight = UserInfo.UserInfo.weight > 0 ? 70 : 0;
+  const height = UserInfo.UserInfo.height > 0 ? 90 : 1;
   const bmi = calculateBMI(weight, height);
   const weightStatus = getWeightStatus(bmi);
 
@@ -39,7 +39,7 @@ function BMICard() {
       <div className='bg-white rounded p-4 cursor-pointer hover:translate-y-[-5px] duration-300'>
         <div className='flex flex-col md:flex-row justify-between gap-2 mb-4 '>
           <div className='flex items-center justify-between border h-20 md:w-[50%] p-3 rounded-md relative'>
-            
+
             {weightValues.length > 0 && weightValues.map((val, index) => (
               <p key={index} className='text-gray-300 text-2xl'>{val}</p>
             ))}
@@ -55,7 +55,7 @@ function BMICard() {
             {heightValues.length > 0 && heightValues.map((val, index) => (
               <p key={index} className='text-gray-300 text-2xl'>{val}</p>
             ))}
-            
+
             <div className='flex flex-col items-center relative'>
               <p className='text-[#39827a] text-3xl font-semibold'>{height}</p>
               <span className='text-gray-500'>cm</span>
@@ -69,22 +69,27 @@ function BMICard() {
         <div className='relative h-[5px] bg-gray-200 my-4'>
           <div className='absolute left-[30%] right-[30%] h-full bg-[#39827a]'></div> {/* Center indicating normal range */}
         </div>
-
+        <div className='flex gap-2 items-center'>
+        <p className='text-gray-400 text-[12px] '>BMI: {bmi}</p>
+          <FaRegQuestionCircle size={14} className='text-gray-500 cursor-pointer' />
+        </div>
         <div className='text-center flex justify-between items-center'>
-          <p className='text-gray-400 text-[12px] mt-4 flex items-center justify-center gap-2'>
-            <span className={`${weightStatus === "Underweight"
-                ? "text-red-500 bg-red-200 px-2 rounded-full"
-                : weightStatus === "Overweight"
-                  ? "text-red-500 bg-red-200 px-2 rounded-full"
-                  : "text-green-600 bg-green-200 px-2 rounded-full"
+          <div className='text-gray-400 text-[12px] mt-4 flex items-center justify-between w-full gap-2'>
+            <span className={`block ${weightStatus === "Underweight"
+              ? "text-orange-500 bg-orange-200 px-2 rounded-full" : ""}`}>
+              Underweight
+            </span>
+            <span className={`block ${weightStatus === "Normal weight"
+              ? "text-green-600 bg-green-200 px-2 rounded-full" : ""}`}>
+              Normal weight
+            </span>
+            <span className={`block ${weightStatus === "Overweight"
+              ? "text-red-500 bg-red-200 px-2 rounded-full"
+              : ""
               }`}>
-              {weightStatus}
+              Overweight
             </span>
-            <span>
-              <FaRegQuestionCircle size={14} className='text-gray-500 cursor-pointer' />
-            </span>
-          </p>
-          <p className='text-gray-400 text-[12px] mt-2'>BMI: {bmi}</p>
+          </div>
         </div>
       </div>
     </div>
