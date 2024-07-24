@@ -59,7 +59,7 @@ function Login({ toggleForm, showForgotPassword }) {
             window.location.href = "/dashboard"
           } else {
             toast.dismiss();
-            toast.error("Unable To Establish Session For You Retry");
+            toast.error("Unable To Establish Session For You, Retry");
           }
         } else {
           toast.dismiss();

@@ -20,7 +20,7 @@ function BookingDashboard() {
 
   return (
     <div className="relative">
-      <div className="flex flex-col md:flex-row justify-center">
+      <div className="flex flex-col md:flex-row justify-center"> 
         <BookingCard
           title="Book clinic appointment"
           backgroundImage={background1}

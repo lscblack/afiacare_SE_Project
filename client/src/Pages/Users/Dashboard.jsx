@@ -155,7 +155,7 @@ function Dashboard() {
           <Navbar showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} /> {/* Place your Navbar here */}
         </div>
         {!UserInfo.UserInfo.acc_status &&
-          <div className="bg-[white] p-1 z-0">
+          <div className="bg-[white] p-1 z-0"> 
             <Onboarding />
           </div>
         }
