@@ -58,3 +58,10 @@ class UpdateUserSchema(BaseModel):
 
 class UserTypeDropDown(BaseModel):
     user_type: Literal["admin", "minister", "hospital", "nurse", "doctor","patient"]
+
+class DeleteUserAdmin(BaseModel):
+    userId:int
+    
+class GetUserAdmin(BaseModel):
+    userId:Optional[int] = None
+    

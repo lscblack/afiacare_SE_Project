@@ -12,7 +12,8 @@ from sqlalchemy import or_
 
 from schemas.schemas import CreateUserRequest, Token, FromData
 from schemas.returnSchemas import ReturnUser
-
+from functions.send_mail import send_new_email
+from emailsTemps.custom_email_send import custom_email
 
 from dotenv import load_dotenv
 import os
@@ -63,9 +64,33 @@ async def register_user(db: db_dependency, create_user_request: CreateUserReques
         # Add to the database and commit
         db.add(create_user_model)
         db.commit()
+        db.refresh(create_user_model)
+        heading = "Welcome to Afiacare!"
+        sub = "Complete your onboarding for a personalized experience."
+        body = """
+        <p>Thank you for joining Afiacare! We're excited to have you on board. You've created your account, and now you can complete your onboarding process to unlock the full benefits of Afiacare.</p>
+        <h2>Why is onboarding important?</h2>
+        <p>We ask for some information during onboarding to create a personalized experience just for you. This means:</p>
+        <ul>
+        <li><b>A tailored view:</b> We'll set up your dashboard to show the information most relevant to you.</li>
+        <li><b>Easier access to help:</b> With complete information, doctors can understand your medical history better and provide the best possible care.</li>
+        </ul>
+        <h2>What if I don't complete onboarding?</h2>
+        <p>While you can still use some features of Afiacare, there are some limitations without completing onboarding. For example, if you don't provide details about your parents, you won't be able to see your family medical history, which can be important for doctors.</p>
+        <h2>Benefits of completing onboarding:</h2>
+        <ul>
+        <li>Get personalized medical advice based on your health profile.</li>
+        <li>Allow doctors to understand your medical history for a more accurate diagnosis.</li>
+        <li>Simplify the process of getting the help you need.</li>
+        </ul>
+        <p><b>Ready to get started?</b></p>
+        <p>Head over to the Afiacare app and complete your onboarding process today! It's quick and easy.</p>
 
-        # Return the created user data (optional)
-        return create_user_request
+        """
+        msg = custom_email(create_user_model.fname,heading,body)
+        if send_new_email(create_user_model.email, sub, msg):
+            # Return the created user data (optional)
+            return create_user_request
 
     except Exception as e:
         # Log the error or handle it as needed
@@ -199,8 +224,32 @@ async def sign_up_with_google(
 
         # Serialize the user object to match the ReturnUser schema
         user_info = ReturnUser.from_orm(create_user_model)
+        heading = "Welcome to Afiacare!"
+        sub = "Complete your onboarding for a personalized experience."
+        body = """
+        <p>Thank you for joining Afiacare! We're excited to have you on board. You've created your account, and now you can complete your onboarding process to unlock the full benefits of Afiacare.</p>
+        <h2>Why is onboarding important?</h2>
+        <p>We ask for some information during onboarding to create a personalized experience just for you. This means:</p>
+        <ul>
+        <li><b>A tailored view:</b> We'll set up your dashboard to show the information most relevant to you.</li>
+        <li><b>Easier access to help:</b> With complete information, doctors can understand your medical history better and provide the best possible care.</li>
+        </ul>
+        <h2>What if I don't complete onboarding?</h2>
+        <p>While you can still use some features of Afiacare, there are some limitations without completing onboarding. For example, if you don't provide details about your parents, you won't be able to see your family medical history, which can be important for doctors.</p>
+        <h2>Benefits of completing onboarding:</h2>
+        <ul>
+        <li>Get personalized medical advice based on your health profile.</li>
+        <li>Allow doctors to understand your medical history for a more accurate diagnosis.</li>
+        <li>Simplify the process of getting the help you need.</li>
+        </ul>
+        <p><b>Ready to get started?</b></p>
+        <p>Head over to the Afiacare app and complete your onboarding process today! It's quick and easy.</p>
 
-        return {"access_token": token, "token_type": "bearer", "UserInfo": user_info}
+        """
+        msg = custom_email(user_info.fname,heading,body)
+        if send_new_email(user_info.email, sub, msg):
+            # Return the created user data (optional)
+            return {"access_token": token, "token_type": "bearer", "UserInfo": user_info}
 
     except Exception as e:
         # Log the error or handle it as needed
@@ -234,5 +283,5 @@ async def Create_Token_For_sign_up_with_google(
 
     # Serialize the user object to match the ReturnUser schema
     user_info = ReturnUser.from_orm(check_email)
-
+    # Return the created user data (optional)
     return {"access_token": token, "token_type": "bearer", "UserInfo": user_info}

@@ -58,39 +58,45 @@ class OTP(Base):
 class Minister(Base):
     __tablename__ = "minister"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
-    ministry_id = Column(Integer)
+    OwnerId = Column(Integer, ForeignKey("users.id"))
+    country =  Column(String(255), nullable=True, default="")
+    AdminId = Column(String(255), nullable=True, default="")
+    
+class Admin(Base):
+    __tablename__ = "Admin"
+    id = Column(Integer, primary_key=True, index=True)
+    OwnerId = Column(Integer, ForeignKey("users.id"))
+    country =  Column(String(255), nullable=True, default="")
 
 class Doctor(Base):
     __tablename__ = "Doctors"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
     hospitalId = Column(Integer, ForeignKey("hospital.id"))
-    doctor_id = Column(Integer)
     specailists = Column(String(255), nullable=True, default="")
 
 class Nurse(Base):
     __tablename__ = "Nurses"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
     hospitalId = Column(Integer, ForeignKey("hospital.id"))
-    nurse_id = Column(Integer)
     specailists = Column(String(255), nullable=True, default="")
 
 class Lab_tech(Base):
     __tablename__ = "lab_tech"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
     hospitalId = Column(Integer, ForeignKey("hospital.id"))
-    nurse_id = Column(Integer)
     specailists = Column(String(255), nullable=True, default="")
 
 class Hospital(Base):
     __tablename__ = "hospital"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
     hospital_type = Column(String(255), nullable=True, default="")
     hospital_status = Column(Boolean, nullable=True, default=False)
+    hospital_prove = Column(Text, nullable=True, default="")
+    insurance = Column(ARRAY(String), nullable=True, default="")
     country = Column(String(255), nullable=True, default="")
     ministerId = Column(Integer, nullable=True, default="")
 
