@@ -1,26 +1,20 @@
 import React, { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { addUserLogin, changeLangSate } from "../features/SharedDataSlice/SharedData";
 import { useSelector, useDispatch } from "react-redux";
 import MyApi from "../AxiosInstance/MyApi";
 import { toast } from 'react-toastify';
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import MainLoad from "../loads/MainLoad";
 import { jwtDecode } from 'jwt-decode';
 import { useEffect } from "react";
 import LoginWithGoogle from "./LoginWithGoogle";
 
-function Login({ toggleForm, showForgotPassword }) {
-  const dispatch = useDispatch()
-  const nav = useNavigate()
+function Login({ toggleForm, showForgotPassword, showOTPVerification, setEmail, sendOtp }) {
   // Assuming you're using English as default language
   const lang = useSelector(state => state.afiaCare.langs);
-  const [selectedLang, setSelectedLang] = useState(""); // State to track selected language
   const [showPassword, setShowPassword] = useState(false);
-  const [Register, SetRegister] = useState({ "username": "", "password": "" })
-  const [ShowGoogle, setGoogle] = useState(false)
-  const [avatar,setAvatar] = useState("")
+  const [Register, SetRegister] = useState({ "username": "", "password": "" });
+  const [ShowGoogle, setGoogle] = useState(false);
+  const [avatar, setAvatar] = useState("");
   const [data, setData] = useState({
     fname: "",
     lname: "",
@@ -28,11 +22,12 @@ function Login({ toggleForm, showForgotPassword }) {
     email: "",
     password: "",
   });
-  const [showLoad, setShowLoad] = useState(false)
+  const [showLoad, setShowLoad] = useState(false);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  //handle function chaning
+
   const handleInputChange = (e) => {
     const { id, value } = e.target;
     SetRegister((prevData) => ({
@@ -40,53 +35,50 @@ function Login({ toggleForm, showForgotPassword }) {
       [id]: value,
     }));
   };
-  //login a user
+
+
+  // Login user
   const LoginUser = async () => {
-    if (Register.username == "") {
+    if (Register.username === "") {
       toast.dismiss();
-      toast.warning('UseName Or Email Is Required');
-      setShowLoad(false)
-    } else if (Register.password == "") {
+      toast.warning('Username Or Email Is Required');
+      setShowLoad(false);
+    } else if (Register.password === "") {
       toast.dismiss();
       toast.warning('Password Is Required');
     } else {
-      setShowLoad(true)
+      setShowLoad(true);
       try {
-        const response = await MyApi.post("auth/login", Register) // for sending request on backend
-        const UserData = response.data
+        const response = await MyApi.post("auth/login", Register);
+        const UserData = response.data;
         if (UserData) {
-          if (dispatch(addUserLogin(UserData))) {
-            window.location.href = "/dashboard"
-          } else {
-            toast.dismiss();
-            toast.error("Unable To Establish Session For You, Retry");
-          }
+          let email = response.data.UserInfo.email;
+          email = String(email);
+          setEmail(email);
+          sendOtp(email, "login");
+          showOTPVerification(UserData);
         } else {
           toast.dismiss();
-          toast.error("Error While Logging Try again Later");
+          toast.error("Error While Logging In. Try again later.");
         }
-        setShowLoad(false)
-      }
-      catch (err) {
-        if (err.response.status == 401) {
+        setShowLoad(false);
+      } catch (err) {
+        if (err.response && err.response.status === 401) {
           toast.dismiss();
           toast.error(err.response.data.detail);
         } else {
           toast.dismiss();
-          toast.error("Error While Logging Try again Later");
+          toast.error("Error While Logging In. Try again later.");
         }
-        setShowLoad(false)
-        console.log(err)
+        setShowLoad(false);
+        console.log(err);
       }
     }
+  };
 
-
-  }
   const handelResponse = (response) => {
-    const userObj = jwtDecode(response.credential)
-    // console.log(userObj)
+    const userObj = jwtDecode(response.credential);
     if (userObj.email) {
-      // Spread operator to create a new object, preserving existing state
       setData({
         ...data,
         email: userObj.email,
@@ -94,16 +86,15 @@ function Login({ toggleForm, showForgotPassword }) {
         lname: userObj.family_name,
         username: userObj.email.replace(/^(.+)@.*/, '$1'),
       });
-      setAvatar(userObj.picture)
-
-      setGoogle(true)
+      setAvatar(userObj.picture);
+      setGoogle(true);
     } else {
-      setGoogle(false)
+      setGoogle(false);
     }
-  }
-  //Google auth
+  };
+
+  // Google auth
   useEffect(() => {
-    //Gloabl
     google.accounts.id.initialize({
       client_id: `${import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}`,
       callback: handelResponse
@@ -111,8 +102,8 @@ function Login({ toggleForm, showForgotPassword }) {
     google.accounts.id.renderButton(
       document.getElementById("signInDiv"),
       { theme: "text", size: "bigger" }
-    )
-  }, [])
+    );
+  }, []);
 
   return (
     <>
@@ -123,7 +114,8 @@ function Login({ toggleForm, showForgotPassword }) {
       </>}
       {ShowGoogle &&
         <>
-          <LoginWithGoogle data={data} avatar={avatar} setData={setData} />
+        {console.log('Rendering LoginWithGoogle with data:', data, 'avatar:', avatar)}
+          <LoginWithGoogle data={data} avatar={avatar} setData={setData} sendOtp={sendOtp} showOTPVerification={showOTPVerification}/>
         </>
       }
       {!ShowGoogle &&
@@ -136,7 +128,8 @@ function Login({ toggleForm, showForgotPassword }) {
               onChange={(e) => handleInputChange(e)}
               type="text"
               placeholder="Enter Your Username Here"
-              id="username" className="w-full p-3 border rounded bg-slate-200 text-slate-700 outline-none"
+              id="username"
+              className="w-full p-3 border rounded bg-slate-200 text-slate-700 outline-none"
               required
             />
           </div>
@@ -170,13 +163,8 @@ function Login({ toggleForm, showForgotPassword }) {
           <button onClick={() => LoginUser()} type="submit" className="w-full bg-[#36857b] text-slate-200 py-3 rounded hover:bg-[#276b63] mb-4">
             {lang.login_button}
           </button>
-          {/* <button
-          type="button" className="w-full flex items-center justify-center  font-medium  bg-gray-200 text-gray-700 py-3 rounded hover:bg-gray-300"
-        >
-          <FcGoogle className="mr-2" /> {lang.login_google_button}
-        </button> */}
           <div className="w-full bg-none flex justify-center items-center text-center">
-            <button id="signInDiv" ></button>
+            <button id="signInDiv"></button>
           </div>
         </div>
       }
