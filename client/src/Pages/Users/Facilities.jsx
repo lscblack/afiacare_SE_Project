@@ -1,17 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { Drawer } from 'antd';
-import Sidebar, { SidebarItem } from '../../Components/User/Sidebar';
+import Sidebar from '../../Components/User/Sidebar';
 import Navbar from '../../Components/User/Navbar';
-import { LuLayoutDashboard } from 'react-icons/lu';
-import { MdForum } from 'react-icons/md';
-import { FaHospitalUser } from 'react-icons/fa6';
-import { GrEmergency } from 'react-icons/gr';
-import { BiSolidDonateBlood } from 'react-icons/bi';
-import { FaHospitalAlt } from 'react-icons/fa';
-import { IoIosSettings } from 'react-icons/io';
-import { MdContactSupport } from 'react-icons/md';
-import { SiFigshare } from 'react-icons/si';
 import FacilityCard from '../../Components/User/Facilities/FacilityCard';
 import FacilityDrawerContent from '../../Components/User/Facilities/FacilityDrawerContent';
 import { FaHospital, FaClinicMedical, FaSyringe, FaTooth, FaUserMd, FaHeartbeat, FaAmbulance } from 'react-icons/fa';
@@ -68,6 +59,7 @@ const Facilities = () => {
   const [loading, setLoading] = useState(false);
   const [drawerTitle, setDrawerTitle] = useState('');
   const [drawerContent, setDrawerContent] = useState([]);
+  const [showMenuSmall, setShowMenuSmall] = useState(true)
 
   const showDrawer = (title) => {
     setDrawerTitle(title);
@@ -80,27 +72,26 @@ const Facilities = () => {
     }, 2000);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setShowMenuSmall(false);
+      }else{
+        setShowMenuSmall(true);
+
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="flex h-screen">
-      <div>
-        <Sidebar>
-          <Link to="/dashboard">
-            <SidebarItem icon={<LuLayoutDashboard size={20} />} text="Dashboard" alert />
-          </Link>
-          <Link to="/user/consultations">
-            <SidebarItem icon={<FaHospitalUser size={20} />} text="Consultations" />
-          </Link>
-          <Link to="/user/emergency">
-            <SidebarItem icon={<GrEmergency size={20} />} text="Emergency" />
-          </Link>
-          <SidebarItem icon={<BiSolidDonateBlood size={20} />} text="Donations" alert />
-          <SidebarItem icon={<FaHospitalAlt size={20} />} text="Facilities" active />
-          <SidebarItem icon={<MdForum size={20} />} text="Messages" alert />
-          <hr className='my-3' />
-          <SidebarItem icon={<SiFigshare size={20} />} text="Referrals" />
-          <SidebarItem icon={<MdContactSupport size={20} />} text="Support" />
-          <SidebarItem icon={<IoIosSettings size={20} />} text="Settings" alert />
-        </Sidebar>
+      <div className={`${showMenuSmall ? "" : "hidden"} z-50`}>
+        <Sidebar />
       </div>
 
       <div className="flex-1 overflow-y-auto">

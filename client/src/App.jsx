@@ -56,14 +56,8 @@ function App() {
           <Route path='/about' element={<><AboutUs /></>}></Route>
           <Route path='/contact' element={<><Contact /></>}></Route>
           <Route path='/services' element={<><Services /></>}></Route>
-          {/* <Route path='/dashboard' element={<>{dash}</>}></Route>
-          <Route path='/user/consultations' element={<><Consultation /></>}></Route>
-          <Route path='/user/emergency' element={<><Emergency /></>}></Route>
-          <Route path='/user/donations' element={<><Donations /></>}></Route>
-          <Route path='/facilities' element={<><Facilities /></>}></Route>
+          {/* 
           <Route path='/doctor/dashboard' element={<><DoctorsDashboard /></>}></Route>
-          <Route path='/admin/dashboard' element={<><AdminDashboard /></>}></Route>
-          <Route path='/auth/onboarding' element={<><Onboarding /></>}></Route>
           <Route path='/authentication' element={<>{auth}</>}></Route> */}
           <Route path='/dashboard' element={getComponent(<Dashboard />)} />
           <Route path='/user/consultations' element={getComponent(<Consultation />)} />

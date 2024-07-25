@@ -1,18 +1,9 @@
 import React from 'react';
+import { useState } from 'react';
 import Sidebar, { SidebarItem } from '../../Components/User/Sidebar';
 import Navbar from '../../Components/User/Navbar'; // Import your Navbar component
-import { LuLayoutDashboard } from 'react-icons/lu';
-import { MdForum } from "react-icons/md";
 import CardImg from '../../assets/images/DonorImg.jpg'
-import { FaHospitalUser } from "react-icons/fa6";
-import { GrEmergency } from "react-icons/gr";
-import { BiSolidDonateBlood } from "react-icons/bi";
-import { FaHospitalAlt } from "react-icons/fa";
-import { IoIosSettings } from "react-icons/io";
-import { MdContactSupport } from "react-icons/md";
-import { SiFigshare } from "react-icons/si";
 import backgroundImage from '../../assets/images/DonateBg.jpg';
-import { Link } from 'react-router-dom';
 import GreetingsCard from '../../Components/User/consultations/GreetingsCard';
 import RecentDonations from '../../Components/User/Donations/RecentDonations';
 import PeopleInNeed from '../../Components/User/Donations/PeopleInNeed';
@@ -29,38 +20,35 @@ function Donations() {
     const ExamText = 'Blood donation eligibility';
     const description = "Find out what is required of you...";
     const buttonText =  'More details';
+    const [showMenuSmall, setShowMenuSmall] = useState(true)
+
+
+    useEffect(() => {
+      const handleResize = () => {
+        if (window.innerWidth < 768) {
+          setShowMenuSmall(false);
+        }else{
+          setShowMenuSmall(true);
+  
+        }
+      };
+  
+      handleResize();
+      window.addEventListener("resize", handleResize);
+  
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    
   return (
     <div className='flex h-screen'>
-        <div>
-      <Sidebar>
-        <Link to="/dashboard">   <SidebarItem 
-          icon={<LuLayoutDashboard size={20} />}
-          text="Dashboard"
-          alert
-         
-        /></Link>
-     
-        <Link to="/user/consultations"> <SidebarItem icon={<FaHospitalUser size={20} />} text="Consultations"  /></Link>
-       <Link to="/user/emergency">
-        <SidebarItem icon={<GrEmergency size={20} />} text="Emergency"  />
-       </Link>
-       <Link to="/user/donations">
-        <SidebarItem icon={<BiSolidDonateBlood size={20} />} text="Donations" alert active/>
-       </Link>
-       <Link to="/facilities">
-        <SidebarItem icon={<FaHospitalAlt size={20} />} text="Facilities" />
-       </Link>
-        <SidebarItem icon={<MdForum size={20} />} text="Messages" alert />
-        <hr className='my-3' />
-        <SidebarItem icon={<SiFigshare size={20} />} text="Referrals" />
-        <SidebarItem icon={<MdContactSupport size={20} />} text="Support" />
-        <SidebarItem icon={<IoIosSettings size={20} />} text="Settings" alert />
-       
-      </Sidebar>
+        <div className={`${showMenuSmall ? "" : "hidden"} z-50`}>
+        <Sidebar />
       </div>
+
       <div className="flex-1  overflow-y-auto ">
         <div className='sticky top-0 z-40'>
-        <Navbar /> {/* Place your Navbar here */}
+        <Navbar showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} /> 
         </div>
        <div className="flex flex-col px-4 md:flex-row">
         <div className='md:w-[50%]'>
