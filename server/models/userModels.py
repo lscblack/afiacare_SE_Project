@@ -122,9 +122,10 @@ class Appointments(Base):
     id = Column(Integer, primary_key=True, index=True)
     userId = Column(Integer, ForeignKey("users.id"))
     hospital =Column(Integer, ForeignKey("hospital.id"))
-    app_status = Column(Boolean, default=False)
-    reason =  Column(String(255), nullable=True, default="")
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
+    app_status = Column(Boolean, default=False)
+    reason =  Column(Text, nullable=True, default="")
+    due_date = Column(Date, default=date.today)
     date_taken  = Column(Date, default=date.today)
 
 class Donations(Base):
