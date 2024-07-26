@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { MdEmail } from 'react-icons/md';
 import { addUserLogin } from "../features/SharedDataSlice/SharedData";
+import { ImSpinner2 } from 'react-icons/im'; // Import a spinner icon
 
 function OTPVerification({ toggleForm, resendOtp, UserData }) {
   const [otp, setOtp] = useState(""); // State to store OTP input
@@ -34,30 +35,46 @@ function OTPVerification({ toggleForm, resendOtp, UserData }) {
         "verification_code": verification_code,
         "email": email
       });
-      
-      if (response.data.detail == "Successfully Verified") {
+    
+      if (response.data.detail === "Successfully Verified") {
         toast.success("OTP verified successfully.");
         // dispatch the data here 
-        if(dispatch(addUserLogin(UserData))){
+        if (dispatch(addUserLogin(UserData))) {
           // Redirect to dashboard or login success page
-          window.location.href = "/dashboard"
+          window.location.href = "/dashboard";
+        } else {
+          toast.error("Unable to establish session. Please retry.");
         }
-        else {
-          toast.error("Unable To Establish Session For You Retry");
-        }
-      } else if(response.status == 404) {
-        toast.error("Invalid OTP. Please try again.");
-      } else if(response.status == 422) {
-        toast.error("Invalid input. Please input the correct OTP.");
-      }
-      else {
+      } else {
         toast.error("Error verifying OTP. Please try again later.");
       }
     } catch (err) {
-      toast.error("Error verifying OTP. Please try again later.");
+      // Extract status code or message from the error response if available
+      let errorMessage = "Error verifying OTP. Please try again later.";
+      
+      if (err.response) {
+        // Server responded with a status code other than 2xx
+        const status = err.response.status;
+        const data = err.response.data;
+    
+        if (status === 404) {
+          errorMessage = "Invalid OTP. Please try again.";
+        } else if (status === 422) {
+          errorMessage = "Invalid input. Please input the correct OTP.";
+        } else if (data && data.detail) {
+          errorMessage = data.detail;
+        }
+      } else if (err.request) {
+        // Request was made but no response received
+        errorMessage = "Network error. Please check your connection and try again.";
+      } else {
+        // Something happened in setting up the request
+        errorMessage = "Error setting up request. Please try again later.";
+      }
+    
+      toast.error(errorMessage);
       console.error(err);
     }
-
     setLoading(false);
   };
 
@@ -85,8 +102,13 @@ function OTPVerification({ toggleForm, resendOtp, UserData }) {
               Didn't get the code? <span onClick={resendOtp} className='text-[#39827a] hover:underline'>Resend</span>
             </button>
           </div>
-          <button type="submit" className="w-full bg-[#36857b] text-slate-200 py-3 rounded hover:bg-[#276b63] mb-4">
-            Verify OTP
+          <button 
+            type="submit" 
+            className={`w-full py-3 rounded mb-4 ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#36857b] hover:bg-[#276b63]"} text-slate-200 flex items-center justify-center`}
+            disabled={loading}
+          >
+            {loading && <ImSpinner2 className="animate-spin mr-2" size={20} />} {/* Loader */}
+            {loading ? "Verifying..." : "Verify OTP"}
           </button>
         </form>
       </div>
