@@ -114,7 +114,6 @@ function Login({ toggleForm, showForgotPassword, showOTPVerification, setEmail, 
       </>}
       {ShowGoogle &&
         <>
-        {console.log('Rendering LoginWithGoogle with data:', data, 'avatar:', avatar)}
           <LoginWithGoogle data={data} avatar={avatar} setData={setData} sendOtp={sendOtp} showOTPVerification={showOTPVerification}/>
         </>
       }

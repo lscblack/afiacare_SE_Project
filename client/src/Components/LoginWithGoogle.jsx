@@ -21,18 +21,20 @@ export default function LoginWithGoogle({ data, setData, avatar, sendOtp, showOT
       const response = await MyApi.post(`auth/google-auth-token?Email=${data.email}`);
       if (response && response.status >= 200 && response.status <= 299) {
         const UserData = response.data;
-        console.log(UserData);
-        let email = UserData.UserInfo.email;
-        email = String(email);
-        if (!OTPSent) {
-            console.log("send otp")
-            sendOtp(email, "login");
-            setOTPSent(true); 
-          }
-        showOTPVerification(UserData);
-      } else {
+        if (dispatch(addUserLogin(UserData))) {
+          window.location.href = "/dashboard";
+        } else {
+          toast.dismiss();
+          toast.error("Unable To Establish Session For You. Retry.");
+        }
         setShowLoad(false);
+      } else {
+        toast.dismiss();
+        toast.error('An unexpected error occurred.');
+        setShowLoad(false);
+        console.log('Unexpected response:', JSON.stringify(response, null, 2));
       }
+      setShowLoad(false);
     } catch (err) {
       if (err.response && err.response.status == 401) {
         setShowLoad(false);
