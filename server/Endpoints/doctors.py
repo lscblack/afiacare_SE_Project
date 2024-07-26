@@ -114,6 +114,42 @@ async def view_hospital_workers(worker_type: Literal["nurse", "doctor"], user: u
     return {"workers": worker_list}
 
 
+@router.get("/workers/all/{hospital_id}", description="Get all doctors and nurses of To show To a User When Chossing Doctors Based On Hospital Enter Hospital And Get Every Doc In It")
+async def view_hospital_workers_for_user(worker_type: Literal["nurse", "doctor"],hospital_id:int, user: user_dependency, db: db_dependency):
+    if isinstance(user, HTTPException):
+        raise user
+
+
+    hospital = db.query(Hospital).filter(Hospital.id == hospital_id).first()
+    if not hospital:
+        raise HTTPException(status_code=404, detail="hospital Not Found")
+
+    if worker_type == "nurse":
+        workers = db.query(Nurse, Users).join(Users, Nurse.OwnerId == Users.id).filter(Nurse.hospitalId == hospital.id).all()
+    elif worker_type == "doctor":
+        workers = db.query(Doctor, Users).join(Users, Doctor.OwnerId == Users.id).filter(Doctor.hospitalId == hospital.id).all()
+    else:
+        raise HTTPException(status_code=400, detail="Invalid worker type")
+
+    if not workers:
+        raise HTTPException(status_code=404, detail="No workers found")
+
+    worker_list = []
+    for worker, user_info in workers:
+        worker_data = {
+            "worker_id": worker.id,
+            "hospital_id": worker.hospitalId,
+            "specialists": worker.specialists,
+            "experience_time": worker.experience_time,
+            "fname": user_info.fname,
+            "lname": user_info.lname,
+            "country": user_info.country
+        }
+        worker_list.append(worker_data)
+
+    return {"workers": worker_list}
+
+
 # Update Doctor or Nurse
 @router.patch("/update_worker/{worker_id}", description="Update doctor or nurse details")
 async def update_worker(worker_id: int, details: UpdateWorkerRequest, user: user_dependency, db: db_dependency):
@@ -140,6 +176,7 @@ async def update_worker(worker_id: int, details: UpdateWorkerRequest, user: user
     db.refresh(worker)
 
     return {"detail": f"{details.Type.capitalize()} updated successfully"}
+
 
 # Delete Doctor or Nurse
 @router.delete("/remove_worker/{worker_id}", status_code=status.HTTP_204_NO_CONTENT, description="Delete doctor or nurse")
