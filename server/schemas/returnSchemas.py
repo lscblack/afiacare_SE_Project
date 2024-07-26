@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional, List
+from typing import Optional, List,Literal
 from datetime import date
 
 class ReturnUser(BaseModel):
@@ -43,15 +43,20 @@ class ReturnUser(BaseModel):
         orm_mode = True
         from_attributes = True  # Enable this to use from_orm
 
-class ReturnHospital(BaseModel):
-    id: int
-    OwnerId: Optional[int]
-    hospital_type: Optional[str]
-    hospital_status: Optional[bool]
-    hospital_prove: Optional[str]
-    insurance: Optional[List[str]]
-    country: Optional[str]
-    ministerId: Optional[int]
+class UpdateHospitalSchema(BaseModel):
+    hospital_name: Optional[str] = None
+    hospital_type : Optional[Literal["public","private"]] = None
+    hospital_status : Optional[bool]
+    hospital_prove : Optional[str] = None
+    insurance : Optional[List[str]] = None
+    country : Optional[str] = None
+    hospital_address: Optional[str] = None
+    ministerId : Optional[int] = None
+
+class UpdateWorkerRequest(BaseModel):
+    Type:Literal["nurse","doctor"]
+    specialists: Optional[str] = None
+    experience_time: Optional[str] = None
 
     class Config:
         orm_mode = True

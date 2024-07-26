@@ -63,19 +63,25 @@ class DeleteUserAdmin(BaseModel):
     userId:int
     
 class GetUserAdmin(BaseModel):
-    userId:Optional[int] = None
-    hospitalId:Optional[int] = None
+    hospital_status:Optional[Literal[True,False]] = None
 
 class RequestHospitalSchema(BaseModel):
     hospital_name: str
+    hospital_type : Literal["public","private"]
+    hospital_prove : str
+    insurance : Optional[List[str]]
+    country : str
     hospital_address: str
+    ministerId : int
+    
+class AddMinisterSchema(BaseModel):
+    OwnerId:int
+    country:str
 
-    class Config:
-        orm_mode = True
+class AddHospUser(BaseModel):
+    Type:Literal["nurse","doctor"]
+    OwnerId:int
+    specialists : str
+    experience_time:str
 
-class ProcessRequestSchema(BaseModel):
-    status: str  # Expected values: "approved" or "rejected"
-
-    class Config:
-        orm_mode = True
 

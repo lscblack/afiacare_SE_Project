@@ -73,27 +73,31 @@ class Doctor(Base):
     id = Column(Integer, primary_key=True, index=True)
     OwnerId = Column(Integer, ForeignKey("users.id"))
     hospitalId = Column(Integer, ForeignKey("hospital.id"))
-    specailists = Column(String(255), nullable=True, default="")
+    specialists = Column(String(255), nullable=True, default="")
+    experience_time = Column(String(255), nullable=True, default="")
 
 class Nurse(Base):
     __tablename__ = "Nurses"
     id = Column(Integer, primary_key=True, index=True)
     OwnerId = Column(Integer, ForeignKey("users.id"))
     hospitalId = Column(Integer, ForeignKey("hospital.id"))
-    specailists = Column(String(255), nullable=True, default="")
+    specialists = Column(String(255), nullable=True, default="")
+    experience_time = Column(String(255), nullable=True, default="")
 
 class Lab_tech(Base):
     __tablename__ = "lab_tech"
     id = Column(Integer, primary_key=True, index=True)
     OwnerId = Column(Integer, ForeignKey("users.id"))
     hospitalId = Column(Integer, ForeignKey("hospital.id"))
-    specailists = Column(String(255), nullable=True, default="")
+    specialists = Column(String(255), nullable=True, default="")
 
 class Hospital(Base):
     __tablename__ = "hospital"
     id = Column(Integer, primary_key=True, index=True)
     OwnerId = Column(Integer, ForeignKey("users.id"))
     hospital_type = Column(String(255), nullable=True, default="")
+    hospital_name = Column(String(255), nullable=True, default="")
+    hospital_address = Column(String(255), nullable=True, default="")
     hospital_status = Column(Boolean, nullable=True, default=False)
     hospital_prove = Column(Text, nullable=True, default="")
     insurance = Column(ARRAY(String), nullable=True, default="")
