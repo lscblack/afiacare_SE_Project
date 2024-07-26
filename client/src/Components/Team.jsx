@@ -9,6 +9,7 @@ import Member1 from "../assets/images/Member1.jpg";
 import Member2 from "../assets/images/Member2.jpg";
 import Member3 from "../assets/images/Member3.jpg";
 import Member4 from "../assets/images/Member4.png";
+import Member5 from "../assets/images/Member5.jpg";
 import AOS from "aos"; // Import AOS
 import "aos/dist/aos.css"; // Import AOS styles
 
@@ -49,6 +50,14 @@ function Team() {
       instagram: "https://www.instagram.com/michaelbrown",
       facebook: "https://www.facebook.com/michaelbrown",
     },
+    {
+      img: Member5,
+      name: "Chance Karambizi",
+      role: lang.team_role5,
+      linkedin: "https://www.linkedin.com/in/johndoe",
+      instagram: "https://www.instagram.com/johndoe",
+      facebook: "https://www.facebook.com/johndoe",
+    },
   ];
 
   useEffect(() => {
@@ -65,7 +74,7 @@ function Team() {
       <p className="text-center mb-8 text-gray-500">
         {lang.ourTeam_description}
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
         {teamMembers.map((member, index) => (
           <div
             key={index} className="flex flex-col items-start p-4 border rounded-md bg-white hover:translate-y-[-10px] duration-300 cursor-pointer"
