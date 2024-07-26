@@ -42,3 +42,16 @@ class ReturnUser(BaseModel):
     class Config:
         orm_mode = True
         from_attributes = True  # Enable this to use from_orm
+
+class ReturnHospital(BaseModel):
+    id: int
+    OwnerId: Optional[int]
+    hospital_type: Optional[str]
+    hospital_status: Optional[bool]
+    hospital_prove: Optional[str]
+    insurance: Optional[List[str]]
+    country: Optional[str]
+    ministerId: Optional[int]
+
+    class Config:
+        orm_mode = True

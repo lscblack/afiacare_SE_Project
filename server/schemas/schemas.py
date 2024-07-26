@@ -57,11 +57,25 @@ class UpdateUserSchema(BaseModel):
     emergency_contact_name: Optional[str] = None
 
 class UserTypeDropDown(BaseModel):
-    user_type: Literal["admin", "minister", "hospital", "nurse", "doctor","patient"]
+    user_type: Literal["admin", "minister", "hospital", "nurse", "labtech", "doctor","patient"]
 
 class DeleteUserAdmin(BaseModel):
     userId:int
     
 class GetUserAdmin(BaseModel):
     userId:Optional[int] = None
-    
+    hospitalId:Optional[int] = None
+
+class RequestHospitalSchema(BaseModel):
+    hospital_name: str
+    hospital_address: str
+
+    class Config:
+        orm_mode = True
+
+class ProcessRequestSchema(BaseModel):
+    status: str  # Expected values: "approved" or "rejected"
+
+    class Config:
+        orm_mode = True
+
