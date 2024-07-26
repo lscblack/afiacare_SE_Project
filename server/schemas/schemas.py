@@ -57,11 +57,31 @@ class UpdateUserSchema(BaseModel):
     emergency_contact_name: Optional[str] = None
 
 class UserTypeDropDown(BaseModel):
-    user_type: Literal["admin", "minister", "hospital", "nurse", "doctor","patient"]
+    user_type: Literal["admin", "minister", "hospital", "nurse", "labtech", "doctor","patient"]
 
 class DeleteUserAdmin(BaseModel):
     userId:int
     
 class GetUserAdmin(BaseModel):
-    userId:Optional[int] = None
+    hospital_status:Optional[Literal[True,False]] = None
+
+class RequestHospitalSchema(BaseModel):
+    hospital_name: str
+    hospital_type : Literal["public","private"]
+    hospital_prove : str
+    insurance : Optional[List[str]]
+    country : str
+    hospital_address: str
+    ministerId : int
     
+class AddMinisterSchema(BaseModel):
+    OwnerId:int
+    country:str
+
+class AddHospUser(BaseModel):
+    Type:Literal["nurse","doctor"]
+    OwnerId:int
+    specialists : str
+    experience_time:str
+
+
