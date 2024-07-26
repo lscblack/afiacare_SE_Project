@@ -61,6 +61,7 @@ const Facilities = () => {
   const [drawerContent, setDrawerContent] = useState([]);
   const [showMenuSmall, setShowMenuSmall] = useState(true)
 
+
   const showDrawer = (title) => {
     setDrawerTitle(title);
     setDrawerContent(facilitiesData[title]);
@@ -96,7 +97,8 @@ const Facilities = () => {
 
       <div className="flex-1 overflow-y-auto">
         <div className='sticky top-0 z-40'>
-          <Navbar /> {/* Place your Navbar here */}
+        <Navbar showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} /> {/* Place your Navbar here */}
+
         </div>
         <div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 p-4">

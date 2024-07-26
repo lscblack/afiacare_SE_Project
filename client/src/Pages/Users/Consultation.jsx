@@ -1,17 +1,7 @@
 import React from 'react';
 import Sidebar, { SidebarItem } from '../../Components/User/Sidebar'; // Ensure SidebarItem is imported
 import Navbar from '../../Components/User/Navbar'; // Import your Navbar component
-import { LuLayoutDashboard } from 'react-icons/lu';
-import { MdForum } from "react-icons/md";
-import { FaHospitalUser } from "react-icons/fa6";
-import { GrEmergency } from "react-icons/gr";
-import { BiSolidDonateBlood } from "react-icons/bi";
-import { FaHospitalAlt } from "react-icons/fa";
-import { IoIosSettings } from "react-icons/io";
-import { MdContactSupport } from "react-icons/md";
-import { SiFigshare } from "react-icons/si";
 import backgroundImage from '../../assets/images/bgImg.png';
-import { Link } from 'react-router-dom';
 import GreetingsCard from '../../Components/User/consultations/GreetingsCard';
 import CardImg from '../../assets/images/welness3.jpg';
 import CardInsuranceImg from '../../assets/images/InsuranceImg.avif';
@@ -20,7 +10,7 @@ import PhysicalOverview from '../../Components/User/consultations/PhysicalOvervi
 import RecentVisits from '../../Components/User/consultations/RecentVisits';
 import InsuranceCard from '../../Components/User/consultations/InsuranceCard';
 import UpcomingConsultations from '../../Components/User/consultations/UpcomingConsultations';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function Consultation() {
     const title = 'How are you feeling today?';
