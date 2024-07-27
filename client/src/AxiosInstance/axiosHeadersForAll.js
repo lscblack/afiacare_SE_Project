@@ -30,7 +30,7 @@ const createAxiosInstance = () => {
             if (error.response?.status === 401) {
                 // Reset state and redirect to login
                 store.dispatch(resetStateToDefault());
-                window.location.href = ""
+                // window.location.href = ""
             } else {
                 const errorData = error.response?.data;
                 let errorMessage = errorData
