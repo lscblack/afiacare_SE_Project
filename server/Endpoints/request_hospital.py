@@ -237,10 +237,12 @@ async def update_hospital_for_logged_in(
 
     hospital = db.query(Hospital).filter(Hospital.OwnerId == user["user_id"]).first()
     if not hospital:
-        raise HTTPException(status_code=404, detail="Hospital Not Found")
-
-    if update_data.hospital_status:
-        raise HTTPException(status_code=403, detail="You Are Not Allowed To Change This")
+        raise HTTPException(status_code=404, detail="You Have No Hospital")
+    
+    approved_by = db.query(Minister).filter(Minister.id == update_data.ministerId).first() # get seted minister
+    if not approved_by:
+        raise HTTPException(status_code=404, detail="Invalid Minister with Givine ID")
+    
     # Update hospital details based on provided data
     for key, value in update_data.dict(exclude_unset=True).items():
         setattr(hospital, key, value)
