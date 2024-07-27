@@ -167,12 +167,14 @@ async def view_appointment(appointment_id: int, user: user_dependency, db: db_de
 async def update_appointment_status(appointment_id: int, status: bool, user: user_dependency, db: db_dependency):
     if isinstance(user, HTTPException):
         raise user
+    # if user["acc_type"] not in ["hospital", "admin", "doctor"]:
+    #     raise HTTPException(status_code=403, detail="You are not authorized to Change appointments")
 
     appointment = db.query(ORMAppointments).filter(ORMAppointments.id == appointment_id).first()
     if not appointment:
         raise HTTPException(status_code=404, detail="Appointment not found")
 
-    if user["acc_type"] == "doctor" and appointment.Doctor_id != user["user_id"]:
+    if user["acc_type"] == "doctor" or appointment.OwnerId != user["user_id"]:
         raise HTTPException(status_code=403, detail="You are not authorized to update this appointment")
 
     appointment.app_status = status
