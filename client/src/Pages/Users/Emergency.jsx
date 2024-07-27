@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import Sidebar from '../../Components/User/Sidebar';
-import Navbar from '../../Components/User/Navbar'; 
+import Sidebar from '../../Components/Sidebar';
+import Navbar from '../../Components/Navbar'; 
 import EmergencyRequestCards from '../../Components/User/Emergency_Components/EmergencyRequestCards';
 import FirstAidCards from '../../Components/User/Emergency_Components/FirstAidCards';
 import HospitalsNearyou from '../../Components/User/Emergency_Components/HospitalsNearyou';

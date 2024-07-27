@@ -1,23 +1,21 @@
 import React, { useContext, createContext, useState, useEffect } from "react";
-import Logo from "../../assets/images/afiacare.svg";
-import { LuChevronFirst, LuChevronLast } from "react-icons/lu";
-import { IoMdMore } from "react-icons/io";
+import Logo from "../assets/images/afiacare.svg";
+import { LuChevronFirst, LuChevronLast, LuLayoutDashboard } from "react-icons/lu";
+import { IoMdMore, IoIosSettings } from "react-icons/io";
+import { IoSettingsOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineLogin } from "react-icons/ai";
-import { IoSettingsOutline } from "react-icons/io5";
-import ProfileAvatar from "../../assets/images/avatar.png";
+import ProfileAvatar from "../assets/images/avatar.png";
 import { useSelector } from "react-redux";
-import { resetStateToDefault } from "../../features/SharedDataSlice/SharedData";
+import { resetStateToDefault } from "../features/SharedDataSlice/SharedData";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { LuLayoutDashboard } from 'react-icons/lu';
-import { FaHospitalUser } from "react-icons/fa6";
-import { IoIosSettings } from "react-icons/io";
+import { FaHospitalUser, FaHospitalAlt } from "react-icons/fa";
 import { BiSolidDonateBlood } from "react-icons/bi";
-import { MdForum, MdContactSupport } from "react-icons/md";
+import { MdForum, MdContactSupport, MdDashboardCustomize, MdPeople, MdPerson, MdAccessTime, MdReport, MdSettings } from "react-icons/md";
 import { GrEmergency } from "react-icons/gr";
-import { FaHospitalAlt } from "react-icons/fa";
-import { SiFigshare } from "react-icons/si";
+import { FaCalendarMinus, FaUsers, FaPlusCircle, FaFolderPlus } from "react-icons/fa";
+import { TbGraphFilled } from "react-icons/tb";
 
 const SidebarContext = createContext();
 
@@ -77,16 +75,41 @@ function Sidebar({ children }) {
     }
   };
 
-  const sidebarItems = [
-    { icon: <LuLayoutDashboard size={20} />, text: "Dashboard", link: "/dashboard", alert: true },
-    UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "Consultations", link: "/user/consultations" },
-    UserInfo.UserInfo.acc_status && { icon: <BiSolidDonateBlood size={20} />, link: "/user/donations", text: "Donations", alert: true },
-    { icon: <GrEmergency size={20} />, link: "/user/emergency", text: "Emergency" },
-    { icon: <FaHospitalAlt size={20} />,link: "/facilities", text: "Facilities" },
-    UserInfo.UserInfo.acc_status && { icon: <MdForum size={20} />, text: "Messages", alert: true },
-    UserInfo.UserInfo.acc_status && { icon: <IoIosSettings size={20} />, text: "Settings", alert: true },
-    { icon: <MdContactSupport size={20} />, text: "Support" }
-  ].filter(Boolean);
+  const getSidebarItems = acc_type => {
+    if (acc_type === "patient") {
+      return [
+        { icon: <LuLayoutDashboard size={20} />, text: "Dashboard", link: "/dashboard", alert: true },
+        UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "Consultations", link: "/user/consultations" },
+        UserInfo.UserInfo.acc_status && { icon: <BiSolidDonateBlood size={20} />, link: "/user/donations", text: "Donations", alert: true },
+        { icon: <GrEmergency size={20} />, link: "/user/emergency", text: "Emergency" },
+        { icon: <FaHospitalAlt size={20} />, link: "/facilities", text: "Facilities" },
+        UserInfo.UserInfo.acc_status && { icon: <MdForum size={20} />, text: "Messages", alert: true },
+        UserInfo.UserInfo.acc_status && { icon: <IoIosSettings size={20} />, text: "Settings", alert: true },
+        { icon: <MdContactSupport size={20} />, text: "Support" }
+      ];
+    } else if (acc_type === "doctor") {
+      return [
+          { icon: <MdDashboardCustomize size={20} />, text: "Dashboard" },
+          { icon: <FaCalendarMinus size={20} />, text: "Appointments" },
+          { icon: <FaUsers size={20} />, text: "Patients" },
+          { icon: <TbGraphFilled size={20} />, text: "Statistics" },
+          { icon: <MdForum size={20} />, text: "Forums" },
+          { icon: <FaPlusCircle size={20} />, text: "Requests" },
+          { icon: <FaFolderPlus size={20} />, text: "Test Results" },
+        ];
+    } else if (acc_type === "admin") {
+      return [
+        { icon: <MdDashboardCustomize size={20} />, text: "Dashboard" },
+        { icon: <MdPeople size={20} />, text: "Manage Doctors" },
+        { icon: <MdPerson size={20} />, text: "View Patients" },
+        { icon: <MdAccessTime size={20} />, text: "View Appointments" },
+        { icon: <MdReport size={20} />, text: "Reports" },
+        { icon: <MdSettings size={20} />, text: "Settings" }
+      ];
+    }
+  };
+
+  const sidebarItems = getSidebarItems(UserInfo.UserInfo.acc_type);
 
   return (
     <aside className={`h-screen ${expanded ? "w-64" : "w-20"} transition-all`}>
@@ -146,4 +169,4 @@ function Sidebar({ children }) {
   );
 }
 
-export default Sidebar;
+export default Sidebar; 

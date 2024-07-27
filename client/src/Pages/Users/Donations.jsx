@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import Sidebar, { SidebarItem } from '../../Components/User/Sidebar';
-import Navbar from '../../Components/User/Navbar'; // Import your Navbar component
+import Sidebar from '../../Components/Sidebar';
+import Navbar from '../../Components/Navbar'; 
 import CardImg from '../../assets/images/DonorImg.jpg'
 import backgroundImage from '../../assets/images/DonateBg.jpg';
 import GreetingsCard from '../../Components/User/consultations/GreetingsCard';

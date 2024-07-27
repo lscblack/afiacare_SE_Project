@@ -1,0 +1,134 @@
+import React from 'react';
+import { Calendar, theme, Badge } from 'antd';
+import RecentActivities from '../RecentActivities';
+import { useSelector } from 'react-redux';
+import UserManagement from './Dashboard/UserManagement'; // Assume this component exists
+import SystemStatistics from './Dashboard/SystemStatistics'; // Assume this component exists
+import ReportsDashboard from './Dashboard/ReportsDashboard'; // Assume this component exists
+import { useState, useEffect } from 'react';
+import Sidebar from '../Sidebar';
+import Navbar from '../Navbar';
+
+function AdminDashboard() {
+
+  const [showMenuSmall, setShowMenuSmall] = useState(true)
+  //auto
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setShowMenuSmall(false);
+      }else{
+        setShowMenuSmall(true);
+
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []); // Removed `expanded` from the dependency array
+
+
+
+  const UserInfo = useSelector(state => state.afiaCare.usersLogin);
+  const { token } = theme.useToken();
+  const wrapperStyle = {
+    borderRadius: token.borderRadiusLG,
+  };
+  const onPanelChange = (value, mode) => {
+    console.log(value.format('YYYY-MM-DD'), mode);
+  };
+
+  // Event details
+  const getListData = (value) => {
+    let listData = []; // Specify the type of listData
+    switch (value.date()) {
+      case 1:
+        listData = [
+          {
+            type: 'warning',
+            content: 'System Maintenance',
+          },
+        ];
+        break;
+      case 10:
+        listData = [
+          {
+            type: 'warning',
+            content: 'User Audit',
+          },
+        ];
+        break;
+      case 15:
+        listData = [
+          {
+            type: 'success',
+            content: 'Report Generation',
+          },
+        ];
+        break;
+      default:
+    }
+    return listData || [];
+  };
+  const getMonthData = (value) => {
+    if (value.month() === 1) {
+      return 1394;
+    }
+  };
+
+  // Event rendering
+  const monthCellRender = (value) => {
+    const num = getMonthData(value);
+    return num ? (
+      <div className="notes-month">
+        <section>{num}</section>
+        <span>Event</span>
+      </div>
+    ) : null;
+  };
+  const dateCellRender = (value) => {
+    const listData = getListData(value);
+    return (
+      <ul className="events">
+        {listData.map((item) => (
+          <li key={item.content}>
+            <Badge status={item.type} text={item.content} />
+          </li>
+        ))}
+      </ul>
+    );
+  };
+  const cellRender = (current, info) => {
+    if (info.type === 'date') return dateCellRender(current);
+    if (info.type === 'month') return monthCellRender(current);
+    return info.originNode;
+  };
+  return (
+   
+    <div className="flex flex-col px-4 md:flex-row">
+      <div className='md:w-[50%]'>
+        <div style={wrapperStyle} className='p-4'>
+          <Calendar fullscreen={false} onPanelChange={onPanelChange} cellRender={cellRender} />
+        </div>
+        <div>
+          <UserManagement />
+        </div>
+        <div>
+          <SystemStatistics />
+        </div>
+      </div>
+      <div className='md:w-[50%]'>
+        <div>
+          <ReportsDashboard />
+        </div>
+        <div>
+          <RecentActivities />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default AdminDashboard;

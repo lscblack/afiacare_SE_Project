@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import AvatarImg from "../../assets/images/avatar.png";
-import FlagEN from "../../assets/images/en-flag.png"; // Replace with your actual flag image path
-import FlagES from "../../assets/images/fr-flag.png"; // Replace with your actual flag image path
+import AvatarImg from "../assets/images/avatar.png";
+import FlagEN from "../assets/images/en-flag.png"; // Replace with your actual flag image path
+import FlagES from "../assets/images/fr-flag.png"; // Replace with your actual flag image path
 import { FiSearch } from "react-icons/fi";
 import { AiOutlineLogin } from "react-icons/ai";
 import { AiOutlineBell } from "react-icons/ai";
@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { useNavigate } from "react-router-dom";
-import { resetStateToDefault } from "../../features/SharedDataSlice/SharedData";
+import { resetStateToDefault } from "../features/SharedDataSlice/SharedData";
 
 function Navbar({ showMenuSmall, setShowMenuSmall }) {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
@@ -21,6 +21,8 @@ function Navbar({ showMenuSmall, setShowMenuSmall }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
+  const acc_type = UserInfo.UserInfo.acc_type
+  
 
   useEffect(() => {
     const currentHour = new Date().getHours();
@@ -102,12 +104,40 @@ function Navbar({ showMenuSmall, setShowMenuSmall }) {
 
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-60 p-2 bg-white border rounded-lg shadow-lg z-10">
-                {UserInfo.UserInfo.acc_type !== "patient" && <>
+                {UserInfo.UserInfo.acc_type === "patient" && <>
                   <p className="text-gray-600 text-center font-medium ">You're in as a user</p>
+                </>}
+                {UserInfo.UserInfo.acc_type === "doctor" && <>
+                  <p className="text-gray-600 text-center font-medium ">You're in as a doctor</p>
                   <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
                     Switch Profile
                   </button>
                 </>}
+                {UserInfo.UserInfo.acc_type === "minister" && <>
+                  <p className="text-gray-600 text-center font-medium ">You're in as a minister</p>
+                  <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
+                    Switch Profile
+                  </button>
+                </>}
+                {UserInfo.UserInfo.acc_type === "hospital" && <>
+                  <p className="text-gray-600 text-center font-medium ">You're in as a hospital</p>
+                  <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
+                    Switch Profile
+                  </button>
+                </>}
+                {UserInfo.UserInfo.acc_type === "nurse" && <>
+                  <p className="text-gray-600 text-center font-medium ">You're in as a nurse</p>
+                  <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
+                    Switch Profile
+                  </button>
+                </>}
+                {UserInfo.UserInfo.acc_type === "admin" && <>
+                  <p className="text-gray-600 text-center font-medium ">You're in as a admin</p>
+                  <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
+                    Switch Profile
+                  </button>
+                </>}
+                
 
                 <hr />
                 <button className="w-full text-red-500 text-center p-2 hover:bg-gray-100 flex items-center gap-2" onClick={() => LogoutUser()}>

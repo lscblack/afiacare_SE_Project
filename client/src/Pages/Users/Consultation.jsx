@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar, { SidebarItem } from '../../Components/User/Sidebar'; // Ensure SidebarItem is imported
-import Navbar from '../../Components/User/Navbar'; // Import your Navbar component
+import Sidebar from '../../Components/Sidebar';
+import Navbar from '../../Components/Navbar'; 
 import backgroundImage from '../../assets/images/bgImg.png';
 import GreetingsCard from '../../Components/User/consultations/GreetingsCard';
 import CardImg from '../../assets/images/welness3.jpg';

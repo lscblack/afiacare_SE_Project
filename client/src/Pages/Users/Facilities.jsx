@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Drawer } from 'antd';
-import Sidebar from '../../Components/User/Sidebar';
-import Navbar from '../../Components/User/Navbar';
+import Sidebar from '../../Components/Sidebar';
+import Navbar from '../../Components/Navbar'; 
 import FacilityCard from '../../Components/User/Facilities/FacilityCard';
 import FacilityDrawerContent from '../../Components/User/Facilities/FacilityDrawerContent';
 import { FaHospital, FaClinicMedical, FaSyringe, FaTooth, FaUserMd, FaHeartbeat, FaAmbulance } from 'react-icons/fa';
