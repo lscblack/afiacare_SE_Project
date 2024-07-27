@@ -150,8 +150,9 @@ async def update_hospital(
         if not supposed_by:
             raise HTTPException(status_code=404, detail="Failed To Get Minister All Info")
         
-        if approved_by.country != supposed_by.country:
-            raise HTTPException(status_code=403, detail="You Are Not Allowed To Do This")
+        # if approved_by.country != supposed_by.country:
+        #     # raise HTTPException(status_code=403, detail="You Are Not Allowed To Do This")
+        #     return {"country":approved_by.country, "supp":supposed_by.country}
      
     # Update hospital details based on provided data
     for key, value in update_data.dict(exclude_unset=True).items():
