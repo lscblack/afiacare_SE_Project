@@ -142,7 +142,7 @@ async def update_hospital(
     if not user_info:
          raise HTTPException(status_code=404, detail="Failed To Get User Info")
     if user["acc_type"] in ["minister"]:
-        approved_by = db.query(Minister).filter(Minister.OwnerId == hospital.ministerId).first() # get seted minister
+        approved_by = db.query(Minister).filter(Minister.id == hospital.ministerId).first() # get seted minister
         if not approved_by:
             raise HTTPException(status_code=404, detail="Failed To Get Minister Info")
             
