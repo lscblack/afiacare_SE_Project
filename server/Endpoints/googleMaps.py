@@ -56,10 +56,10 @@ def get_my_location():
 async def near_by_hospitals(user: user_dependency, db: db_dependency):
     lat, lon = get_my_location()
     hospitals = get_nearby_amenities(lat, lon, "hospital")
-    return {"hospitals": hospitals}
+    return {"hospitals": hospitals,"lat":lat,"lon":lon}
 
 @router.get("/me/near_by_pharmacies")
 async def near_by_pharmacies(user: user_dependency, db: db_dependency):
     lat, lon = get_my_location()
     pharmacies = get_nearby_amenities(lat, lon, "pharmacy")
-    return {"pharmacies": pharmacies}
+    return {"pharmacies": pharmacies,"lat":lat,"lon":lon}
