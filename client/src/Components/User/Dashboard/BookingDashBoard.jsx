@@ -6,9 +6,11 @@ import HomeVisitForm from "./HomeVisitForm";
 import BookingCard from "./BookingCard";
 import { FaPlusCircle } from "react-icons/fa";
 import { MdAddHome } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 function BookingDashboard() {
   const [activeForm, setActiveForm] = useState(null);
+  const UserInfo = useSelector(state => state.afiaCare.usersLogin);
 
   const handleCardClick = (formType) => {
     setActiveForm(formType);
@@ -40,7 +42,7 @@ function BookingDashboard() {
           <div className="bg-black bg-opacity-50 absolute inset-0" onClick={handleCloseDrawer}></div>
           <div className="bg-white w-full sm:w-1/2 md:w-1/3 lg:w-2/4 p-4 shadow-lg transform transition-transform duration-300 ease-in-out translate-x-0">
             {activeForm === "clinic" ? (
-              <AppointmentForm onClose={handleCloseDrawer} />
+              <AppointmentForm UserInfo={UserInfo} onClose={handleCloseDrawer} />
             ) : (
               <HomeVisitForm onClose={handleCloseDrawer} />
             )}

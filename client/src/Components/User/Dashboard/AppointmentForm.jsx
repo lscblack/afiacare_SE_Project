@@ -7,7 +7,9 @@ import { toast } from 'react-toastify';
 dayjs.extend(customParseFormat);
 import MyApi from "../../../AxiosInstance/MyApi";
 
-function AppointmentForm({ title, onClose }) {
+
+function AppointmentForm({ title, onClose, UserInfo }) {
+
 
    // state to store the hospital names
    const [hospitals, setHospitals] = useState([]);
@@ -24,6 +26,24 @@ function AppointmentForm({ title, onClose }) {
      doctor: '',
      specialists: '',
    });
+
+   // function to send an email
+   const sendEmail = async (email, purpose) => {
+    try {
+      const response = await MyApi.post("email/send-otp", { "purpose": purpose, "toEmail": email });
+      if (response.data) {
+        toast.success("An appointment was booked successfully and an email sent successfully");
+        setShowLoad(false);
+      } else {
+        toast.dismiss();
+        toast.error("Something went wrong. Please try again later.");
+      }
+    } catch (err) {
+      toast.dismiss();
+      toast.error("Error While Sending OTP. Try again later.");
+      console.log(err);
+    }
+  };
  
    // function to get all hospitals available
    const getHospitals = async () => {
@@ -44,7 +64,7 @@ function AppointmentForm({ title, onClose }) {
  
    const getDoctors = async () => {
      const params = {
-       "worker_type": "nurse",
+       "worker_type": "doctor",
      }
      try {
        const response = await MyApi.get(`hosp/workers/all/${formValues.hospital_id}`, { params });
@@ -188,8 +208,13 @@ function AppointmentForm({ title, onClose }) {
         try {
           const response = await MyApi.post("app/book", params);
           console.log(response);
+
+          // send an email if appointment is booked
+          if (response.status >= 200 && response.status <= 299) {
+            sendEmail(UserInfo.UserInfo.email, "email");
+          }
         } catch (error) {
-          console.log(error);
+          console.log(error.name);
         }
      }
    }
