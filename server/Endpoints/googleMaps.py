@@ -36,30 +36,27 @@ def get_nearby_amenities(lat, lon, amenity, radius=5000):
                 continue
 
             google_maps_link = f"https://www.google.com/maps/search/?api=1&query={lat},{lon}"
-            amenities.append({'name': name, 'location': (lat, lon), 'link': google_maps_link})
+            contact_details = {
+                'phone': element['tags'].get('phone') or element['tags'].get('contact:phone'),
+                'website': element['tags'].get('website') or element['tags'].get('contact:website'),
+                'address': element['tags'].get('addr:street') or element['tags'].get('addr:full')
+            }
+            amenities.append({
+                'name': name, 
+                'location': (lat, lon), 
+                'link': google_maps_link, 
+                'contact_details': contact_details
+            })
     
     return amenities
 
-def get_my_location():
-    try:
-        response = requests.get('http://ipinfo.io/json')
-        if response.status_code == 200:
-            data = response.json()
-            lat, lon = data['loc'].split(',')
-            return float(lat), float(lon)
-        else:
-            raise HTTPException(status_code=500, detail="Error fetching location")
-    except requests.exceptions.RequestException as e:
-        raise HTTPException(status_code=500, detail=f"Error: {e}")
 
-@router.get("/me/near_by_hospitals")
-async def near_by_hospitals(user: user_dependency, db: db_dependency):
-    lat, lon = get_my_location()
+@router.get("/me/near_by_hospitals/{lat}&{lon}")
+async def near_by_hospitals(user: user_dependency, db: db_dependency,lat:float,lon:float):
     hospitals = get_nearby_amenities(lat, lon, "hospital")
     return {"hospitals": hospitals,"lat":lat,"lon":lon}
 
-@router.get("/me/near_by_pharmacies")
-async def near_by_pharmacies(user: user_dependency, db: db_dependency):
-    lat, lon = get_my_location()
+@router.get("/me/near_by_pharmacies/{lat}&{lon}")
+async def near_by_pharmacies(user: user_dependency, db: db_dependency,lat:float,lon:float):
     pharmacies = get_nearby_amenities(lat, lon, "pharmacy")
     return {"pharmacies": pharmacies,"lat":lat,"lon":lon}
