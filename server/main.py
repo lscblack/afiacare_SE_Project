@@ -2,7 +2,7 @@ from enum import Enum
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
-from Endpoints import auth, apis, otp, diseases,admin,minister,request_hospital,doctors,appointment
+from Endpoints import auth, apis, otp, diseases,admin,minister,request_hospital,doctors,appointment,googleMaps
 
 app = FastAPI(
     title="AfiaCare Api Documentation",  # Replace with your desired title
@@ -21,6 +21,7 @@ app.add_middleware(
 # Include the routers from auth, apis, and otp
 app.include_router(auth.router)
 app.include_router(apis.router)
+app.include_router(googleMaps.router)
 app.include_router(diseases.router)
 app.include_router(otp.router)
 app.include_router(admin.router)

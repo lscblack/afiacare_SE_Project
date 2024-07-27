@@ -11,3 +11,4 @@ psycopg2-binary
 #end db
 #env file
 python-dotenv
+requests
