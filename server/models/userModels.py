@@ -107,31 +107,32 @@ class Hospital(Base):
 class Records(Base):
     __tablename__ = "records"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
     consultations = Column(String(255), nullable=True, default="")
     tests = Column(String(255), nullable=True, default="")
     tests_results = Column(String(255), nullable=True, default="")
     presciptions = Column(String(255), nullable=True, default="")
     diseases = Column(String(255), nullable=True, default="")
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
-    hospital = Column(Integer, ForeignKey("hospital.id"))
+    hospitalId = Column(Integer, ForeignKey("hospital.id"))
     date_taken  = Column(Date, default=date.today)
 
 class Appointments(Base):
     __tablename__ = "appointments"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
-    hospital =Column(Integer, ForeignKey("hospital.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
+    hospitalId =Column(Integer, ForeignKey("hospital.id"))
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
     app_status = Column(Boolean, default=False)
     reason =  Column(Text, nullable=True, default="")
+    issue_prove = Column(ARRAY(String), nullable=True, default="")
     due_date = Column(Date, default=date.today)
     date_taken  = Column(Date, default=date.today)
 
 class Donations(Base):
     __tablename__ = "donations"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
     hospital =Column(Integer, ForeignKey("hospital.id"))
     blood_donation = Column(Boolean, default=False)
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
@@ -142,7 +143,7 @@ class Donations(Base):
 class Transfer(Base):
     __tablename__ = "Transfer"
     id = Column(Integer, primary_key=True, index=True)
-    userId = Column(Integer, ForeignKey("users.id"))
+    OwnerId = Column(Integer, ForeignKey("users.id"))
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
     hospital_id = Column(Integer, ForeignKey("hospital.id"))
     hospital_transfer_status = Column(Boolean, default=False)
