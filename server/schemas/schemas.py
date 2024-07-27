@@ -1,6 +1,6 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr,validator
 from typing import List, Optional, Literal
-from datetime import date
+from datetime import date,datetime
 from schemas.returnSchemas import ReturnUser
 
 class CreateUserRequest(BaseModel):  # registeration Schema
@@ -85,3 +85,23 @@ class AddHospUser(BaseModel):
     experience_time:str
 
 
+class AppointmentCreate(BaseModel):
+    hospitalId : int
+    Doctor_id : int
+    reason : str
+    issue_prove: Optional[List[str]] = None
+    due_date :str
+    
+    @validator('due_date')
+    def validate_due_date(cls, value):
+        try:
+            datetime.strptime(value, '%m-%d-%Y')
+            return value
+        except ValueError:
+            raise ValueError('Invalid date format. Please use m-dd-YYYY (12-25-2024-15-30-45) format.')
+class AppointmentUpdate(BaseModel):
+    hospitalId : int
+    Doctor_id : int
+    reason : str
+    issue_prove: Optional[List[str]] = None
+    due_date :str
