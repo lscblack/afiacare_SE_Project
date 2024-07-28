@@ -15,6 +15,9 @@ import { BiSolidDonateBlood } from "react-icons/bi";
 import { MdForum, MdContactSupport, MdDashboardCustomize, MdPeople, MdPerson, MdAccessTime, MdReport, MdSettings, MdHealthAndSafety } from "react-icons/md";
 import { GrEmergency } from "react-icons/gr";
 import { TbGraphFilled } from "react-icons/tb";
+import { FaCalendarMinus } from "react-icons/fa";
+import { FaPlusCircle } from "react-icons/fa";
+import { FaFolderPlus } from "react-icons/fa";
 
 const SidebarContext = createContext();
 
