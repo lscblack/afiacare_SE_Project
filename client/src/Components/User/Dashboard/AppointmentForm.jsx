@@ -212,6 +212,18 @@ function AppointmentForm({ title, onClose, UserInfo }) {
           // send an email if appointment is booked
           if (response.status >= 200 && response.status <= 299) {
             sendEmail(UserInfo.UserInfo.email, "email");
+                // clear the form and close the modal
+                setFormValues({
+                  date: null,
+                  address: '',
+                  reason: '',
+                  additionalRequest: '',
+                  hospital: '',
+                  hospital_id: '',
+                  doctor: '',
+                  specialists: '',
+                });
+                onClose();
           }
         } catch (error) {
           console.log(error.name);
