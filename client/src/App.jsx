@@ -16,8 +16,7 @@ import Donations from "./Pages/Users/Donations";
 import Facilities from "./Pages/Users/Facilities";
 import MainLoad from "./loads/MainLoad";
 import { useEffect } from "react";
-import AdminDashboard from "./Components/Admin/AdminDashboard";
-import DoctorDashboard from "./Components/Doctor/DoctorDashboard";
+import Appointments from "./Pages/Doctors/Appointments";
 
 function App() {
   const lang = useSelector(state => state.afiaCare.langs); // load language translations
@@ -56,16 +55,16 @@ function App() {
           <Route path='/about' element={<><AboutUs /></>}></Route>
           <Route path='/contact' element={<><Contact /></>}></Route>
           <Route path='/services' element={<><Services /></>}></Route>
-          <Route path='/admin-dashboard' element={<><AdminDashboard /></>}></Route>
-          <Route path='/doctor-dashboard' element={<><DoctorDashboard /></>}></Route>
           {/* 
           <Route path='/authentication' element={<>{auth}</>}></Route> */
           }
-          <Route path='/dashboard' element={getComponent(<Dashboard />)} />
+          <Route path='/dashboard' element={getComponent(<Dashboard acc_type="patient"/>)} />
           <Route path='/user/consultations' element={getComponent(<Consultation />)} />
           <Route path='/user/emergency' element={getComponent(<Emergency />)} />
           <Route path='/user/donations' element={getComponent(<Donations />)} />
           <Route path='/facilities' element={getComponent(<Facilities />)} />
+          <Route path='/doctor/appointments' element={getComponent(<Appointments />)} />
+          <Route path='/doctor/dashboard' element={getComponent(<Dashboard acc_type="doctor" />)} />
           <Route path='/auth/onboarding' element={getComponent(<Onboarding />)} />
           <Route path='/authentication' element={isAuthenticated ? <Dashboard/>:<Authentication />} />
           <Route path='*' element={<><PageNotFound /></>}></Route>

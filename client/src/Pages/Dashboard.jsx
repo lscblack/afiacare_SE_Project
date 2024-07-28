@@ -11,21 +11,10 @@ import NurseDashboard from '../Components/Nurse/NurseDashboard';
 import HospitalDashboard from '../Components/Hospital/HospitalDashboard';
 import MinisterDashboard from '../Components/Minister/MinisterDashboard';
 
-function Dashboard() {
+function Dashboard(acc_type) {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
   const [showMenuSmall, setShowMenuSmall] = useState(true);
-  const [currentUser, setCurrentUser] = useState("patient");
-
-  useEffect(() => {
-    const handleResize = () => {
-      setShowMenuSmall(window.innerWidth >= 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const [currentUser, setCurrentUser] = useState(acc_type ? acc_type.acc_type : "patient");
 
   const renderDashboard = () => {
     switch (currentUser) {
@@ -43,6 +32,23 @@ function Dashboard() {
         return <UserDashboard />;
     }
   };
+
+  if (acc_type) {
+    renderDashboard();
+  }
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShowMenuSmall(window.innerWidth >= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+ 
 
   return (
     <div className="flex h-screen">
