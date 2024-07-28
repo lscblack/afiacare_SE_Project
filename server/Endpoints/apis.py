@@ -2,10 +2,8 @@ from fastapi import APIRouter, FastAPI, HTTPException
 from db.connection import db_dependency
 from db.VerifyToken import user_dependency
 from models.userModels import Users
-from typing import List
 from schemas.returnSchemas import ReturnUser
 from schemas.schemas import UpdateUserSchema
-from schemas.schemas import UserTypeDropDown
 from functions.send_mail import send_new_email
 from emailsTemps.AccCreation import account_completion_email
 

@@ -2,7 +2,7 @@ from enum import Enum
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
-from Endpoints import auth, apis, otp, diseases,admin,minister,request_hospital,doctors,appointment,googleMaps
+from Endpoints import auth, apis, otp, diseases,admin,minister,request_hospital,doctors,appointment,googleMaps,records
 
 app = FastAPI(
     title="AfiaCare Api Documentation",  # Replace with your desired title
@@ -29,3 +29,4 @@ app.include_router(minister.router)
 app.include_router(request_hospital.router)
 app.include_router(doctors.router)
 app.include_router(appointment.router)
+app.include_router(records.router)

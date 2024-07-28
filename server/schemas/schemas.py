@@ -1,7 +1,8 @@
-from pydantic import BaseModel, EmailStr,validator
+from pydantic import BaseModel, EmailStr, validator
 from typing import List, Optional, Literal
-from datetime import date,datetime
+from datetime import date, datetime
 from schemas.returnSchemas import ReturnUser
+
 
 class CreateUserRequest(BaseModel):  # registeration Schema
     fname: Optional[str] = None
@@ -16,9 +17,11 @@ class Token(BaseModel):  # token validation schema
     token_type: str
     UserInfo: ReturnUser
 
+
 class FromData(BaseModel):  # token validation schema
     username: str
     password: str
+
 
 # Define your Pydantic schema for partial updates
 
@@ -56,52 +59,79 @@ class UpdateUserSchema(BaseModel):
     emergency_contact: Optional[str] = None
     emergency_contact_name: Optional[str] = None
 
+
 class UserTypeDropDown(BaseModel):
-    user_type: Literal["admin", "minister", "hospital", "nurse", "labtech", "doctor","patient"]
+    user_type: Literal[
+        "admin", "minister", "hospital", "nurse", "labtech", "doctor", "patient"
+    ]
+
 
 class DeleteUserAdmin(BaseModel):
-    userId:int
-    
+    userId: int
+
+
 class GetUserAdmin(BaseModel):
-    hospital_status:Optional[Literal[True,False]] = None
+    hospital_status: Optional[Literal[True, False]] = None
+
 
 class RequestHospitalSchema(BaseModel):
     hospital_name: str
-    hospital_type : Literal["public","private"]
-    hospital_prove : str
-    insurance : Optional[List[str]]
-    country : str
+    hospital_type: Literal["public", "private"]
+    hospital_prove: str
+    insurance: Optional[List[str]]
+    country: str
     hospital_address: str
-    ministerId : int
-    
+    ministerId: int
+
+
 class AddMinisterSchema(BaseModel):
-    OwnerId:int
-    country:str
+    OwnerId: int
+    country: str
+
 
 class AddHospUser(BaseModel):
-    Type:Literal["nurse","doctor"]
-    OwnerId:int
-    specialists : str
-    experience_time:str
+    Type: Literal["nurse", "doctor"]
+    OwnerId: int
+    specialists: str
+    experience_time: str
 
 
 class AppointmentCreate(BaseModel):
-    hospitalId : int
-    Doctor_id : int
-    reason : str
+    hospitalId: int
+    Doctor_id: int
+    reason: str
     issue_prove: Optional[List[str]] = None
-    due_date :str
-    
-    @validator('due_date')
+    due_date: str
+
+    @validator("due_date")
     def validate_due_date(cls, value):
         try:
-            datetime.strptime(value, '%m-%d-%Y')
+            due_date = datetime.datetime.strptime(value, "%m-%d-%Y")
+            today = datetime.datetime.now()
+
+            if due_date < today:
+                raise ValueError("Due date cannot be earlier than today.")
+
             return value
         except ValueError:
-            raise ValueError('Invalid date format. Please use m-dd-YYYY (12-25-2024-15-30-45) format.')
+            raise ValueError(
+                "Invalid date format. Please use m-dd-YYYY (12-25-2024) format."
+            )
+
+
 class AppointmentUpdate(BaseModel):
-    hospitalId : int
-    Doctor_id : int
-    reason : str
+    hospitalId: int
+    Doctor_id: int
+    reason: str
     issue_prove: Optional[List[str]] = None
-    due_date :str
+    due_date: str
+
+
+class AddRecord(BaseModel):
+    record_of: Optional[int]
+    consultations: Optional[List[str]] = None
+    tests: Optional[List[str]] = None
+    tests_results: Optional[str]
+    presciptions: Optional[List[str]] = None
+    diseases: Optional[List[str]] = None
+    date_taken: Optional[str]
