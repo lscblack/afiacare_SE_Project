@@ -8,6 +8,13 @@ import FacilityDrawerContent from '../../Components/User/Facilities/FacilityDraw
 import { FaHospital, FaClinicMedical, FaSyringe, FaTooth, FaUserMd, FaHeartbeat, FaAmbulance } from 'react-icons/fa';
 import RecommendedFacilities from '../../Components/User/Facilities/RecommendedFacilities';
 
+// import dashboards
+import AdminDashboard from '../../Components/Admin/AdminDashboard';
+import DoctorDashboard from '../../Components/Doctor/DoctorDashboard';
+import NurseDashboard from '../../Components/Nurse/NurseDashboard';
+import HospitalDashboard from '../../Components/Hospital/HospitalDashboard';
+import MinisterDashboard from '../../Components/Minister/MinisterDashboard';
+
 const facilities = [
     { id: 1, icon: <FaHospital size={24} />, title: 'Hospitals' },
     { id: 2, icon: <FaClinicMedical size={24} />, title: 'Independent Clinic' },
@@ -60,6 +67,8 @@ const Facilities = () => {
   const [drawerTitle, setDrawerTitle] = useState('');
   const [drawerContent, setDrawerContent] = useState([]);
   const [showMenuSmall, setShowMenuSmall] = useState(true)
+  const [currentUser, setCurrentUser] = useState("patient");
+
 
 
   const showDrawer = (title) => {
@@ -89,18 +98,36 @@ const Facilities = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const renderDashboard = () => {
+    switch (currentUser) {
+      case 'admin':
+        return <AdminDashboard />;
+      case 'doctor':
+        return <DoctorDashboard />;
+      case 'nurse':
+        return <NurseDashboard />;
+      case 'hospital':
+        return <HospitalDashboard />;
+      case 'minister':
+        return <MinisterDashboard />;
+      default:
+        return <UserDashboard />;
+    }
+  };
+
   return (
     <div className="flex h-screen">
       <div className={`${showMenuSmall ? "" : "hidden"} z-50`}>
-        <Sidebar />
+        <Sidebar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       </div>
 
       <div className="flex-1 overflow-y-auto">
         <div className='sticky top-0 z-40'>
-        <Navbar showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} /> {/* Place your Navbar here */}
-
+          <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} />
         </div>
-        <div>
+        {currentUser === "patient" &&
+          <div>
+              <div>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 p-4">
           {facilities.map(facility => (
             <FacilityCard
@@ -125,6 +152,10 @@ const Facilities = () => {
         <div>
             <RecommendedFacilities />
         </div>
+          </div>
+        }
+        {currentUser !== "patient" && renderDashboard()}
+        
       </div>
     </div>
   );

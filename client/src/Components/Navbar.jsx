@@ -22,6 +22,7 @@ function Navbar({ currentUser, setCurrentUser, showMenuSmall, setShowMenuSmall }
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
   const [adminDropdownOpen, setAdminDropdownOpen] = useState(false); // New state for admin dropdown
   const acc_type = UserInfo.UserInfo.acc_type;
+
   
   const changeUser = (userType) => {
     setCurrentUser(userType);

@@ -47,17 +47,17 @@ const SystemStatistics = () => {
     <div className="p-6 bg-gray-100 shadow-md rounded">
       <h2 className="text-xl font-semibold mb-6 text-gray-800" data-aos="fade-up">System Statistics</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 rounded bg-[#4caf50] text-white" data-aos="fade-right">
-          <h3 className="font-semibold text-lg">Active Users</h3>
-          <p className="text-2xl">{stats.activeUsers}</p>
+        <div className="p-6 rounded bg-[#4caf50]" data-aos="fade-right">
+          <h3 className="font-semibold text-lg text-[#39827a]">Active Users</h3>
+          <p className="text-2xl text-[#39827a]">{stats.activeUsers}</p>
         </div>
         <div className="p-6 rounded bg-[#ff9800] text-white" data-aos="fade-left">
           <h3 className="font-semibold text-lg">Recent Activities</h3>
           <p className="text-2xl">{stats.recentActivities}</p>
         </div>
-        <div className="p-6 rounded bg-[#f44336] text-white" data-aos="fade-right">
-          <h3 className="font-semibold text-lg">System Errors</h3>
-          <p className="text-2xl">{stats.systemErrors}</p>
+        <div className="p-6 rounded bg-[#f44336]" data-aos="fade-right">
+          <h3 className="font-semibold text-lg text-[#39827a]">System Errors</h3>
+          <p className="text-2xl text-[#39827a]">{stats.systemErrors}</p>
         </div>
         <div className="col-span-1 md:col-span-2" data-aos="zoom-in">
           <Bar data={barData} options={{

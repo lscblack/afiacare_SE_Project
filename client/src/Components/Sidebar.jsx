@@ -57,7 +57,7 @@ function Sidebar({ currentUser, setCurrentUser }) {
   const location = useLocation();
   const [expanded, setExpanded] = useState(false);
   const [actionsVisible, setActionsVisible] = useState(false);
-  const [adminDropdownOpen, setAdminDropdownOpen] = useState(false);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -139,6 +139,7 @@ function Sidebar({ currentUser, setCurrentUser }) {
   };
 
   const sidebarItems = getSidebarItems(currentUser);
+
 
   const changeUser = (userType) => {
     setCurrentUser(userType);

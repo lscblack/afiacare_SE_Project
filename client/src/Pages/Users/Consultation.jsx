@@ -12,6 +12,13 @@ import InsuranceCard from '../../Components/User/consultations/InsuranceCard';
 import UpcomingConsultations from '../../Components/User/consultations/UpcomingConsultations';
 import { useState, useEffect } from 'react';
 
+// import dashboards
+import AdminDashboard from '../../Components/Admin/AdminDashboard';
+import DoctorDashboard from '../../Components/Doctor/DoctorDashboard';
+import NurseDashboard from '../../Components/Nurse/NurseDashboard';
+import HospitalDashboard from '../../Components/Hospital/HospitalDashboard';
+import MinisterDashboard from '../../Components/Minister/MinisterDashboard';
+
 function Consultation() {
     const title = 'How are you feeling today?';
     const message = "Reserve your slot, get ticket, don't wait in line!";
@@ -22,6 +29,7 @@ function Consultation() {
     const InsuranceText = 'Insurance Management';
     const InsuranceDescription = "Get a quote and get covered for your health needs.";
     const [showMenuSmall, setShowMenuSmall] = useState(true)
+    const [currentUser, setCurrentUser] = useState("patient");
 
     useEffect(() => {
         const handleResize = () => {
@@ -38,18 +46,35 @@ function Consultation() {
     
         return () => window.removeEventListener("resize", handleResize);
       }, []);
+      const renderDashboard = () => {
+        switch (currentUser) {
+          case 'admin':
+            return <AdminDashboard />;
+          case 'doctor':
+            return <DoctorDashboard />;
+          case 'nurse':
+            return <NurseDashboard />;
+          case 'hospital':
+            return <HospitalDashboard />;
+          case 'minister':
+            return <MinisterDashboard />;
+          default:
+            return <UserDashboard />;
+        }
+      };
       
 
     return (
         <div className="flex h-screen">
           <div className={`${showMenuSmall ? "" : "hidden"} z-50`}>
-            <Sidebar />
+            <Sidebar currentUser={currentUser} setCurrentUser={setCurrentUser} />
           </div>
 
             <div className="flex-1 overflow-y-auto">
                 <div className="sticky top-0 z-40">
-                <Navbar showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} /> 
+                <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} />
                 </div>
+                {currentUser === 'patient' && 
                 <div className="flex flex-col px-4 md:flex-row">
                     <div className="md:w-[50%]">
                         <div className="p-4">
@@ -89,6 +114,10 @@ function Consultation() {
                         </div>
                     </div>
                 </div>
+                }
+
+                {currentUser !== 'patient' && renderDashboard()}
+                
             </div>
         </div>
     );
