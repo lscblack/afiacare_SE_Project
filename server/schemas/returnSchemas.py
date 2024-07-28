@@ -63,7 +63,10 @@ class UpdateWorkerRequest(BaseModel):
         
 class AppointmentWithUserDetails(BaseModel):
     # Fields from Appointments
-
+    app_id: Optional[int]
+    OwnerId : Optional[int]
+    hospitalId : Optional[int]
+    Doctor_id : Optional[int]
     app_status: bool
     reason: Optional[str] =None
     issue_prove: Optional[List[str]] = None

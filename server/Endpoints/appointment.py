@@ -130,6 +130,7 @@ async def view_all_appointments_me(user: user_dependency, db: db_dependency):
         
         if user_info and hospital and doctor and doctor_info:
             combined_data.append({
+                "app_id":appointment.id,
                 **appointment.__dict__,
                 **user_info.__dict__,
                 "hospital_name": hospital.hospital_name,
@@ -156,13 +157,14 @@ async def view_appointment(appointment_id: int, user: user_dependency, db: db_de
         raise HTTPException(status_code=404, detail="User, Hospital, or Doctor not found")
 
     combined_data = {
+        "app_id":appointment.id,
         **appointment.__dict__,
         **user_info.__dict__,
         "hospital_name": hospital.hospital_name,
         "doctor_name": f"{doctor_info.fname} {doctor_info.lname}"
     }
 
-    return combined_data
+    return {combined_data}
 @router.patch("/update_status/{appointment_id}", description="Update appointment status")
 async def update_appointment_status(appointment_id: int, status: bool, user: user_dependency, db: db_dependency):
     if isinstance(user, HTTPException):

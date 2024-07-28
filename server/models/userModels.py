@@ -107,12 +107,12 @@ class Hospital(Base):
 class Records(Base):
     __tablename__ = "records"
     id = Column(Integer, primary_key=True, index=True)
-    OwnerId = Column(Integer, ForeignKey("users.id"))
-    consultations = Column(String(255), nullable=True, default="")
-    tests = Column(String(255), nullable=True, default="")
-    tests_results = Column(String(255), nullable=True, default="")
-    presciptions = Column(String(255), nullable=True, default="")
-    diseases = Column(String(255), nullable=True, default="")
+    record_of = Column(Integer, ForeignKey("users.id"))
+    consultations = Column(ARRAY(String), nullable=True, default="")
+    tests = Column(ARRAY(String), nullable=True, default="")
+    tests_results = Column(Text, nullable=True, default="")
+    presciptions = Column(ARRAY(String), nullable=True, default="")
+    diseases = Column(ARRAY(String), nullable=True, default="")
     Doctor_id = Column(Integer, ForeignKey("Doctors.id"))
     hospitalId = Column(Integer, ForeignKey("hospital.id"))
     date_taken  = Column(Date, default=date.today)
