@@ -11,7 +11,6 @@ function NurseDashboard() {
   return (
     <div>
     <h1 className='text-center text-gray-600'>Hello Nurse</h1>
-    <RecentActivities/>
     </div>
 );
 }

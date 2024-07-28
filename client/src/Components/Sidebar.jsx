@@ -10,11 +10,10 @@ import { useSelector } from "react-redux";
 import { resetStateToDefault } from "../features/SharedDataSlice/SharedData";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import { FaHospitalUser, FaHospitalAlt } from "react-icons/fa";
+import { FaHospitalUser, FaHospitalAlt, FaUsers, FaCalendarAlt, FaUserNurse, FaClipboardList } from "react-icons/fa";
 import { BiSolidDonateBlood } from "react-icons/bi";
-import { MdForum, MdContactSupport, MdDashboardCustomize, MdPeople, MdPerson, MdAccessTime, MdReport, MdSettings } from "react-icons/md";
+import { MdForum, MdContactSupport, MdDashboardCustomize, MdPeople, MdPerson, MdAccessTime, MdReport, MdSettings, MdHealthAndSafety } from "react-icons/md";
 import { GrEmergency } from "react-icons/gr";
-import { FaCalendarMinus, FaUsers, FaPlusCircle, FaFolderPlus } from "react-icons/fa";
 import { TbGraphFilled } from "react-icons/tb";
 
 const SidebarContext = createContext();
@@ -48,13 +47,14 @@ export function SidebarItem({ icon, text, active, alert, link }) {
   );
 }
 
-function Sidebar({ children }) {
+function Sidebar({ currentUser, setCurrentUser }) {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
   const dispatch = useDispatch();
   const nav = useNavigate();
   const location = useLocation();
   const [expanded, setExpanded] = useState(false);
   const [actionsVisible, setActionsVisible] = useState(false);
+  const [adminDropdownOpen, setAdminDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -83,33 +83,63 @@ function Sidebar({ children }) {
         UserInfo.UserInfo.acc_status && { icon: <BiSolidDonateBlood size={20} />, link: "/user/donations", text: "Donations", alert: true },
         { icon: <GrEmergency size={20} />, link: "/user/emergency", text: "Emergency" },
         { icon: <FaHospitalAlt size={20} />, link: "/facilities", text: "Facilities" },
-        UserInfo.UserInfo.acc_status && { icon: <MdForum size={20} />, text: "Messages", alert: true },
-        UserInfo.UserInfo.acc_status && { icon: <IoIosSettings size={20} />, text: "Settings", alert: true },
-        { icon: <MdContactSupport size={20} />, text: "Support" }
+        UserInfo.UserInfo.acc_status && { icon: <MdForum size={20} />, text: "Messages", link: "/user/messages", alert: true },
+        UserInfo.UserInfo.acc_status && { icon: <IoIosSettings size={20} />, text: "Settings", link: "/user/settings", alert: true },
+        { icon: <MdContactSupport size={20} />, text: "Support", link: "/user/support" }
       ];
     } else if (acc_type === "doctor") {
       return [
-          { icon: <MdDashboardCustomize size={20} />, text: "Dashboard" },
-          { icon: <FaCalendarMinus size={20} />, text: "Appointments" },
-          { icon: <FaUsers size={20} />, text: "Patients" },
-          { icon: <TbGraphFilled size={20} />, text: "Statistics" },
-          { icon: <MdForum size={20} />, text: "Forums" },
-          { icon: <FaPlusCircle size={20} />, text: "Requests" },
-          { icon: <FaFolderPlus size={20} />, text: "Test Results" },
-        ];
+        { icon: <MdDashboardCustomize size={20} />, text: "Dashboard", link: "/doctor/dashboard" },
+        { icon: <FaCalendarMinus size={20} />, text: "Appointments", link: "/doctor/appointments" },
+        { icon: <FaUsers size={20} />, text: "Patients", link: "/doctor/patients" },
+        { icon: <TbGraphFilled size={20} />, text: "Statistics", link: "/doctor/statistics" },
+        { icon: <MdForum size={20} />, text: "Forums", link: "/doctor/forums" },
+        { icon: <FaPlusCircle size={20} />, text: "Requests", link: "/doctor/requests" },
+        { icon: <FaFolderPlus size={20} />, text: "Test Results", link: "/doctor/test-results" },
+      ];
     } else if (acc_type === "admin") {
       return [
-        { icon: <MdDashboardCustomize size={20} />, text: "Dashboard" },
-        { icon: <MdPeople size={20} />, text: "Manage Doctors" },
-        { icon: <MdPerson size={20} />, text: "View Patients" },
-        { icon: <MdAccessTime size={20} />, text: "View Appointments" },
-        { icon: <MdReport size={20} />, text: "Reports" },
-        { icon: <MdSettings size={20} />, text: "Settings" }
+        { icon: <MdDashboardCustomize size={20} />, text: "Dashboard", link: "/admin/dashboard" },
+        { icon: <MdPeople size={20} />, text: "Manage Doctors", link: "/admin/manage-doctors" },
+        { icon: <MdPerson size={20} />, text: "View Patients", link: "/admin/view-patients" },
+        { icon: <MdAccessTime size={20} />, text: "View Appointments", link: "/admin/view-appointments" },
+        { icon: <MdReport size={20} />, text: "Reports", link: "/admin/reports" },
+        { icon: <MdSettings size={20} />, text: "Settings", link: "/admin/settings" }
+      ];
+    } else if (acc_type === "nurse") {
+      return [
+        { icon: <MdDashboardCustomize size={20} />, text: "Dashboard", link: "/nurse/dashboard" },
+        { icon: <FaUserNurse size={20} />, text: "Patients", link: "/nurse/patients" },
+        { icon: <MdHealthAndSafety size={20} />, text: "Health Records", link: "/nurse/health-records" },
+        { icon: <FaClipboardList size={20} />, text: "Tasks", link: "/nurse/tasks" },
+        { icon: <MdForum size={20} />, text: "Forums", link: "/nurse/forums" },
+        { icon: <MdContactSupport size={20} />, text: "Support", link: "/nurse/support" }
+      ];
+    } else if (acc_type === "minister") {
+      return [
+        { icon: <MdDashboardCustomize size={20} />, text: "Dashboard", link: "/minister/dashboard" },
+        { icon: <FaUsers size={20} />, text: "Manage Health Programs", link: "/minister/manage-health-programs" },
+        { icon: <MdReport size={20} />, text: "Reports", link: "/minister/reports" },
+        { icon: <FaHospitalAlt size={20} />, text: "Facilities", link: "/minister/facilities" },
+        { icon: <TbGraphFilled size={20} />, text: "Statistics", link: "/minister/statistics" },
+        { icon: <MdContactSupport size={20} />, text: "Support", link: "/minister/support" }
+      ];
+    } else if (acc_type === "hospital") {
+      return [
+        { icon: <MdDashboardCustomize size={20} />, text: "Dashboard", link: "/hospital/dashboard" },
+        { icon: <FaCalendarAlt size={20} />, text: "Manage Appointments", link: "/hospital/manage-appointments" },
+        { icon: <FaUsers size={20} />, text: "Manage Patients", link: "/hospital/manage-patients" },
+        { icon: <MdForum size={20} />, text: "Forums", link: "/hospital/forums" },
+        { icon: <MdContactSupport size={20} />, text: "Support", link: "/hospital/support" }
       ];
     }
   };
 
-  const sidebarItems = getSidebarItems(UserInfo.UserInfo.acc_type);
+  const sidebarItems = getSidebarItems(currentUser);
+
+  const changeUser = (userType) => {
+    setCurrentUser(userType);
+  }
 
   return (
     <aside className={`h-screen ${expanded ? "w-64" : "w-20"} transition-all`}>
@@ -169,4 +199,4 @@ function Sidebar({ children }) {
   );
 }
 
-export default Sidebar; 
+export default Sidebar;

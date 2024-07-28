@@ -1,11 +1,9 @@
 import React from 'react';
 import Sidebar from '../Components/Sidebar';
-import Navbar from '../Components/Navbar'; 
-import { Calendar, theme, Badge } from 'antd';
+import Navbar from '../Components/Navbar';
 import { useSelector } from 'react-redux';
 import Onboarding from './Onboarding';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import UserDashboard from '../Components/User/UserDashboard';
 import AdminDashboard from '../Components/Admin/AdminDashboard';
 import DoctorDashboard from '../Components/Doctor/DoctorDashboard';
@@ -13,69 +11,58 @@ import NurseDashboard from '../Components/Nurse/NurseDashboard';
 import HospitalDashboard from '../Components/Hospital/HospitalDashboard';
 import MinisterDashboard from '../Components/Minister/MinisterDashboard';
 
-
-
 function Dashboard() {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
-  const [showMenuSmall, setShowMenuSmall] = useState(true)
-  const { token } = theme.useToken();
+  const [showMenuSmall, setShowMenuSmall] = useState(true);
+  const [currentUser, setCurrentUser] = useState("patient");
 
-  //auto
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setShowMenuSmall(false);
-      }else{
-        setShowMenuSmall(true);
-
-      }
+      setShowMenuSmall(window.innerWidth >= 768);
     };
 
     handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []); // Removed `expanded` from the dependency array
+  }, []);
 
-  
+  const renderDashboard = () => {
+    switch (currentUser) {
+      case 'admin':
+        return <AdminDashboard />;
+      case 'doctor':
+        return <DoctorDashboard />;
+      case 'nurse':
+        return <NurseDashboard />;
+      case 'hospital':
+        return <HospitalDashboard />;
+      case 'minister':
+        return <MinisterDashboard />;
+      default:
+        return <UserDashboard />;
+    }
+  };
+
   return (
     <div className="flex h-screen">
       <div className={`${showMenuSmall ? "" : "hidden"} z-50`}>
-        <Sidebar />
+        <Sidebar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       </div>
 
-
-      <div className="flex-1  overflow-y-auto ">
+      <div className="flex-1 overflow-y-auto">
         <div className='sticky top-0 z-40'>
-          <Navbar showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} /> {/* Place your Navbar here */}
+          <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} />
         </div>
-        {!UserInfo.UserInfo.acc_status &&
-          <div className="bg-[white] p-1 z-0"> 
+        {!UserInfo.UserInfo.acc_status ? (
+          <div className="bg-white p-1 z-0">
             <Onboarding />
           </div>
-        }
-        {UserInfo.UserInfo.acc_type === "patient" &&
-          <UserDashboard />
-        }
-        {UserInfo.UserInfo.acc_type === "doctor" &&
-          <DoctorDashboard />
-        }
-        {UserInfo.UserInfo.acc_type === "admin" &&
-          <AdminDashboard />
-        }
-        {UserInfo.UserInfo.acc_type === "nurse" &&
-          <NurseDashboard />
-        }
-        {UserInfo.UserInfo.acc_type === "minister" &&
-          <MinisterDashboard />
-        }
-        {UserInfo.UserInfo.acc_type === "hospital" &&
-          <HospitalDashboard />
-        }
-
+        ) : (
+          renderDashboard()
+        )}
       </div>
     </div>
-
   );
 }
 

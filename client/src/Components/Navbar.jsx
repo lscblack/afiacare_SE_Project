@@ -13,16 +13,20 @@ import { LuLayoutDashboard } from 'react-icons/lu';
 import { useNavigate } from "react-router-dom";
 import { resetStateToDefault } from "../features/SharedDataSlice/SharedData";
 
-function Navbar({ showMenuSmall, setShowMenuSmall }) {
+function Navbar({ currentUser, setCurrentUser, showMenuSmall, setShowMenuSmall }) {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
-  const dispatch = useDispatch()
-  const nav = useNavigate()
+  const dispatch = useDispatch();
   const [greeting, setGreeting] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [languageDropdownOpen, setLanguageDropdownOpen] = useState(false);
-  const acc_type = UserInfo.UserInfo.acc_type
+  const [adminDropdownOpen, setAdminDropdownOpen] = useState(false); // New state for admin dropdown
+  const acc_type = UserInfo.UserInfo.acc_type;
   
+  const changeUser = (userType) => {
+    setCurrentUser(userType);
+    setDropdownOpen(false);
+  }
 
   useEffect(() => {
     const currentHour = new Date().getHours();
@@ -38,6 +42,7 @@ function Navbar({ showMenuSmall, setShowMenuSmall }) {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
     setLanguageDropdownOpen(false); // Close language dropdown when profile is opened
+    setAdminDropdownOpen(false); // Close admin dropdown when profile is opened
   };
 
   const toggleNotification = () => {
@@ -47,9 +52,14 @@ function Navbar({ showMenuSmall, setShowMenuSmall }) {
   const toggleLanguageDropdown = () => {
     setLanguageDropdownOpen(!languageDropdownOpen);
   };
+
+  const toggleAdminDropdown = () => {
+    setAdminDropdownOpen(!adminDropdownOpen);
+  };
+
   const LogoutUser = () => {
     if (dispatch(resetStateToDefault())) {
-      window.location.href = "/authentication"
+      window.location.href = "/authentication";
     }
   }
 
@@ -60,35 +70,37 @@ function Navbar({ showMenuSmall, setShowMenuSmall }) {
         <MdWavingHand className="wave-icon" />
       </h1>
       <div className="flex max-lg:w-full justify-between">
-        <button onClick={()=>setShowMenuSmall(!showMenuSmall)} className=" max-md:block hidden"><LuLayoutDashboard className="text-slate-700 text-4xl"/></button>
+        <button onClick={() => setShowMenuSmall(!showMenuSmall)} className=" max-md:block hidden">
+          <LuLayoutDashboard className="text-slate-700 text-4xl"/>
+        </button>
         <div className="flex items-center gap-4 ml-auto">
           <div className="relative max-sm:hidden">
             <input
               type="text"
-              placeholder="Search..." className="p-2 pl-8 border rounded-lg text-sm bg-white text-gray-400 outline-none "
+              placeholder="Search..." 
+              className="p-2 pl-8 border rounded-lg text-sm bg-white text-gray-400 outline-none"
               style={{ width: "200px" }}
             />
             <FiSearch className="absolute left-3 top-3 text-gray-400" />
           </div>
           <div className="relative">
             <button
-              onClick={toggleNotification} className="text-gray-400 text-xl relative bg-white p-1 rounded-md"
+              onClick={toggleNotification}
+              className="text-gray-400 text-xl relative bg-white p-1 rounded-md"
             >
               <AiOutlineBell size={30} className="font-normal" />
               <span className="absolute top-0 right-0 w-2 h-2 bg-yellow-400 rounded-full"></span>
             </button>
             {notificationOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-md z-10">
-                {!UserInfo.UserInfo.email_confirm &&
-                  <div className="p-2 px-4 text-gray-600 cursor-pointer"
-                  >
-                    <span className="text-red-500 font-bold">
-                      Email not verified
-                    </span>
-                    <br></br> <span className="text-xs">(Fill The OnBoarding To Have Full Access)</span>
+                {!UserInfo.UserInfo.email_confirm && (
+                  <div className="p-2 px-4 text-gray-600 cursor-pointer">
+                    <span className="text-red-500 font-bold">Email not verified</span>
+                    <br />
+                    <span className="text-xs">(Fill The OnBoarding To Have Full Access)</span>
                     <span className="absolute top-4 right-4 w-2 h-2 bg-red-400 rounded-full"></span>
                   </div>
-                }
+                )}
               </div>
             )}
           </div>
@@ -96,49 +108,37 @@ function Navbar({ showMenuSmall, setShowMenuSmall }) {
             <div className="h-10 w-10 rounded-full overflow-hidden">
               <img
                 src={UserInfo.UserInfo.avatar ? UserInfo.UserInfo.avatar : AvatarImg}
-                alt={UserInfo.UserInfo.username} className="w-full h-full rounded-full border border-white shadow-md cursor-pointer"
+                alt={UserInfo.UserInfo.username}
+                className="w-full h-full rounded-full border border-white shadow-md cursor-pointer"
                 onClick={toggleDropdown}
               />
             </div>
-
-
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-60 p-2 bg-white border rounded-lg shadow-lg z-10">
-                {UserInfo.UserInfo.acc_type === "patient" && <>
-                  <p className="text-gray-600 text-center font-medium ">You're in as a user</p>
-                </>}
-                {UserInfo.UserInfo.acc_type === "doctor" && <>
-                  <p className="text-gray-600 text-center font-medium ">You're in as a doctor</p>
-                  <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
-                    Switch Profile
-                  </button>
-                </>}
-                {UserInfo.UserInfo.acc_type === "minister" && <>
-                  <p className="text-gray-600 text-center font-medium ">You're in as a minister</p>
-                  <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
-                    Switch Profile
-                  </button>
-                </>}
-                {UserInfo.UserInfo.acc_type === "hospital" && <>
-                  <p className="text-gray-600 text-center font-medium ">You're in as a hospital</p>
-                  <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
-                    Switch Profile
-                  </button>
-                </>}
-                {UserInfo.UserInfo.acc_type === "nurse" && <>
-                  <p className="text-gray-600 text-center font-medium ">You're in as a nurse</p>
-                  <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
-                    Switch Profile
-                  </button>
-                </>}
-                {UserInfo.UserInfo.acc_type === "admin" && <>
-                  <p className="text-gray-600 text-center font-medium ">You're in as a admin</p>
-                  <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100">
-                    Switch Profile
-                  </button>
-                </>}
-                
-
+                <p className="text-gray-600 text-center font-medium">You're in as a {currentUser}</p>
+                <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100" onClick={() => changeUser(acc_type)}>
+                  Switch Profile
+                </button>
+                {acc_type === 'admin' && (
+                  <>
+                    <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100" onClick={toggleAdminDropdown}>
+                      Choose Account Type
+                    </button>
+                    {adminDropdownOpen && (
+                      <div className="mt-2">
+                        {['patient', 'doctor', 'nurse', 'hospital', 'minister', 'admin'].map((type) => (
+                          <button
+                            key={type}
+                            className="flex items-center gap-2 w-full text-gray-600 hover:bg-gray-100 p-2"
+                            onClick={() => changeUser(type)}
+                          >
+                            {type.charAt(0).toUpperCase() + type.slice(1)}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                )}
                 <hr />
                 <button className="w-full text-red-500 text-center p-2 hover:bg-gray-100 flex items-center gap-2" onClick={() => LogoutUser()}>
                   <AiOutlineLogin /> Logout
@@ -152,11 +152,10 @@ function Navbar({ showMenuSmall, setShowMenuSmall }) {
                       <img src={FlagEN} alt="English" className="w-5 h-5" /> English
                     </button>
                     <button className="flex items-center gap-2 w-full text-gray-600 hover:bg-gray-100 p-2">
-                      <img src={FlagES} alt="Spanish" className="w-5 h-5" /> French
+                      <img src={FlagES} alt="French" className="w-5 h-5" /> French
                     </button>
                   </div>
                 )}
-
               </div>
             )}
             <span className="absolute top-8 right-1 w-2 h-2 bg-green-500 rounded-full" title="Online"></span>
