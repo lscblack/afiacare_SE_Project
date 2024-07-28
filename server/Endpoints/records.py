@@ -94,38 +94,89 @@ async def add_record(user: user_dependency, db: db_dependency,detail:AddRecord )
 @router.get(
     "/user_records",
     description="Get all records of the logged-in user.",
-    response_model=List[AddRecord]
 )
 async def get_user_records(user: user_dependency, db: db_dependency):
     if isinstance(user, HTTPException):
         raise user
 
-    records = (
-        db.query(Records)
-        .filter(Records.record_of == user["user_id"])
-        .join(Doctor, Doctor.OwnerId == Records.Doctor_id)
-        .join(Users, Users.id == Records.Doctor_id)
-        .join(Hospital, Hospital.id == Doctor.hospitalId)
-        .add_columns(
-            Users.fname.label("doctor_fname"),
-            Users.lname.label("doctor_lname"),
-            Doctor.specialists.label("doctor_specialization"),
-            Hospital.hospital_name.label("hospital_name"),
-            Hospital.hospital_address.label("hospital_address")
-        )
-        .all()
-    )
+    records = db.query(Records).filter(Records.record_of == user["user_id"]).all()
+    if not records:
+        raise HTTPException(status_code=404, detail="You have no records")
 
     detailed_records = []
-    for record, doctor_fname, doctor_lname, doctor_specialization, hospital_name, hospital_address in records:
-        detailed_record = {
-            "record": record,
-            "doctor_fname": doctor_fname,
-            "doctor_lname": doctor_lname,
-            "doctor_specialization": doctor_specialization,
-            "hospital_name": hospital_name,
-            "hospital_address": hospital_address
-        }
-        detailed_records.append(detailed_record)
+    
+    for record in records:
+        doctor = db.query(Doctor).filter(Doctor.id == record.Doctor_id).first()
+        if not doctor:
+            raise HTTPException(status_code=404, detail="Doctor account not found")
 
+        doctor_info = db.query(Users).filter(Users.id == doctor.OwnerId).first()
+        if not doctor_info:
+            raise HTTPException(status_code=404, detail="Doctor info account not found")
+
+        hospital = db.query(Hospital).filter(Hospital.id == doctor.hospitalId).first()
+        if not hospital:
+            raise HTTPException(status_code=404, detail="Hospital not found")
+
+        detailed_record = {
+            "record": record.id,
+            "doctor_name": f"{doctor_info.fname} {doctor_info.lname}",
+            "doctor_specialization": doctor.specialists,
+            "exp_time": doctor.experience_time,
+            "hospital_name": hospital.hospital_name,
+            "hospital_address": hospital.hospital_address,
+            "consultations": record.consultations,
+            "tests": record.tests,
+            "tests_results": record.tests_results,
+            "prescriptions": record.presciptions,  # Corrected spelling from 'presciptions' to 'prescriptions'
+            "diseases": record.diseases,
+        }
+        
+        detailed_records.append(detailed_record)
+  
+    return detailed_records
+
+@router.get(
+    "/all_records/{hospitalId}",
+    description="Get all records of the lthe spe.. Hospital.",
+)
+async def all_Records(user: user_dependency, db: db_dependency,hospitalId:int):
+    if isinstance(user, HTTPException):
+        raise user
+
+    records = db.query(Records).filter(Records.hospitalId == hospitalId).all()
+    if not records:
+        raise HTTPException(status_code=404, detail="No records Fo This Hospital")
+
+    detailed_records = []
+    
+    for record in records:
+        doctor = db.query(Doctor).filter(Doctor.id == record.Doctor_id).first()
+        if not doctor:
+            raise HTTPException(status_code=404, detail="Doctor account not found")
+
+        doctor_info = db.query(Users).filter(Users.id == doctor.OwnerId).first()
+        if not doctor_info:
+            raise HTTPException(status_code=404, detail="Doctor info account not found")
+
+        hospital = db.query(Hospital).filter(Hospital.id == doctor.hospitalId).first()
+        if not hospital:
+            raise HTTPException(status_code=404, detail="Hospital not found")
+
+        detailed_record = {
+            "record": record.id,
+            "doctor_name": f"{doctor_info.fname} {doctor_info.lname}",
+            "doctor_specialization": doctor.specialists,
+            "exp_time": doctor.experience_time,
+            "hospital_name": hospital.hospital_name,
+            "hospital_address": hospital.hospital_address,
+            "consultations": record.consultations,
+            "tests": record.tests,
+            "tests_results": record.tests_results,
+            "prescriptions": record.presciptions,  # Corrected spelling from 'presciptions' to 'prescriptions'
+            "diseases": record.diseases,
+        }
+        
+        detailed_records.append(detailed_record)
+  
     return detailed_records
