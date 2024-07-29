@@ -69,7 +69,7 @@ function Appointments() {
   const onApprove = async (appointmentId) => {
     try {
       const response = await MyApi.patch(`/app/update_status/${appointmentId}?status=true`);
-      console.log(response)
+      getAppointments();
       toast.success('Appointment approved successfully');
     } catch (error) {
       toast.error(error.response.data.detail || 'An error occurred');
