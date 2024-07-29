@@ -106,16 +106,16 @@ class AppointmentCreate(BaseModel):
     @validator("due_date")
     def validate_due_date(cls, value):
         try:
-            due_date = datetime.datetime.strptime(value, "%m-%d-%Y")
-            today = datetime.datetime.now()
+            due_date = datetime.strptime(value, "%m-%d-%Y")
+            today = datetime.now()
 
-            if due_date < today:
+            if due_date.date() < today.date():
                 raise ValueError("Due date cannot be earlier than today.")
 
             return value
         except ValueError:
             raise ValueError(
-                "Invalid date format. Please use m-dd-YYYY (12-25-2024) format."
+                "Invalid date format. Please use mm-dd-YYYY (12-25-2024) format."
             )
 
 
