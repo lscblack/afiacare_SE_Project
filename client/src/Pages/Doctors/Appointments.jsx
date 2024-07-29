@@ -122,8 +122,8 @@ function Appointments() {
                   />
                   <select name="" id="" className='w-1/4 mb-4 p-2 bg-transparent border border-gray-300 rounded text-gray-500 outline-none'>
                     <option value="">All</option>
-                    <option value="">Approved</option>
-                    <option value="">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Pending">Pending</option>
                   </select>
                 </div>
                 <div className="overflow-x-auto">
