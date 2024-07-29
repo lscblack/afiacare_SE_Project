@@ -5,6 +5,7 @@ import AppointmentHistory from '../../Components/Doctor/AppointmentHistory';
 import MyApi from "../../AxiosInstance/MyApi";
 import { toast } from 'react-toastify';
 import { RiMore2Fill } from 'react-icons/ri';
+import { AiOutlineClose } from 'react-icons/ai'; 
 
 // import dashboards
 import AdminDashboard from '../../Components/Admin/AdminDashboard';
@@ -69,7 +70,7 @@ function Users() {
   }, []);
 
 
-  const handleRowClick = (user) => {
+  const handleMoreClick = (user) => {
     setSelectedUsers(user);
     setIsModalOpen(true);
   };
@@ -88,6 +89,24 @@ function Users() {
     user.lname.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.acc_type.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const deleteUser = async (id) => {
+      try {
+          // Send the userId in the request body
+          const response = await MyApi.delete('/admin/user/remove', {
+              data: { userId: id } // Use `data` to send the body for DELETE requests
+          });
+          console.log(response);
+          closeModal();
+          toast.warning('User deleted successfully');
+          getUsers();
+      } catch (error) {
+          console.log(error);
+          toast.error(error.response?.data?.detail || 'An error occurred');
+      }
+  };
+
+
 
   return (
     <div className="flex h-screen">
@@ -142,7 +161,7 @@ function Users() {
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{new Date(user.dob).toLocaleDateString()}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{user.acc_type}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">
-                              <div className='cursor-pointer  text-[#39827a]' onClick={(e) => { e.stopPropagation(); handleRowClick(user); }}>
+                              <div className='cursor-pointer  text-[#39827a]' onClick={(e) => { e.stopPropagation(); handleMoreClick(user); }}>
                                 <RiMore2Fill size={17} className='m-auto'/>
                               </div>
                             </td>
@@ -164,19 +183,25 @@ function Users() {
 
       {isModalOpen && selectedUsers && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-5 rounded-lg w-[90%] max-w-lg">
-            <h2 className="text-2xl font-bold mb-2 text-[#39827a]">Appointment Details</h2>
+          <div className="bg-white p-5 rounded-lg w-[90%] max-w-lg relative">
+              <button className="absolute top-4 right-5 text-gray-500 hover:text-gray-700" onClick={closeModal}>
+                <AiOutlineClose size={24} />
+              </button>
+            <h2 className="text-2xl font-bold mb-2 text-[#39827a]">User Details</h2>
             <p className="text-gray-500 mb-4"><strong>Name:</strong> {selectedUsers.fname + " " + selectedUsers.lname}</p>
             <p className="text-gray-500 mb-4"><strong>Username:</strong> {selectedUsers.username}</p>
             <p className="text-gray-500 mb-4"><strong>Email:</strong> {selectedUsers.email}</p>
-            <p className="text-gray-500 mb-4"><strong>Date:</strong> {new Date(selectedUsers.dob).toLocaleDateString()}</p>
-            <p className="text-gray-500 mb-4"><strong>Phone:</strong> {selectedUsers.phone}</p>
-            <p className="text-gray-500 mb-4"><strong>Emergency Contact:</strong> {selectedUsers.emergency_contact + " (" + selectedUsers.emergency_contact_name + ")"}</p>
+            <p className="text-gray-500 mb-4"><strong>DoB:</strong> {new Date(selectedUsers.dob).toLocaleDateString()}</p>
+            <p className="text-gray-500 mb-4"><strong>Phone:</strong> {!selectedUsers.phone ? "N/A" : selectedUsers.phone}</p>
+            <p className="text-gray-500 mb-4"><strong>Emergency Contact:</strong> {!selectedUsers.emergency_contact ? "N/A" : selectedUsers.emergency_contact }</p>
+            <p className="text-gray-500 mb-4"><strong>Emergency Name:</strong> {!selectedUsers.emergency_contact_name ? "N/A" : selectedUsers.emergency_contact_name }</p>
+            <hr className='mb-4'/>
+            <p className="text-sm text-[#c04c44]"><strong>Danger zone:</strong> You are about to delete this user.</p>
             <button
-              className="mt-4 px-4 py-2 bg-[#39827a] text-white rounded hover:bg-[#2e6d62]"
-              onClick={closeModal}
+              className="mt-4 px-4 py-2 bg-[#a52920] text-white rounded hover:bg-[#ca352b]"
+              onClick={() => deleteUser(selectedUsers.id)}
             >
-              Close
+              Delete
             </button>
           </div>
         </div>
