@@ -66,7 +66,7 @@ function App() {
           <Route path='/doctor/appointments' element={getComponent(<Appointments />)} />
           <Route path='/doctor/dashboard' element={getComponent(<Dashboard acc_type="doctor" />)} />
           <Route path='/auth/onboarding' element={getComponent(<Onboarding />)} />
-          <Route path='/authentication' element={isAuthenticated ? <Dashboard/>:<Authentication />} />
+          <Route path='/authentication' element={isAuthenticated ? <Dashboard acc_type="patient"/>:<Authentication />} />
           <Route path='*' element={<><PageNotFound /></>}></Route>
         </Routes>
       }

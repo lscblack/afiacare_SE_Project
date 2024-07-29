@@ -191,13 +191,9 @@ function AppointmentForm({ title, onClose, UserInfo }) {
         const month = date.getMonth() + 1;
         const day = pad(date.getDate());
         const year = date.getFullYear();
-        const hours = pad(date.getHours());
-        const minutes = pad(date.getMinutes());
-        const seconds = pad(date.getSeconds());
       
         return `${month}-${day}-${year}`;
       }
-       toast.success("Form Submitted Successfully");
         const params = {
           "hospitalId": formValues.hospital_id,
           "Doctor_id": formValues.doctor,
@@ -211,6 +207,7 @@ function AppointmentForm({ title, onClose, UserInfo }) {
 
           // send an email if appointment is booked
           if (response.status >= 200 && response.status <= 299) {
+            toast.success("Form Submitted Successfully");
             sendEmail(UserInfo.UserInfo.email, "email");
                 // clear the form and close the modal
                 setFormValues({
@@ -226,7 +223,7 @@ function AppointmentForm({ title, onClose, UserInfo }) {
                 onClose();
           }
         } catch (error) {
-          console.log(error.name);
+          console.log(error);
         }
      }
    }
