@@ -16,38 +16,31 @@ const DoctorDashboard = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer" onClick={() => handleCardClick('/doctor/appointments')}>
-          <div className="flex items-center">
-          <div className='text-[#39827a] bg-slate-100 p-2 rounded-full'>
-            <FaCalendarAlt size={24}  />
+          <div className="">
+          <div className='text-[#39827a] bg-slate-100 p-5 rounded-full w-fit m-auto'>
+            <FaCalendarAlt size={42}  className="m-auto"/>
           </div>
-            <h2 className="text-xl font-semibold">Appointments</h2>
+            <h2 className="text-2xl text-center font-semibold bg-slate-100 rounded-full p-5 mt-5 text-gray-500">Appointments</h2>
           </div>
-          <p className="text-gray-500 mt-2">View and manage upcoming appointments.</p>
-          {/* Add appointment content here */}
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer">
-          <div className="flex items-center">
-          <div className='text-[#39827a] bg-slate-100 p-2 rounded-full '>
-            <FaUsers size={24}  />
+        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer" onClick={() => handleCardClick('/doctor/appointments')}>
+          <div className="">
+          <div className='text-[#39827a] bg-slate-100 p-5 rounded-full w-fit m-auto'>
+            <FaUsers size={42}  className="m-auto"/>
           </div>
-            <h2 className="text-xl font-semibold">Patients</h2>
+            <h2 className="text-2xl text-center font-semibold bg-slate-100 rounded-full p-5 mt-5 text-gray-500">Patients</h2>
           </div>
-          <p className="text-gray-500 mt-2">View and manage patient details.</p>
-          {/* Add patient content here */}
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer">
-          <div className="flex items-center">
-          <div className='text-[#39827a] bg-slate-100 p-2 rounded-full '>
-            <TbGraphFilled size={24} className="" />
+        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer" onClick={() => handleCardClick('/doctor/appointments')}>
+          <div className="">
+          <div className='text-[#39827a] bg-slate-100 p-5 rounded-full w-fit m-auto'>
+            <TbGraphFilled size={42}  className="m-auto"/>
           </div>
-            <h2 className="text-xl font-semibold">Statistics</h2>
+            <h2 className="text-2xl text-center font-semibold bg-slate-100 rounded-full p-5 mt-5 text-gray-500">Statistics</h2>
           </div>
-          <p className="text-gray-500 mt-2">View health statistics and trends.</p>
-           <h2 className="text-2xl font-semibold text-[#39827a]">34%</h2>
         </div>
-
       </div>
 
       <div className="mt-8 flex flex-wrap gap-5">

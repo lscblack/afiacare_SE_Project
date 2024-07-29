@@ -17,9 +17,9 @@ function Appointments() {
   const [showMenuSmall, setShowMenuSmall] = useState(true);
   const [currentUser, setCurrentUser] = useState("doctor");
   const [error, setError] = useState(null);
-  const [selectedAppointment, setSelectedAppointment] = useState(null); // State for selected appointment
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,7 +53,6 @@ function Appointments() {
     }
   };
 
-  // retrieve appointments for a logged in doctor
   const getAppointments = async () => {
     try {
       const response = await MyApi.get('/app/me/all');
@@ -69,10 +68,9 @@ function Appointments() {
 
   const onApprove = async (appointmentId) => {
     try {
-      // Approve appointment
-      const response = await MyApi.patch(`/app/update_status/${appointmentId}`, { appointment_id: appointmentId, status: 'approved' });
-      console.log(response.data);
-      getAppointments();
+      const response = await MyApi.patch(`/app/update_status/${appointmentId}?status=true`);
+      console.log(response)
+      toast.success('Appointment approved successfully');
     } catch (error) {
       toast.error(error.response.data.detail || 'An error occurred');
     }
@@ -108,19 +106,26 @@ function Appointments() {
           <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} showMenuSmall={showMenuSmall} setShowMenuSmall={setShowMenuSmall} />
         </div>
         {currentUser === 'doctor' && (
-          <div className="p-5">
+          <div className="p-5 bg-white rounded-md m-5">
             <h2 className="text-2xl font-bold mb-2 text-[#39827a]">Appointments</h2>
             <p className="text-gray-500 mb-4">View and manage upcoming appointments.</p>
 
-            <div className="overflow-x-auto flex items-start gap-4 md:gap-0 justify-normal md:justify-around flex-wrap pb-5">
-              <div className="min-w-full md:min-w-[65%] shadow-lg">
-                <input
-                  type="text"
-                  placeholder="Search appointments"
-                  value={searchQuery}
-                  onChange={handleSearch}
-                  className="mb-4 p-2 bg-transparent border border-gray-300 rounded w-full text-gray-500 outline-none"
-                />
+            <div className="overflow-x-auto flex items-start gap-4 md:gap-0 justify-normal md:justify-between flex-wrap pb-5">
+              <div className="min-w-full md:min-w-[65%] shadow-lg mt-5">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="Search appointments"
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    className="w-3/4 mb-4 p-2 bg-transparent border border-gray-300 rounded text-gray-500 outline-none"
+                  />
+                  <select name="" id="" className='w-1/4 mb-4 p-2 bg-transparent border border-gray-300 rounded text-gray-500 outline-none'>
+                    <option value="">All</option>
+                    <option value="">Approved</option>
+                    <option value="">Pending</option>
+                  </select>
+                </div>
                 <div className="overflow-x-auto">
                   <table className="min-w-full bg-white rounded-lg overflow-hidden">
                     <thead>
@@ -145,7 +150,7 @@ function Appointments() {
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">
                               <button
                                 className="px-4 py-2 border-2 border-[#39827a] text-[#39827a] rounded hover:bg-[#39827a] hover:text-white"
-                                onClick={(e) => { e.stopPropagation(); onApprove(appointment.id); }}
+                                onClick={(e) => { e.stopPropagation(); onApprove(appointment.app_id); }}
                               >
                                 Approve
                               </button>
@@ -157,7 +162,7 @@ function Appointments() {
                   </table>
                 </div>
               </div>
-              <div className="min-w-[20%]">
+              <div className="min-w-[30%]">
                 <AppointmentHistory />
               </div>
             </div>
@@ -166,7 +171,7 @@ function Appointments() {
         {currentUser !== 'doctor' && renderDashboard()}
       </div>
 
-      {isModalOpen && (
+      {isModalOpen && selectedAppointment && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-5 rounded-lg w-[90%] max-w-lg">
             <h2 className="text-2xl font-bold mb-2 text-[#39827a]">Appointment Details</h2>

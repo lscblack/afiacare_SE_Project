@@ -113,15 +113,15 @@ function AdminDashboard() {
           <Calendar fullscreen={false} onPanelChange={onPanelChange} cellRender={cellRender} />
         </div>
         <div>
-          <UserManagement />
+          {/* <UserManagement /> */}
         </div>
         <div>
-          <SystemStatistics />
+          {/* <SystemStatistics /> */}
         </div>
       </div>
       <div className='md:w-[50%]'>
         <div>
-          <ReportsDashboard />
+          {/* <ReportsDashboard /> */}
         </div>
         <div>
           <RecentActivities />
