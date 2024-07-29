@@ -141,9 +141,6 @@ function Sidebar({ currentUser, setCurrentUser }) {
   const sidebarItems = getSidebarItems(currentUser);
 
 
-  const changeUser = (userType) => {
-    setCurrentUser(userType);
-  }
 
   return (
     <aside className={`h-screen ${expanded ? "w-64" : "w-20"} transition-all`}>

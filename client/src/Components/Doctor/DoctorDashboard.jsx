@@ -24,7 +24,7 @@ const DoctorDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer" onClick={() => handleCardClick('/doctor/appointments')}>
+        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer">
           <div className="">
           <div className='text-[#39827a] bg-slate-100 p-5 rounded-full w-fit m-auto'>
             <FaUsers size={42}  className="m-auto"/>
@@ -33,7 +33,7 @@ const DoctorDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer" onClick={() => handleCardClick('/doctor/appointments')}>
+        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer">
           <div className="">
           <div className='text-[#39827a] bg-slate-100 p-5 rounded-full w-fit m-auto'>
             <TbGraphFilled size={42}  className="m-auto"/>
