@@ -19,6 +19,9 @@ function UserDashboard() {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
   const defaultUser = useSelector(state => state.afiaCare.defaultView);
   const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(ChangeDefault(""))
+  },[])
   const { token } = theme.useToken();
   const wrapperStyle = {
     borderRadius: token.borderRadiusLG,
