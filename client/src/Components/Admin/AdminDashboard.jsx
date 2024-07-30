@@ -1,32 +1,32 @@
 import React from 'react';
-import { Calendar, theme, Badge } from 'antd';
 import RecentActivities from '../RecentActivities';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { FaCrown, FaUsers } from "react-icons/fa";
 import { TbGraphFilled } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { theme } from 'antd';
 
 
 function AdminDashboard() {
 
-  const [showMenuSmall, setShowMenuSmall] = useState(true)
-  //auto
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setShowMenuSmall(false);
-      }else{
-        setShowMenuSmall(true);
+  // const [showMenuSmall, setShowMenuSmall] = useState(true)
+  // //auto
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     if (window.innerWidth < 768) {
+  //       setShowMenuSmall(false);
+  //     }else{
+  //       setShowMenuSmall(true);
 
-      }
-    };
+  //     }
+  //   };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
+  //   handleResize();
+  //   window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); // Removed `expanded` from the dependency array
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []); // Removed `expanded` from the dependency array
 
   const navigate = useNavigate();
 
@@ -36,75 +36,75 @@ function AdminDashboard() {
   const wrapperStyle = {
     borderRadius: token.borderRadiusLG,
   };
-  const onPanelChange = (value, mode) => {
-    console.log(value.format('YYYY-MM-DD'), mode);
-  };
+  // const onPanelChange = (value, mode) => {
+  //   console.log(value.format('YYYY-MM-DD'), mode);
+  // };
 
   // Event details
-  const getListData = (value) => {
-    let listData = []; // Specify the type of listData
-    switch (value.date()) {
-      case 1:
-        listData = [
-          {
-            type: 'warning',
-            content: 'System Maintenance',
-          },
-        ];
-        break;
-      case 10:
-        listData = [
-          {
-            type: 'warning',
-            content: 'User Audit',
-          },
-        ];
-        break;
-      case 15:
-        listData = [
-          {
-            type: 'success',
-            content: 'Report Generation',
-          },
-        ];
-        break;
-      default:
-    }
-    return listData || [];
-  };
-  const getMonthData = (value) => {
-    if (value.month() === 1) {
-      return 1394;
-    }
-  };
+  // const getListData = (value) => {
+  //   let listData = []; // Specify the type of listData
+  //   switch (value.date()) {
+  //     case 1:
+  //       listData = [
+  //         {
+  //           type: 'warning',
+  //           content: 'System Maintenance',
+  //         },
+  //       ];
+  //       break;
+  //     case 10:
+  //       listData = [
+  //         {
+  //           type: 'warning',
+  //           content: 'User Audit',
+  //         },
+  //       ];
+  //       break;
+  //     case 15:
+  //       listData = [
+  //         {
+  //           type: 'success',
+  //           content: 'Report Generation',
+  //         },
+  //       ];
+  //       break;
+  //     default:
+  //   }
+  //   return listData || [];
+  // };
+  // const getMonthData = (value) => {
+  //   if (value.month() === 1) {
+  //     return 1394;
+  //   }
+  // };
 
   // Event rendering
-  const monthCellRender = (value) => {
-    const num = getMonthData(value);
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Event</span>
-      </div>
-    ) : null;
-  };
-  const dateCellRender = (value) => {
-    const listData = getListData(value);
-    return (
-      <ul className="events">
-        {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
-          </li>
-        ))}
-      </ul>
-    );
-  };
-  const cellRender = (current, info) => {
-    if (info.type === 'date') return dateCellRender(current);
-    if (info.type === 'month') return monthCellRender(current);
-    return info.originNode;
-  };
+  // const monthCellRender = (value) => {
+  //   const num = getMonthData(value);
+  //   return num ? (
+  //     <div className="notes-month">
+  //       <section>{num}</section>
+  //       <span>Event</span>
+  //     </div>
+  //   ) : null;
+  // };
+  // const dateCellRender = (value) => {
+  //   const listData = getListData(value);
+  //   return (
+  //     <ul className="events">
+  //       {listData.map((item) => (
+  //         <li key={item.content}>
+  //           <Badge status={item.type} text={item.content} />
+  //         </li>
+  //       ))}
+  //     </ul>
+  //   );
+  // };
+  // const cellRender = (current, info) => {
+  //   if (info.type === 'date') return dateCellRender(current);
+  //   if (info.type === 'month') return monthCellRender(current);
+  //   return info.originNode;
+  // };
 
   const handleCardClick = (path) => {
     navigate(path);
@@ -147,7 +147,7 @@ function AdminDashboard() {
         
         <div className='md:w-[50%]'> 
           <div style={wrapperStyle} className='p-4'>
-            <Calendar fullscreen={false} onPanelChange={onPanelChange} cellRender={cellRender} />
+            {/* <Calendar fullscreen={false} onPanelChange={onPanelChange} cellRender={cellRender} /> */}
           </div>
           <div>
             {/* <UserManagement /> */}
@@ -161,7 +161,7 @@ function AdminDashboard() {
             {/* <ReportsDashboard /> */}
           </div>
           <div>
-            <RecentActivities />
+            {/* <RecentActivities /> */}
           </div>
         </div>
       </div>
