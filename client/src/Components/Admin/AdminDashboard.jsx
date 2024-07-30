@@ -3,7 +3,7 @@ import { Calendar, theme, Badge } from 'antd';
 import RecentActivities from '../RecentActivities';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { FaCalendarAlt, FaUsers } from "react-icons/fa";
+import { FaCrown, FaUsers } from "react-icons/fa";
 import { TbGraphFilled } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 
@@ -124,12 +124,12 @@ function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer" onClick={() => handleCardClick('/doctor/appointments')}>
+        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer" onClick={() => handleCardClick('/admin/ministers')}>
           <div className="">
           <div className='text-[#39827a] bg-slate-100 p-5 rounded-full w-fit m-auto'>
-            <FaCalendarAlt size={42}  className="m-auto"/>
+            <FaCrown size={42}  className="m-auto"/>
           </div>
-            <h2 className="text-2xl text-center font-semibold bg-slate-100 rounded-full p-5 mt-5 text-gray-500">Appointments</h2>
+            <h2 className="text-2xl text-center font-semibold bg-slate-100 rounded-full p-5 mt-5 text-gray-500">Ministers</h2>
           </div>
         </div>
 

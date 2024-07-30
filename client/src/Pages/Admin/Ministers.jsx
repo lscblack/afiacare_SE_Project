@@ -14,15 +14,15 @@ import NurseDashboard from '../../Components/Nurse/NurseDashboard';
 import HospitalDashboard from '../../Components/Hospital/HospitalDashboard';
 import MinisterDashboard from '../../Components/Minister/MinisterDashboard';
 
-function Users() {
+function Ministers() {
   const [showMenuSmall, setShowMenuSmall] = useState(true);
   const [currentUser, setCurrentUser] = useState("admin");
   const [error, setError] = useState(null);
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUsers, setSelectedUsers] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [dropdownOpen, setDropdownOpen] = useState(null);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -69,14 +69,15 @@ function Users() {
     getUsers();
   }, []);
 
-  const handleMoreClick = (user, index) => {
-    setSelectedUser(user);
-    setDropdownOpen(dropdownOpen === index ? null : index); // Toggle dropdown
+
+  const handleMoreClick = (user) => {
+    setSelectedUsers(user);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedUser(null);
+    setSelectedUsers(null);
   };
 
   const handleSearch = (e) => {
@@ -90,19 +91,22 @@ function Users() {
   );
 
   const deleteUser = async (id) => {
-    try {
-      const response = await MyApi.delete('/admin/user/remove', {
-        data: { userId: id }
-      });
-      console.log(response);
-      closeModal();
-      toast.warning('User deleted successfully');
-      getUsers();
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response?.data?.detail || 'An error occurred');
-    }
+      try {
+          // Send the userId in the request body
+          const response = await MyApi.delete('/admin/user/remove', {
+              data: { userId: id } // Use `data` to send the body for DELETE requests
+          });
+          console.log(response);
+          closeModal();
+          toast.warning('User deleted successfully');
+          getUsers();
+      } catch (error) {
+          console.log(error);
+          toast.error(error.response?.data?.detail || 'An error occurred');
+      }
   };
+
+
 
   return (
     <div className="flex h-screen">
@@ -115,8 +119,8 @@ function Users() {
         </div>
         {currentUser === 'admin' && (
           <div className="p-5 bg-white rounded-md m-5">
-            <h2 className="text-2xl font-bold mb-2 text-[#39827a]">Users</h2>
-            <p className="text-gray-500 mb-4">View and manage upcoming users.</p>
+            <h2 className="text-2xl font-bold mb-2 text-[#39827a]">Ministers</h2>
+            <p className="text-gray-500 mb-4">View and manage upcoming ministers.</p>
 
             <div className="overflow-x-auto flex items-start gap-4 md:gap-0 justify-normal md:justify-between flex-wrap pb-5">
               <div className="min-w-full md:min-w-[65%] shadow-lg mt-5">
@@ -148,58 +152,18 @@ function Users() {
                       </tr>
                     </thead>
                     <tbody>
-                      {!users.length && [0,1,2,3,4,5].map((i) => (
-                        <tr key={i}>
-                          <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
-                          </th>
-                          <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
-                          </th>
-                          <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
-                          </th>
-                          <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
-                          </th>
-                        </tr>
-                        
-                      ))}
                       {error ? (
                         <tr><td colSpan="5" className="text-center py-2 px-4 border-b border-gray-200 text-gray-500">{error}</td></tr>
                       ) : (
-                        filteredUsers.map((user, index) => (
-                          <tr key={user.id} className="relative cursor-pointer">
+                        filteredUsers.map((user) => (
+                          <tr key={user.id} className="cursor-pointer">
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{user.fname + " " + user.lname}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{new Date(user.dob).toLocaleDateString()}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{user.acc_type}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">
-                              <div className='cursor-pointer text-[#39827a]' onClick={(e) => { e.stopPropagation(); handleMoreClick(user, index); }}>
+                              <div className='cursor-pointer  text-[#39827a]' onClick={(e) => { e.stopPropagation(); handleMoreClick(user); }}>
                                 <RiMore2Fill size={17} className='m-auto'/>
                               </div>
-                              {dropdownOpen === index && (
-                                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg z-10">
-                                  <div className="py-2">
-                                    <button
-                                      onClick={() => {
-                                        // Implement view details functionality
-                                      }}
-                                      className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200"
-                                    >
-                                      View Details
-                                    </button>
-                                    <button
-                                      onClick={() => {
-                                        setSelectedUser(user);
-                                        setIsModalOpen(true);
-                                      }}
-                                      className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200"
-                                    >
-                                      Delete
-                                    </button>
-                                  </div>
-                                </div>
-                              )}
                             </td>
                           </tr>
                         ))
@@ -217,25 +181,25 @@ function Users() {
         {currentUser !== 'admin' && renderDashboard()}
       </div>
 
-      {isModalOpen && selectedUser && (
+      {isModalOpen && selectedUsers && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-5 rounded-lg w-[90%] max-w-lg relative">
-            <button className="absolute top-4 right-5 text-gray-500 hover:text-gray-700" onClick={closeModal}>
-              <AiOutlineClose size={24} />
-            </button>
+              <button className="absolute top-4 right-5 text-gray-500 hover:text-gray-700" onClick={closeModal}>
+                <AiOutlineClose size={24} />
+              </button>
             <h2 className="text-2xl font-bold mb-2 text-[#39827a]">User Details</h2>
-            <p className="text-gray-500 mb-4"><strong>Name:</strong> {selectedUser.fname + " " + selectedUser.lname}</p>
-            <p className="text-gray-500 mb-4"><strong>Username:</strong> {selectedUser.username}</p>
-            <p className="text-gray-500 mb-4"><strong>Email:</strong> {selectedUser.email}</p>
-            <p className="text-gray-500 mb-4"><strong>DoB:</strong> {new Date(selectedUser.dob).toLocaleDateString()}</p>
-            <p className="text-gray-500 mb-4"><strong>Phone:</strong> {!selectedUser.phone ? "N/A" : selectedUser.phone}</p>
-            <p className="text-gray-500 mb-4"><strong>Emergency Contact:</strong> {!selectedUser.emergency_contact ? "N/A" : selectedUser.emergency_contact }</p>
-            <p className="text-gray-500 mb-4"><strong>Emergency Name:</strong> {!selectedUser.emergency_contact_name ? "N/A" : selectedUser.emergency_contact_name }</p>
+            <p className="text-gray-500 mb-4"><strong>Name:</strong> {selectedUsers.fname + " " + selectedUsers.lname}</p>
+            <p className="text-gray-500 mb-4"><strong>Username:</strong> {selectedUsers.username}</p>
+            <p className="text-gray-500 mb-4"><strong>Email:</strong> {selectedUsers.email}</p>
+            <p className="text-gray-500 mb-4"><strong>DoB:</strong> {new Date(selectedUsers.dob).toLocaleDateString()}</p>
+            <p className="text-gray-500 mb-4"><strong>Phone:</strong> {!selectedUsers.phone ? "N/A" : selectedUsers.phone}</p>
+            <p className="text-gray-500 mb-4"><strong>Emergency Contact:</strong> {!selectedUsers.emergency_contact ? "N/A" : selectedUsers.emergency_contact }</p>
+            <p className="text-gray-500 mb-4"><strong>Emergency Name:</strong> {!selectedUsers.emergency_contact_name ? "N/A" : selectedUsers.emergency_contact_name }</p>
             <hr className='mb-4'/>
             <p className="text-sm text-[#c04c44]"><strong>Danger zone:</strong> You are about to delete this user.</p>
             <button
               className="mt-4 px-4 py-2 bg-[#a52920] text-white rounded hover:bg-[#ca352b]"
-              onClick={() => deleteUser(selectedUser.id)}
+              onClick={() => deleteUser(selectedUsers.id)}
             >
               Delete
             </button>
@@ -246,4 +210,4 @@ function Users() {
   );
 }
 
-export default Users;
+export default Ministers;
