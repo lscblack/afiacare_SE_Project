@@ -3,7 +3,7 @@ import React from 'react';
 const FacilityCard = ({ icon, title, onClick }) => {
   return (
     <div
-      className="flex items-center p-4 bg-white rounded-lg text-center cursor-pointer hover:translate-y-[-5px] duration-300"
+      className="flex items-center p-10 bg-white rounded-lg text-center cursor-pointer hover:translate-y-[-5px] duration-300"
       onClick={onClick}
     >
       <div className='flex items-center gap-4'>
