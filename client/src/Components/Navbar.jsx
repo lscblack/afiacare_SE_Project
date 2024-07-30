@@ -117,29 +117,12 @@ function Navbar({ currentUser, setCurrentUser, showMenuSmall, setShowMenuSmall }
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-60 p-2 bg-white border rounded-lg shadow-lg z-10">
                 <p className="text-gray-600 text-center font-medium">You're in as a {currentUser}</p>
+                {acc_type !== "patient" && 
                 <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100" onClick={() => changeUser(acc_type)}>
                   Switch Profile
                 </button>
-                {acc_type === 'admin' && (
-                  <>
-                    <button className="w-full text-[#57bdb1] text-center p-2 hover:bg-gray-100" onClick={toggleAdminDropdown}>
-                      Choose Account Type
-                    </button>
-                    {adminDropdownOpen && (
-                      <div className="mt-2">
-                        {['patient', 'doctor', 'nurse', 'hospital', 'minister', 'admin'].map((type) => (
-                          <button
-                            key={type}
-                            className="flex items-center gap-2 w-full text-gray-600 hover:bg-gray-100 p-2"
-                            onClick={() => changeUser(type)}
-                          >
-                            {type.charAt(0).toUpperCase() + type.slice(1)}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                )}
+                }
+                
                 <hr />
                 <button className="w-full text-red-500 text-center p-2 hover:bg-gray-100 flex items-center gap-2" onClick={() => LogoutUser()}>
                   <AiOutlineLogin /> Logout
