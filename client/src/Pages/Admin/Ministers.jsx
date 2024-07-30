@@ -58,7 +58,7 @@ function Ministers() {
 
   const getUsers = async () => {
     try {
-      const response = await MyApi.get(`/admin/all_users`);
+      const response = await MyApi.get(`/admin/all_ministers`);
       setUsers(response.data);
     } catch (error) {
       setError(error.response.data.detail || 'An error occurred');

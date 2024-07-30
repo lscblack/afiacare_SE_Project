@@ -83,7 +83,7 @@ function Users() {
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
-
+  
   const filteredUsers = users.filter((user) =>
     user.fname.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.lname.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -95,7 +95,7 @@ function Users() {
       const response = await MyApi.delete('/admin/user/remove', {
         data: { userId: id }
       });
-      console.log(response);
+      console.log(response.data);
       closeModal();
       toast.warning('User deleted successfully');
       getUsers();

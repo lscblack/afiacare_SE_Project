@@ -138,23 +138,6 @@ function Appointments() {
                       </tr>
                     </thead>
                     <tbody>
-                    {!appointments.length && [0,1,2,3,4,5].map((i) => (
-                        <tr key={i}>
-                          <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
-                          </th>
-                          <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
-                          </th>
-                          <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
-                          </th>
-                          <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
-                          </th>
-                        </tr>
-                        
-                      ))}
                       {error ? (
                         <tr><td colSpan="5" className="text-center py-2 px-4 border-b border-gray-200 text-gray-500">{error}</td></tr>
                       ) : (
