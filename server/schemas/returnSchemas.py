@@ -70,7 +70,7 @@ class AppointmentWithUserDetails(BaseModel):
     app_status: bool
     reason: Optional[str] =None
     issue_prove: Optional[List[str]] = None
-    due_date: datetime
+    due_date: Optional[str]
 
     # Fields from Users
     fname: Optional[str] = None
