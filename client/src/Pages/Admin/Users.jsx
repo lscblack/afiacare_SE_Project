@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import Navbar from '../../Components/Navbar'; 
+import AppointmentHistory from '../../Components/Doctor/AppointmentHistory';
 import MyApi from "../../AxiosInstance/MyApi";
 import { toast } from 'react-toastify';
-import { AiOutlineDelete } from 'react-icons/ai';
+import { RiMore2Fill } from 'react-icons/ri';
 import { AiOutlineClose } from 'react-icons/ai'; 
-import AvatarImg from "../../assets/images/avatar.png"; 
+import { useSelector } from 'react-redux';
 
 // import dashboards
 import AdminDashboard from '../../Components/Admin/AdminDashboard';
@@ -24,6 +25,8 @@ function Users() {
   const [searchQuery, setSearchQuery] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const UserInfo = useSelector(state => state.afiaCare.usersLogin);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -70,20 +73,20 @@ function Users() {
     getUsers();
   }, []);
 
-  const handleDeleteClick = (user, index) => {
+  const handleMoreClick = (user, index) => {
     setSelectedUser(user);
+    setDropdownOpen(dropdownOpen === index ? null : index); // Toggle dropdown
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setIsDeleteModalOpen(false);
     setSelectedUser(null);
   };
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
-  
+
   const filteredUsers = users.filter((user) =>
     user.fname.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.lname.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -95,13 +98,13 @@ function Users() {
       const response = await MyApi.delete('/admin/user/remove', {
         data: { userId: id }
       });
-      console.log(response.data);
+      console.log(response);
       closeModal();
       toast.warning('User deleted successfully');
       getUsers();
     } catch (error) {
       console.log(error);
-      toast.error(error || 'An error occurred');
+      toast.error(error.response?.data?.detail || 'An error occurred');
     }
   };
 
@@ -149,36 +152,60 @@ function Users() {
                       </tr>
                     </thead>
                     <tbody>
-                    {!error && !users.length && [0, 1, 2, 3, 4, 5].map((i) => (
+                      {!users.length && [0,1,2,3,4,5].map((i) => (
                         <tr key={i}>
                           <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                            <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
+                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
                           </th>
                           <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                            <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
+                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
                           </th>
                           <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                            <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
+                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
                           </th>
                           <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
-                            <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
+                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
                           </th>
                         </tr>
-
+                        
                       ))}
                       {error ? (
                         <tr><td colSpan="5" className="text-center py-2 px-4 border-b border-gray-200 text-gray-500">{error}</td></tr>
                       ) : (
                         filteredUsers.map((user, index) => (
-                          <tr key={user.id} className=" cursor-pointer" onClick={(e) => { e.stopPropagation(); handleDeleteClick(user, index); }}>
+                          <tr key={user.id} className="relative cursor-pointer">
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{user.fname + " " + user.lname}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{new Date(user.dob).toLocaleDateString()}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{user.acc_type}</td>
-                            <td className="py-2 px-4 border-b border-gray-200 text-gray-500 relative">
-                              <div className='cursor-pointer text-red-400' onClick={() => setIsDeleteModalOpen(true)}>
-                                <AiOutlineDelete size={17} className='m-auto'/>
+                            <td className="py-2 px-4 border-b border-gray-200 text-gray-500">
+                              <div className='cursor-pointer text-[#39827a]' onClick={(e) => { e.stopPropagation(); handleMoreClick(user, index); }}>
+                                <RiMore2Fill size={17} className='m-auto'/>
                               </div>
-                              
+                              {dropdownOpen === index && (
+                                <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg z-10">
+                                  <div className="py-2">
+                                    <button
+                                      onClick={() => {
+                                        setSelectedUser(user);
+                                        setIsModalOpen(true);
+                                        setIsDeleteModalOpen(false);
+                                      }}
+                                      className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200"
+                                    >
+                                      View Details
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        setSelectedUser(user);
+                                        setIsDeleteModalOpen(true);
+                                      }}
+                                      className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200"
+                                    >
+                                      Delete user
+                                    </button>
+                                  </div>
+                                </div>
+                              )}
                             </td>
                           </tr>
                         ))
@@ -187,40 +214,8 @@ function Users() {
                   </table>
                 </div>
               </div>
-              <div className='shadow-lg w-full md:w-[30%] min-h-full mt-5 bg-white rounded-sm border border-gray-200 p-2'>
-                <div className='relative'>
-                  <img
-                    className='h-32 w-32 rounded-full mx-auto'
-                    src={AvatarImg}
-                    alt='user profile'
-                  />
-                  
-                  <div
-                    className='absolute right-1 top-1 bg-white border border-gray-300 rounded-full p-1 cursor-pointer text-[#39827a]'
-                    onClick={() => setSelectedUser(null)}
-                  >
-                    <AiOutlineClose size={20} />
-                  </div>
-                </div>
-                <div className='p-2'>
-                  {selectedUser ? (
-                    <>
-                      <h3 className='text-center text-lg font-bold'>{selectedUser.fname + ' ' + selectedUser.lname}</h3>
-                      <p className='text-center text-gray-500 mb-2'>{selectedUser.acc_type}</p>
-                      <div className='text-gray-700'>
-                      <p className="text-gray-500 mb-4"><strong>Name:</strong> {selectedUser.fname + " " + selectedUser.lname}</p>
-                      <p className="text-gray-500 mb-4"><strong>Username:</strong> {selectedUser.username}</p>
-                      <p className="text-gray-500 mb-4"><strong>Email:</strong> {selectedUser.email}</p>
-                      <p className="text-gray-500 mb-4"><strong>DoB:</strong> {new Date(selectedUser.dob).toLocaleDateString()}</p>
-                      <p className="text-gray-500 mb-4"><strong>Phone:</strong> {!selectedUser.phone ? "N/A" : selectedUser.phone}</p>
-                      <p className="text-gray-500 mb-4"><strong>Emergency Contact:</strong> {!selectedUser.emergency_contact ? "N/A" : selectedUser.emergency_contact }</p>
-                      <p className="text-gray-500 mb-4"><strong>Emergency Name:</strong> {!selectedUser.emergency_contact_name ? "N/A" : selectedUser.emergency_contact_name }</p>
-                      </div>
-                    </>
-                  ) : (
-                    <p className='text-center text-gray-500'>No user selected</p>
-                  )}
-                </div>
+              <div className="min-w-[30%]">
+                <AppointmentHistory />
               </div>
             </div>
           </div>
@@ -228,12 +223,38 @@ function Users() {
         {currentUser !== 'admin' && renderDashboard()}
       </div>
 
+      {isModalOpen && selectedUser && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-5 rounded-lg w-[90%] max-w-lg relative">
+            <button className="absolute top-4 right-5 text-gray-500 hover:text-gray-700" onClick={closeModal}>
+              <AiOutlineClose size={24} />
+            </button>
+            <h2 className="text-2xl font-bold mb-2 text-[#39827a]">User Details</h2>
+            <div className='flex items-center'>
+              <p className="text-gray-500 mb-4"><strong>Profile:</strong> </p>
+              <div className='w-10 h-10 mr-4 rounded-full'>
+                <img className='w-full h-full' src={UserInfo.UserInfo.avatar} alt="" />
+              </div>
+            </div>
+            <p className="text-gray-500 mb-4"><strong>Name:</strong> {selectedUser.fname + " " + selectedUser.lname}</p>
+            <p className="text-gray-500 mb-4"><strong>Username:</strong> {selectedUser.username}</p>
+            <p className="text-gray-500 mb-4"><strong>Email:</strong> {selectedUser.email}</p>
+            <p className="text-gray-500 mb-4"><strong>DoB:</strong> {new Date(selectedUser.dob).toLocaleDateString()}</p>
+            <p className="text-gray-500 mb-4"><strong>Phone:</strong> {!selectedUser.phone ? "N/A" : selectedUser.phone}</p>
+            <p className="text-gray-500 mb-4"><strong>Emergency Contact:</strong> {!selectedUser.emergency_contact ? "N/A" : selectedUser.emergency_contact }</p>
+            <p className="text-gray-500 mb-4"><strong>Emergency Name:</strong> {!selectedUser.emergency_contact_name ? "N/A" : selectedUser.emergency_contact_name }</p>
+            <hr className='mb-4'/>
+            
+          </div>
+        </div>
+      )}
+
       {isDeleteModalOpen && selectedUser && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-5 rounded-lg w-[90%] max-w-lg relative">
           <button className="absolute top-4 right-5 text-gray-500 hover:text-gray-700" onClick={closeModal}>
-                <AiOutlineClose size={24} />
-          </button>
+              <AiOutlineClose size={24} />
+            </button>
           <p className="text-sm text-[#c04c44]"><strong>Danger zone:</strong> You are about to delete this user.</p>
             <button
               className="mt-4 px-4 py-2 bg-[#a52920] text-white rounded hover:bg-[#ca352b]"

@@ -8,10 +8,17 @@ import { Calendar, theme, Badge } from 'antd';
 import AppointmentDis from './Dashboard/AppointmentDis';
 import RecentActivities from '../RecentActivities';
 import { useSelector } from 'react-redux';
+import { ChangeDefault } from '../../features/SharedDataSlice/SharedData';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import NewRecord from './Views/NewRecord';
+import NewAppointment from './Views/NewAppointment';
 
 
 function UserDashboard() {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
+  const defaultUser = useSelector(state => state.afiaCare.defaultView);
+  const dispatch = useDispatch()
   const { token } = theme.useToken();
   const wrapperStyle = {
     borderRadius: token.borderRadiusLG,
@@ -89,36 +96,43 @@ function UserDashboard() {
     if (info.type === 'month') return monthCellRender(current);
     return info.originNode;
   };
+  console.log(defaultUser)
   return (
-        <div className="flex flex-col px-4 md:flex-row">
-          <div className='md:w-[50%]'>
-            <div>
-              <BookingDashboard />
-            </div>
-
-            <div style={wrapperStyle} className='p-4' >
-              <Calendar fullscreen={false} onPanelChange={onPanelChange} cellRender={cellRender} />
-            </div>
-            <div>
-              <AppointmentDis />
-            </div>
+    <>
+    {defaultUser == "View Records" && <NewRecord/> }
+    {defaultUser == "View Appointments" && <NewAppointment/> }
+    {defaultUser == "" &&
+      <div className="flex flex-col px-4 md:flex-row">
+        <div className='md:w-[50%]'>
+          <div>
+            <BookingDashboard />
           </div>
-          <div className='md:w-[50%]'>
-            <div>
-              <BloodGroupCard />
-            </div>
-            <div>
-              <BMICard />
-            </div>
-            <div className='mt-2'>
-              <MedReportDashboard />
-            </div>
-            <div>
-              <RecentActivities />
-            </div>
+
+          <div style={wrapperStyle} className='p-4' >
+            <Calendar fullscreen={false} onPanelChange={onPanelChange} cellRender={cellRender} />
+          </div>
+          <div>
+            <AppointmentDis />
           </div>
         </div>
-);
+        <div className='md:w-[50%]'>
+          <div>
+            <BloodGroupCard />
+          </div>
+          <div>
+            <BMICard />
+          </div>
+          <div className='mt-2'>
+            <MedReportDashboard />
+          </div>
+          <div>
+            <RecentActivities />
+          </div>
+        </div>
+      </div>
+    }
+    </>
+  );
 }
 
 export default UserDashboard;

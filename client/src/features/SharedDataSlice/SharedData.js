@@ -6,7 +6,8 @@ import langs from '../../languages/langauges';
 const initialState = {
     langs: langs[0]['eng'],
     usersLogin: [],
-    selectedLangKey:'eng',
+    selectedLangKey: 'eng',
+    defaultView: ''
 };
 
 const sharedDataSlice = createSlice({
@@ -16,6 +17,9 @@ const sharedDataSlice = createSlice({
         addUserLogin: (state, action) => {
             const users = action.payload;
             state.usersLogin = users;
+        },
+        ChangeDefault: (state, action) => {
+            state.defaultView = action.payload;
         },
         changeLangSate: (state, action) => {
             const selectedLang = action.payload;
@@ -34,6 +38,6 @@ const sharedDataSlice = createSlice({
     }
 });
 
-export const { addUserLogin, resetStateToDefault, changeLangSate } = sharedDataSlice.actions;
+export const { addUserLogin, resetStateToDefault, ChangeDefault, changeLangSate } = sharedDataSlice.actions;
 
 export default sharedDataSlice.reducer;

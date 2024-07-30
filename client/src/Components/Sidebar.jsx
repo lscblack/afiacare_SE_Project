@@ -7,7 +7,7 @@ import { CgProfile } from "react-icons/cg";
 import { AiOutlineLogin } from "react-icons/ai";
 import ProfileAvatar from "../assets/images/avatar.png";
 import { useSelector } from "react-redux";
-import { resetStateToDefault } from "../features/SharedDataSlice/SharedData";
+import { ChangeDefault, resetStateToDefault } from "../features/SharedDataSlice/SharedData";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { FaHospitalUser, FaHospitalAlt, FaUsers, FaCalendarAlt, FaUserNurse, FaClipboardList } from "react-icons/fa";
@@ -22,31 +22,72 @@ import { FaFolderPlus } from "react-icons/fa";
 const SidebarContext = createContext();
 
 export function SidebarItem({ icon, text, active, alert, link }) {
+  const defaultUser = useSelector(state => state.afiaCare.defaultView);
+  const dispatch = useDispatch()
+  const linkAction = (action) => {
+    if (action == defaultUser) {
+      window.location.href = ""
+    } else {
+      dispatch(ChangeDefault(action))
+    }
+  }
   const { expanded } = useContext(SidebarContext);
-
+  // useEffect(() => {
+  //   if (link == "/dashboard" && defaultUser !== "") {
+  //     window.location.href = ""//
+  //   }
+  // }, [link])
   return (
-    <Link to={link || '#'}>
-      <li
-        className={`relative flex items-center py-2 px-3 my-1 font-sm rounded-md cursor-pointer transition-colors group ${active ? "bg-gradient-to-tr from-slate-50 to-slate-100 text-[#39827a]" : "hover:bg-gray-50 text-gray-500"}`}
-      >
-        {icon}
-        <span
-          className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}
-        >
-          {text}
-        </span>
-        {alert && (
-          <div
-            className={`absolute right-2 w-2 h-2 rounded bg-[#5bbbb0] ${expanded ? "" : "top-2"}`}
-          />
-        )}
-        {!expanded && (
-          <div className="absolute left-full rounded-md px-2 py-1 ml-6 text-xs text-white bg-[#39827a] invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0">
-            {text}
-          </div>
-        )}
-      </li>
-    </Link>
+    <>
+      {link !== "action" &&
+        <Link to={link || '#'}>
+          <li
+            className={`relative flex items-center py-2 px-3 my-1 font-sm rounded-md cursor-pointer transition-colors group ${active ? "bg-gradient-to-tr from-slate-50 to-slate-100 text-[#39827a]" : "hover:bg-gray-50 text-gray-500"}`}
+          >
+            {icon}
+            <span
+              className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}
+            >
+              {text}
+            </span>
+            {alert && (
+              <div
+                className={`absolute right-2 w-2 h-2 rounded bg-[#5bbbb0] ${expanded ? "" : "top-2"}`}
+              />
+            )}
+            {!expanded && (
+              <div className="absolute left-full rounded-md px-2 py-1 ml-6 text-xs text-white bg-[#39827a] invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0">
+                {text}
+              </div>
+            )}
+          </li>
+        </Link>
+      }
+      {link === "action" &&
+        <button onClick={() => linkAction(text)}>
+          <li
+            className={`relative flex items-center py-2 px-3 my-1 font-sm rounded-md cursor-pointer transition-colors group ${active ? "bg-gradient-to-tr from-slate-50 to-slate-100 text-[#39827a]" : "hover:bg-gray-50 text-gray-500"}`}
+          >
+            {icon}
+            <span
+              className={`overflow-hidden text-left transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}
+            >
+              {text}
+            </span>
+            {alert && (
+              <div
+                className={`absolute right-2 w-2 h-2 rounded bg-[#5bbbb0] ${expanded ? "" : "top-2"}`}
+              />
+            )}
+            {!expanded && (
+              <div className="absolute  rounded-md px-2 py-1 ml-6 text-xs text-white bg-[#39827a] invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0">
+                {text}
+              </div>
+            )}
+          </li>
+        </button>
+      }
+    </>
   );
 }
 
@@ -82,13 +123,15 @@ function Sidebar({ currentUser, setCurrentUser }) {
     if (acc_type === "patient") {
       return [
         { icon: <LuLayoutDashboard size={20} />, text: "Dashboard", link: "/dashboard", alert: true },
-        UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "Consultations", link: "/user/consultations" },
-        UserInfo.UserInfo.acc_status && { icon: <BiSolidDonateBlood size={20} />, link: "/user/donations", text: "Donations", alert: true },
-        { icon: <GrEmergency size={20} />, link: "/user/emergency", text: "Emergency" },
+        UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "View Records", link: "action" },
+        UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "View Appointments", link: "action" },
+        // UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "Consultations", link: "/user/consultations" },
+        // UserInfo.UserInfo.acc_status && { icon: <BiSolidDonateBlood size={20} />, link: "/user/donations", text: "Donations", alert: true },
+        // { icon: <GrEmergency size={20} />, link: "/user/emergency", text: "Emergency" },
         { icon: <FaHospitalAlt size={20} />, link: "/facilities", text: "Facilities" },
-        UserInfo.UserInfo.acc_status && { icon: <MdForum size={20} />, text: "Messages", link: "/user/messages", alert: true },
-        UserInfo.UserInfo.acc_status && { icon: <IoIosSettings size={20} />, text: "Settings", link: "/user/settings", alert: true },
-        { icon: <MdContactSupport size={20} />, text: "Support", link: "/user/support" }
+        // UserInfo.UserInfo.acc_status && { icon: <MdForum size={20} />, text: "Messages", link: "/user/messages", alert: true },
+        // UserInfo.UserInfo.acc_status && { icon: <IoIosSettings size={20} />, text: "Settings", link: "/user/settings", alert: true },
+        // { icon: <MdContactSupport size={20} />, text: "Support", link: "/user/support" }
       ];
     } else if (acc_type === "doctor") {
       return [

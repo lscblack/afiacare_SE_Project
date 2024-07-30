@@ -10,6 +10,8 @@ import DoctorDashboard from '../Components/Doctor/DoctorDashboard';
 import NurseDashboard from '../Components/Nurse/NurseDashboard';
 import HospitalDashboard from '../Components/Hospital/HospitalDashboard';
 import MinisterDashboard from '../Components/Minister/MinisterDashboard';
+import { useDispatch } from 'react-redux';
+import { ChangeDefault } from '../features/SharedDataSlice/SharedData';
 
 function Dashboard(acc_type) {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
@@ -48,7 +50,7 @@ function Dashboard(acc_type) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
- 
+
 
   return (
     <div className="flex h-screen">

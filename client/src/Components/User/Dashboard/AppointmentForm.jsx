@@ -26,6 +26,24 @@ function AppointmentForm({ title, onClose, UserInfo }) {
      doctor: '',
      specialists: '',
    });
+
+   // function to send an email
+   const sendEmail = async (email, purpose) => {
+    try {
+      const response = await MyApi.post("email/send-otp", { "purpose": purpose, "toEmail": email });
+      if (response.data) {
+        toast.success("An appointment was booked successfully and an email sent successfully");
+        setShowLoad(false);
+      } else {
+        toast.dismiss();
+        toast.error("Something went wrong. Please try again later.");
+      }
+    } catch (err) {
+      toast.dismiss();
+      toast.error("Error While Sending OTP. Try again later.");
+      console.log(err);
+    }
+  };
  
    // function to get all hospitals available
    const getHospitals = async () => {
@@ -187,9 +205,10 @@ function AppointmentForm({ title, onClose, UserInfo }) {
           const response = await MyApi.post("app/book", params);
           console.log(response);
 
-          // if appointment is booked
+          // send an email if appointment is booked
           if (response.status >= 200 && response.status <= 299) {
             toast.success("Form Submitted Successfully");
+            sendEmail(UserInfo.UserInfo.email, "email");
                 // clear the form and close the modal
                 setFormValues({
                   date: null,
