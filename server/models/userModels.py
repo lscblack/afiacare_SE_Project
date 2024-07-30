@@ -127,7 +127,7 @@ class Appointments(Base):
     reason =  Column(Text, nullable=True, default="")
     issue_prove = Column(ARRAY(String), nullable=True, default="")
     due_date = Column(String, nullable=True, default=date.today)
-    date_taken  = Column(Date, default=date.today)
+    date_taken  = Column(String, default=date.today)
 
 class Donations(Base):
     __tablename__ = "donations"
