@@ -21,8 +21,8 @@ function BMICard() {
   };
 
   // Ensure non-zero values
-  const weight = UserInfo.UserInfo.weight > 0 ? 70 : 0;
-  const height = UserInfo.UserInfo.height > 0 ? 90 : 1;
+  const weight = UserInfo.UserInfo.weight > 0 ? UserInfo.UserInfo.weight : 0;
+  const height = UserInfo.UserInfo.height > 0 ? UserInfo.UserInfo.height : 1;
   const bmi = calculateBMI(weight, height);
   const weightStatus = getWeightStatus(bmi);
 

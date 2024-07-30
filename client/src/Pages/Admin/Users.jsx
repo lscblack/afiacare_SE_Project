@@ -6,6 +6,7 @@ import MyApi from "../../AxiosInstance/MyApi";
 import { toast } from 'react-toastify';
 import { RiMore2Fill } from 'react-icons/ri';
 import { AiOutlineClose } from 'react-icons/ai'; 
+import { useSelector } from 'react-redux';
 
 // import dashboards
 import AdminDashboard from '../../Components/Admin/AdminDashboard';
@@ -23,6 +24,9 @@ function Users() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const UserInfo = useSelector(state => state.afiaCare.usersLogin);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -182,7 +186,9 @@ function Users() {
                                   <div className="py-2">
                                     <button
                                       onClick={() => {
-                                        // Implement view details functionality
+                                        setSelectedUser(user);
+                                        setIsModalOpen(true);
+                                        setIsDeleteModalOpen(false);
                                       }}
                                       className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200"
                                     >
@@ -191,11 +197,11 @@ function Users() {
                                     <button
                                       onClick={() => {
                                         setSelectedUser(user);
-                                        setIsModalOpen(true);
+                                        setIsDeleteModalOpen(true);
                                       }}
                                       className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200"
                                     >
-                                      Delete
+                                      Delete user
                                     </button>
                                   </div>
                                 </div>
@@ -224,6 +230,12 @@ function Users() {
               <AiOutlineClose size={24} />
             </button>
             <h2 className="text-2xl font-bold mb-2 text-[#39827a]">User Details</h2>
+            <div className='flex items-center'>
+              <p className="text-gray-500 mb-4"><strong>Profile:</strong> </p>
+              <div className='w-10 h-10 mr-4 rounded-full'>
+                <img className='w-full h-full' src={UserInfo.UserInfo.avatar} alt="" />
+              </div>
+            </div>
             <p className="text-gray-500 mb-4"><strong>Name:</strong> {selectedUser.fname + " " + selectedUser.lname}</p>
             <p className="text-gray-500 mb-4"><strong>Username:</strong> {selectedUser.username}</p>
             <p className="text-gray-500 mb-4"><strong>Email:</strong> {selectedUser.email}</p>
@@ -232,7 +244,18 @@ function Users() {
             <p className="text-gray-500 mb-4"><strong>Emergency Contact:</strong> {!selectedUser.emergency_contact ? "N/A" : selectedUser.emergency_contact }</p>
             <p className="text-gray-500 mb-4"><strong>Emergency Name:</strong> {!selectedUser.emergency_contact_name ? "N/A" : selectedUser.emergency_contact_name }</p>
             <hr className='mb-4'/>
-            <p className="text-sm text-[#c04c44]"><strong>Danger zone:</strong> You are about to delete this user.</p>
+            
+          </div>
+        </div>
+      )}
+
+      {isDeleteModalOpen && selectedUser && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-5 rounded-lg w-[90%] max-w-lg relative">
+          <button className="absolute top-4 right-5 text-gray-500 hover:text-gray-700" onClick={closeModal}>
+              <AiOutlineClose size={24} />
+            </button>
+          <p className="text-sm text-[#c04c44]"><strong>Danger zone:</strong> You are about to delete this user.</p>
             <button
               className="mt-4 px-4 py-2 bg-[#a52920] text-white rounded hover:bg-[#ca352b]"
               onClick={() => deleteUser(selectedUser.id)}
