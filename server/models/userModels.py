@@ -126,7 +126,7 @@ class Appointments(Base):
     app_status = Column(Boolean, default=False)
     reason =  Column(Text, nullable=True, default="")
     issue_prove = Column(ARRAY(String), nullable=True, default="")
-    due_date = Column(Date, default=date.today)
+    due_date = Column(String, nullable=True, default=date.today)
     date_taken  = Column(Date, default=date.today)
 
 class Donations(Base):

@@ -103,22 +103,6 @@ class AppointmentCreate(BaseModel):
     issue_prove: Optional[List[str]] = None
     due_date: str
 
-    @validator("due_date")
-    def validate_due_date(cls, value):
-        try:
-            due_date = datetime.strptime(value, "%m-%d-%Y")
-            today = datetime.now()
-
-            if due_date.date() < today.date():
-                raise ValueError("Due date cannot be earlier than today.")
-
-            return value
-        except ValueError:
-            raise ValueError(
-                "Invalid date format. Please use mm-dd-YYYY (12-25-2024) format."
-            )
-
-
 class AppointmentUpdate(BaseModel):
     hospitalId: int
     Doctor_id: int
