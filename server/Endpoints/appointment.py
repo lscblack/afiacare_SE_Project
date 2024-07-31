@@ -164,7 +164,7 @@ async def view_appointment(appointment_id: int, user: user_dependency, db: db_de
         "doctor_name": f"{doctor_info.fname} {doctor_info.lname}"
     }
 
-    return {combined_data}
+    return {"data":combined_data}
 @router.patch("/update_status/{appointment_id}", description="Update appointment status")
 async def update_appointment_status(appointment_id: int, status: bool, user: user_dependency, db: db_dependency):
     if isinstance(user, HTTPException):
