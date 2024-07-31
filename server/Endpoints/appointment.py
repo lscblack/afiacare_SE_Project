@@ -105,6 +105,7 @@ async def view_all_appointments(user: user_dependency, db: db_dependency):
         
         if user_info and hospital and doctor and doctor_info:
             combined_data.append({
+                "app_id":appointment.id,
                 **appointment.__dict__,
                 **user_info.__dict__,
                 "hospital_name": hospital.hospital_name,
