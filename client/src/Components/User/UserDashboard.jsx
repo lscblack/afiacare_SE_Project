@@ -141,13 +141,13 @@ function UserDashboard() {
                     <p><strong>Weight:</strong> {UserInfo.UserInfo.weight} kg</p>
                     <p><strong>Blood Type:</strong> {UserInfo.UserInfo.blood_type}</p>
                     <p><strong>Existing Medical Conditions:</strong> {UserInfo.UserInfo.existing_medical_conditions}</p>
-                    <p><strong>Allergies:</strong> {UserInfo.UserInfo.allergies.join(', ')}</p>
+                    <p><strong>Allergies:</strong> {UserInfo.UserInfo.allergies && UserInfo.UserInfo.allergies.join(', ')}</p>
                     <p><strong>Physical Activity Level:</strong> {UserInfo.UserInfo.physical_activity_level}</p>
-                    <p><strong>Dietary Preferences:</strong> {UserInfo.UserInfo.dietary_preferences.join(', ')}</p>
+                    <p><strong>Dietary Preferences:</strong> {UserInfo.UserInfo.dietary_preferences && UserInfo.UserInfo.dietary_preferences.join(', ')}</p>
                     <p><strong>Smoking Status:</strong> {UserInfo.UserInfo.smoking_status}</p>
                     <p><strong>Alcohol Consumption:</strong> {UserInfo.UserInfo.alcohol_consumption}</p>
                     <p><strong>Primary Health Goal:</strong> {UserInfo.UserInfo.primary_health_goal}</p>
-                    <p><strong>Preferred Workout Types:</strong> {UserInfo.UserInfo.preferred_workout_types.join(', ')}</p>
+                    <p><strong>Preferred Workout Types:</strong> {UserInfo.UserInfo.preferred_workout_types && UserInfo.UserInfo.preferred_workout_types.join(', ')}</p>
                     <p><strong>Preferred Workout Times:</strong> {UserInfo.UserInfo.preferred_workout_times}</p>
                   </div>
                   <hr />
