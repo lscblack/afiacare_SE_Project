@@ -39,7 +39,7 @@ export function SidebarItem({ icon, text, active, alert, link }) {
   // }, [link])
   return (
     <>
-      {link !== "action" &&
+      
         <Link to={link || '#'}>
           <li
             className={`relative flex items-center py-2 px-3 my-1 font-sm rounded-md cursor-pointer transition-colors group ${active ? "bg-gradient-to-tr from-slate-50 to-slate-100 text-[#39827a]" : "hover:bg-gray-50 text-gray-500"}`}
@@ -62,31 +62,8 @@ export function SidebarItem({ icon, text, active, alert, link }) {
             )}
           </li>
         </Link>
-      }
-      {link === "action" &&
-        <button onClick={() => linkAction(text)}>
-          <li
-            className={`relative flex items-center py-2 px-3 my-1 font-sm rounded-md cursor-pointer transition-colors group ${active ? "bg-gradient-to-tr from-slate-50 to-slate-100 text-[#39827a]" : "hover:bg-gray-50 text-gray-500"}`}
-          >
-            {icon}
-            <span
-              className={`overflow-hidden text-left transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}
-            >
-              {text}
-            </span>
-            {alert && (
-              <div
-                className={`absolute right-2 w-2 h-2 rounded bg-[#5bbbb0] ${expanded ? "" : "top-2"}`}
-              />
-            )}
-            {!expanded && (
-              <div className="absolute  rounded-md px-2 py-1 ml-6 text-xs text-white bg-[#39827a] invisible opacity-20 -translate-x-3 transition-all group-hover:visible group-hover:opacity-100 group-hover:translate-x-0">
-                {text}
-              </div>
-            )}
-          </li>
-        </button>
-      }
+      
+        
     </>
   );
 }
@@ -123,8 +100,8 @@ function Sidebar({ currentUser, setCurrentUser }) {
     if (acc_type === "patient") {
       return [
         { icon: <LuLayoutDashboard size={20} />, text: "Dashboard", link: "/dashboard", alert: true },
-        UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "View Records", link: "action" },
-        UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "View Appointments", link: "action" },
+        // UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "View Records", link: "/records" },
+        UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "View Appointments", link: "/appointments" },
         // UserInfo.UserInfo.acc_status && { icon: <FaHospitalUser size={20} />, text: "Consultations", link: "/user/consultations" },
         // UserInfo.UserInfo.acc_status && { icon: <BiSolidDonateBlood size={20} />, link: "/user/donations", text: "Donations", alert: true },
         // { icon: <GrEmergency size={20} />, link: "/user/emergency", text: "Emergency" },
@@ -137,20 +114,20 @@ function Sidebar({ currentUser, setCurrentUser }) {
       return [
         { icon: <MdDashboardCustomize size={20} />, text: "Dashboard", link: "/doctor/dashboard" },
         { icon: <FaCalendarMinus size={20} />, text: "Appointments", link: "/doctor/appointments" },
-        { icon: <FaUsers size={20} />, text: "Patients", link: "/doctor/patients" },
-        { icon: <TbGraphFilled size={20} />, text: "Statistics", link: "/doctor/statistics" },
-        { icon: <MdForum size={20} />, text: "Forums", link: "/doctor/forums" },
-        { icon: <FaPlusCircle size={20} />, text: "Requests", link: "/doctor/requests" },
-        { icon: <FaFolderPlus size={20} />, text: "Test Results", link: "/doctor/test-results" },
+        // { icon: <FaUsers size={20} />, text: "Patients", link: "/doctor/patients" },
+        // { icon: <TbGraphFilled size={20} />, text: "Statistics", link: "/doctor/statistics" },
+        // { icon: <MdForum size={20} />, text: "Forums", link: "/doctor/forums" },
+        // { icon: <FaPlusCircle size={20} />, text: "Requests", link: "/doctor/requests" },
+        // { icon: <FaFolderPlus size={20} />, text: "Test Results", link: "/doctor/test-results" },
       ];
     } else if (acc_type === "admin") {
       return [
         { icon: <MdDashboardCustomize size={20} />, text: "Dashboard", link: "/admin/dashboard" },
-        { icon: <MdPeople size={20} />, text: "Manage Doctors", link: "/admin/manage-doctors" },
-        { icon: <MdPerson size={20} />, text: "View Patients", link: "/admin/view-patients" },
-        { icon: <MdAccessTime size={20} />, text: "View Appointments", link: "/admin/view-appointments" },
-        { icon: <MdReport size={20} />, text: "Reports", link: "/admin/reports" },
-        { icon: <MdSettings size={20} />, text: "Settings", link: "/admin/settings" }
+        // { icon: <MdPeople size={20} />, text: "Manage Doctors", link: "/admin/manage-doctors" },
+        { icon: <MdPerson size={20} />, text: "Manage Users", link: "/admin/users" },
+        // { icon: <MdAccessTime size={20} />, text: "View Appointments", link: "/admin/view-appointments" },
+        // { icon: <MdReport size={20} />, text: "Reports", link: "/admin/reports" },
+        // { icon: <MdSettings size={20} />, text: "Settings", link: "/admin/settings" }
       ];
     } else if (acc_type === "nurse") {
       return [

@@ -29,12 +29,12 @@ function BookingDashboard() {
           Icon={FaPlusCircle}
           onClick={() => handleCardClick("clinic")}
         />
-        <BookingCard
+        {/* <BookingCard
           title="Request home visit"
           backgroundImage={background2}
           Icon={MdAddHome}
           onClick={() => handleCardClick("home")}
-        />
+        /> */}
       </div>
 
       {activeForm && (

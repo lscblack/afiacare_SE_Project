@@ -5,7 +5,7 @@ import { MdAddHome } from "react-icons/md";
 function BookingCard({ title, backgroundImage, Icon, onClick }) {
   return (
     <div
-      className=" max-w-sm rounded-lg overflow-hidden shadow-lg m-4 cursor-pointer hover:translate-y-[-5px] duration-300"
+      className=" w-full rounded-lg overflow-hidden shadow-lg m-4 cursor-pointer hover:translate-y-[-5px] duration-300"
       onClick={onClick}
     >
       <div className="h-40 w-full bg-cover bg-center" style={{ backgroundImage: `url(${backgroundImage})` }}>

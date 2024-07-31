@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../../Components/Sidebar';
 import Navbar from '../../Components/Navbar'; 
-import AppointmentHistory from '../../Components/Doctor/AppointmentHistory';
 import MyApi from "../../AxiosInstance/MyApi";
 import { toast } from 'react-toastify';
 
@@ -55,9 +54,10 @@ function Appointments() {
 
   const getAppointments = async () => {
     try {
-      const response = await MyApi.get('/app/me/all');
+      const response = await MyApi.get('/app/all');
       setAppointments(response.data);
     } catch (error) {
+      console.log(error)
       setError(error.response.data.detail || 'An error occurred');
     }
   };
@@ -111,7 +111,7 @@ function Appointments() {
             <p className="text-gray-500 mb-4">View and manage upcoming appointments.</p>
 
             <div className="overflow-x-auto flex items-start gap-4 md:gap-0 justify-normal md:justify-between flex-wrap pb-5">
-              <div className="min-w-full md:min-w-[65%] shadow-lg mt-5">
+              <div className="w-full shadow-lg mt-5">
                 <div className="flex items-center gap-2">
                   <input
                     type="text"
@@ -138,7 +138,7 @@ function Appointments() {
                       </tr>
                     </thead>
                     <tbody>
-                    {!users.length && [0,1,2,3,4,5].map((i) => (
+                      {appointments.length == 0 && [0,1,2,3,4,5].map((i) => (
                         <tr key={i}>
                           <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
                               <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
@@ -152,25 +152,38 @@ function Appointments() {
                           <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
                               <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
                           </th>
+                          <th className="text-left py-2 px-4 border-b border-gray-300 text-gray-700">
+                              <div className="bg-gradient-to-r from-gray-100 to-gray-300 w-full h-3 mr-2 rounded-sm animate-pulse"></div>
+                          </th>
                         </tr>
-                        
                       ))}
-                      {error ? (
+                      {error && appointments.length != 0 ? (
                         <tr><td colSpan="5" className="text-center py-2 px-4 border-b border-gray-200 text-gray-500">{error}</td></tr>
                       ) : (
                         filteredAppointments.map((appointment) => (
-                          <tr key={appointment.id} onClick={() => handleRowClick(appointment)} className="cursor-pointer">
+                          <tr key={appointment.app_id} onClick={() => handleRowClick(appointment)} className="cursor-pointer">
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{appointment.fname + " " + appointment.lname}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{new Date(appointment.due_date).toLocaleDateString()}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{appointment.reason}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">{!appointment.app_status ? "Pending" : "Approved"}</td>
                             <td className="py-2 px-4 border-b border-gray-200 text-gray-500">
-                              <button
-                                className="px-4 py-2 border-2 border-[#39827a] text-[#39827a] rounded hover:bg-[#39827a] hover:text-white"
-                                onClick={(e) => { e.stopPropagation(); onApprove(appointment.app_id); }}
-                              >
-                                Approve
-                              </button>
+                            {!appointment.app_status ? 
+                            <button
+                            className="px-4 py-2 border-2 border-[#39827a] text-[#39827a] rounded hover:bg-[#39827a] hover:text-white"
+                            onClick={(e) => { e.stopPropagation(); onApprove(appointment.app_id); }}
+                          >
+                            Approve
+                          </button>
+                           :
+                           <button
+                           className="px-4 py-2 bg-gray-300 rounded text-[#39827a] cursor-not-allowed "
+                         >
+                           Approve
+                         </button>
+                            }
+                              
+
+                              
                             </td>
                           </tr>
                         ))
@@ -178,9 +191,6 @@ function Appointments() {
                     </tbody>
                   </table>
                 </div>
-              </div>
-              <div className="min-w-[30%]">
-                <AppointmentHistory />
               </div>
             </div>
           </div>
@@ -196,10 +206,13 @@ function Appointments() {
             <p className="text-gray-500 mb-4"><strong>Date:</strong> {new Date(selectedAppointment.due_date).toLocaleDateString()}</p>
             <p className="text-gray-500 mb-4"><strong>Reason:</strong> {selectedAppointment.reason}</p>
             <p className="text-gray-500 mb-4"><strong>Gender:</strong> {selectedAppointment.gender}</p>
-            <p className="text-gray-500 mb-4"><strong>Marital Status:</strong> {!selectedAppointment.married ? "Single" : "Married"}</p>
-            <p className="text-gray-500 mb-4"><strong>Smoking:</strong> {selectedAppointment.smoking_status}</p>
+            <p className="text-gray-500 mb-4"><strong>Date of Birth:</strong> {new Date(selectedAppointment.dob).toLocaleDateString()}</p>
             <p className="text-gray-500 mb-4"><strong>Phone:</strong> {selectedAppointment.phone}</p>
+            <p className="text-gray-500 mb-4"><strong>Blood Type:</strong> {selectedAppointment.blood_type}</p>
             <p className="text-gray-500 mb-4"><strong>Emergency Contact:</strong> {selectedAppointment.emergency_contact + " (" + selectedAppointment.emergency_contact_name + ")"}</p>
+            <p className="text-gray-500 mb-4"><strong>Existing Medical Conditions:</strong> {selectedAppointment.existing_medical_conditions}</p>
+            <p className="text-gray-500 mb-4"><strong>Hospital name:</strong> {selectedAppointment.hospital_name}</p>
+            <p className="text-gray-500 mb-4"><strong>Doctor name:</strong> {selectedAppointment.doctor_name}</p>
             <button
               className="mt-4 px-4 py-2 bg-[#39827a] text-white rounded hover:bg-[#2e6d62]"
               onClick={closeModal}

@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { LuLayoutDashboard } from 'react-icons/lu';
 import { useNavigate } from "react-router-dom";
 import { resetStateToDefault } from "../features/SharedDataSlice/SharedData";
+import { current } from "@reduxjs/toolkit";
 
 function Navbar({ currentUser, setCurrentUser, showMenuSmall, setShowMenuSmall }) {
   const UserInfo = useSelector(state => state.afiaCare.usersLogin);
@@ -25,7 +26,12 @@ function Navbar({ currentUser, setCurrentUser, showMenuSmall, setShowMenuSmall }
 
   
   const changeUser = (userType) => {
-    setCurrentUser(userType);
+    if (currentUser != "patient") {
+      setCurrentUser("patient")
+    }
+    else{
+      setCurrentUser(userType);
+    }
     setDropdownOpen(false);
   }
 
@@ -46,17 +52,17 @@ function Navbar({ currentUser, setCurrentUser, showMenuSmall, setShowMenuSmall }
     setAdminDropdownOpen(false); // Close admin dropdown when profile is opened
   };
 
-  const toggleNotification = () => {
-    setNotificationOpen(!notificationOpen);
-  };
+  // const toggleNotification = () => {
+  //   setNotificationOpen(!notificationOpen);
+  // };
 
   const toggleLanguageDropdown = () => {
     setLanguageDropdownOpen(!languageDropdownOpen);
   };
 
-  const toggleAdminDropdown = () => {
-    setAdminDropdownOpen(!adminDropdownOpen);
-  };
+  // const toggleAdminDropdown = () => {
+  //   setAdminDropdownOpen(!adminDropdownOpen);
+  // };
 
   const LogoutUser = () => {
     if (dispatch(resetStateToDefault())) {
@@ -75,7 +81,7 @@ function Navbar({ currentUser, setCurrentUser, showMenuSmall, setShowMenuSmall }
           <LuLayoutDashboard className="text-slate-700 text-4xl"/>
         </button>
         <div className="flex items-center gap-4 ml-auto">
-          <div className="relative max-sm:hidden">
+          {/* <div className="relative max-sm:hidden">
             <input
               type="text"
               placeholder="Search..." 
@@ -104,7 +110,7 @@ function Navbar({ currentUser, setCurrentUser, showMenuSmall, setShowMenuSmall }
                 )}
               </div>
             )}
-          </div>
+          </div> */}
           <div className="relative">
             <div className="h-10 w-10 rounded-full overflow-hidden">
               <img

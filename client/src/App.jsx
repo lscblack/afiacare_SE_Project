@@ -19,6 +19,8 @@ import { useEffect } from "react";
 import Appointments from "./Pages/Doctors/Appointments";
 import Users from "./Pages/Admin/Users";
 import Ministers from "./Pages/Admin/Ministers";
+import NewRecord from "./Components/User/Views/NewRecord";
+import NewAppointment from "./Components/User/Views/NewAppointment";
 
 function App() {
   const lang = useSelector(state => state.afiaCare.langs); // load language translations
@@ -64,6 +66,8 @@ function App() {
           <Route path='/user/consultations' element={getComponent(<Consultation />)} />
           <Route path='/user/emergency' element={getComponent(<Emergency />)} />
           <Route path='/user/donations' element={getComponent(<Donations />)} />
+          <Route path='/records' element={getComponent(<NewRecord />)} />
+          <Route path='/appointments' element={getComponent(<NewAppointment />)} />
           <Route path='/facilities' element={getComponent(<Facilities />)} />
           <Route path='/doctor/appointments' element={getComponent(<Appointments />)} />
           <Route path='/doctor/dashboard' element={getComponent(<Dashboard acc_type="doctor" />)} />
