@@ -124,7 +124,7 @@ function AdminDashboard() {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer" onClick={() => handleCardClick('/admin/ministers')}>
+        {/* <div className="bg-white p-4 rounded-lg shadow-md transform transition-transform duration-300 hover:translate-y-[-5px] hover:shadow-lg cursor-pointer" onClick={() => handleCardClick('/admin/ministers')}>
           <div className="">
           <div className='text-[#39827a] bg-slate-100 p-5 rounded-full w-fit m-auto'>
             <FaCrown size={42}  className="m-auto"/>
@@ -140,30 +140,7 @@ function AdminDashboard() {
           </div>
             <h2 className="text-2xl text-center font-semibold bg-slate-100 rounded-full p-5 mt-5 text-gray-500">Statistics</h2>
           </div>
-        </div>
-      </div>
-
-      <div className="flex flex-col px-4 md:flex-row">
-        
-        <div className='md:w-[50%]'> 
-          <div style={wrapperStyle} className='p-4'>
-            <Calendar fullscreen={false} onPanelChange={onPanelChange} cellRender={cellRender} />
-          </div>
-          <div>
-            {/* <UserManagement /> */}
-          </div>
-          <div>
-            {/* <SystemStatistics /> */}
-          </div>
-        </div>
-        <div className='md:w-[50%]'>
-          <div>
-            {/* <ReportsDashboard /> */}
-          </div>
-          <div>
-            <RecentActivities />
-          </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
