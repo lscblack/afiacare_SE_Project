@@ -57,7 +57,6 @@ function Appointments() {
       const response = await MyApi.get('/app/all');
       setAppointments(response.data);
     } catch (error) {
-      console.log(error)
       setError(error.response.data.detail || 'An error occurred');
     }
   };
