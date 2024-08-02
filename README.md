@@ -25,7 +25,7 @@ The frontend of Afiacare is built with **React.js**. To get started, you'll need
 
 ### Server (Backend)
 
-Due to security considerations, the environment variables required for the backend are not publicly provided. To set up the server on your local machine, please contact a team member or use depolyed version to endpoints <a href="https://afiacare.onrender.com/">Afia care Backend</a>:
+Due to security considerations, the environment variables required for the backend are not publicly provided. To set up the server on your local machine, please contact a team member or use depolyed version to endpoints <a href="https://afiacare.onrender.com/docs">Afia care Backend</a>:
 
 | Name                         | Email                                 |
 |------------------------------|---------------------------------------|
